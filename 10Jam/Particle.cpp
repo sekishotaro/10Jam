@@ -26,6 +26,10 @@ namespace
 		};
 	}
 
+	/// @brief 弐次元ベクトルの回転
+	/// @param vec 回転前のベクトル
+	/// @param angleRad 回転する角度
+	/// @return 回転後のベクトル
 	inline XMFLOAT2 rotation(const XMFLOAT2& vec, float angleRad)
 	{
 		return XMFLOAT2(vec.x * std::cos(angleRad) - vec.y * std::sin(angleRad),
@@ -50,7 +54,7 @@ Particle::Grain::Grain(unsigned life,
 {
 }
 
-void Particle::Grain::update()
+void Particle::Grain::Update()
 {
 	const float rate = static_cast<float>(lifeMax - life) / static_cast<float>(lifeMax);
 
@@ -62,12 +66,12 @@ void Particle::Grain::update()
 	--life;
 }
 
-int Particle::Grain::draw() const
+int Particle::Grain::Draw() const
 {
 	return DxLib::DrawCircleAA(pos.x, pos.y, r, 32, color);
 }
 
-void Particle::addGrain(unsigned life,
+void Particle::AddGrain(unsigned life,
 						const XMFLOAT2& startPos,
 						const XMFLOAT2& endPos,
 						float startR,
@@ -78,26 +82,26 @@ void Particle::addGrain(unsigned life,
 	grains.emplace_front(life, startPos, endPos, startR, endR, startColor, endColor);
 }
 
-void Particle::update()
+void Particle::Update()
 {
-	grains.remove_if([](const Grain& g) { return 0u >= g.getLife(); });
+	grains.remove_if([](const Grain& g) { return 0u >= g.GetLife(); });
 	for (auto& i : grains)
 	{
-		i.update();
+		i.Update();
 	}
 }
 
-void Particle::draw()
+void Particle::Draw()
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, 64);
 	for (auto& i : grains)
 	{
-		i.draw();
+		i.Draw();
 	}
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
-void Particle::fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color)
+void Particle::Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color)
 {
 	XMFLOAT2 endPos{};
 	float angleRad{};
@@ -112,6 +116,6 @@ void Particle::fireworks(const XMFLOAT2& centerPos, unsigned life, float range, 
 		endPos.x += centerPos.x;
 		endPos.y += centerPos.y;
 
-		addGrain(life, centerPos, endPos, 16.f, 0.f, color, color);
+		AddGrain(life, centerPos, endPos, 16.f, 0.f, color, color);
 	}
 }

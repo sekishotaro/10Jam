@@ -42,16 +42,16 @@ private:
 			  ColorRGB startColor,
 			  ColorRGB endColor);
 
-		inline unsigned getLife() const { return life; }
+		inline unsigned GetLife() const { return life; }
 
-		void update();
-		int draw() const;
+		void Update();
+		int Draw() const;
 	};
 
 	std::forward_list<Grain> grains;
 
 public:
-	void addGrain(unsigned life,
+	void AddGrain(unsigned life,
 				  const XMFLOAT2& startPos,
 				  const XMFLOAT2& endPos,
 				  float startR,
@@ -59,13 +59,13 @@ public:
 				  ColorRGB startColor,
 				  ColorRGB endColor);
 
-	void update();
+	void Update();
 
-	void draw();
+	void Draw();
 
-	void fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, ColorRGB color);
+	void Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, ColorRGB color);
 
-	inline bool isEmpty() const
+	inline bool IsEmpty() const
 	{
 		return grains.empty();
 	}
