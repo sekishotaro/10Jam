@@ -1,6 +1,5 @@
 #include "DxLib.h"
-#include "Player.h"
-#include "Children.h"
+#include "SceneManager.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "Test";
@@ -41,8 +40,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 1ループ(フレーム)前のキーボード情報
 	char oldkeys[256] = { 0 };
 
-	Player player;
-	Children children1 = Children(255.0f, 255.0f);
+	SceneManager* sceneManager_ = new SceneManager(SceneManager::SceneName::PLAY);
+	sceneManager_->Initialize();
 
 	// ゲームループ
 	while (1)
@@ -60,11 +59,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-		player.Update();
+		sceneManager_->Update();
 
 		// 描画処理
-		player.Draw();
-		children1.Draw();
+		sceneManager_->Draw();
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
 		ScreenFlip();
