@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include <d3d12.h>
 #include <DirectXMath.h>
+#include "Player.h"
 #pragma once
 
 class Children
@@ -17,16 +18,30 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(XMFLOAT2 &PlayerPos);
+	void Update(Player& player);
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
 
-private:
 
-	bool FreeFlag = false;
+private:
+	/// <summary>
+	/// 自機と当たり判定
+	/// </summary>
+	/// <param name="PlayerPos"></param>
+	void Collision(XMFLOAT2& PlayerPos);
+
+
+
+private:
+	//拘束状態確認
+	bool FreeFlag = true;
+	//位置
 	XMFLOAT2 pos = { 600.0f, 410.0f };
+	//半径
+	const float radius = 8.0f;
 };
+
 

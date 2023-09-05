@@ -30,6 +30,8 @@ public:
 	/// </summary>
 	void Draw();
 
+	XMFLOAT2& GetPos() { return pos; }
+	XMFLOAT2& GetMoveVec() { return moveVec; }
 private:
 
 	XMFLOAT2 pos = { 600.0f, 410.0f };
@@ -38,5 +40,6 @@ private:
 	char keys[256] = { 0 };
 	// 1ループ(フレーム)前のキーボード情報
 	char oldkeys[256] = { 0 };
+	//半径
+	const float radius = 10.0f;
 };
-
