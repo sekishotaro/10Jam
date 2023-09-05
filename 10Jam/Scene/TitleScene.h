@@ -17,6 +17,8 @@ public:
 	/// •`‰æ
 	/// </summary>
 	void Draw() override;
+private:
+	char keys[256] = { 0 };
 
 };
 
