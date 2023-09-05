@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\シーン関連">
+      <UniqueIdentifier>{a5b22bc4-b0ba-4fe8-adfb-f1cfc96a3aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\シーン関連">
+      <UniqueIdentifier>{45138b80-cf28-4759-ac7e-f3f28d58e7d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,6 +30,21 @@
     <ClCompile Include="Children.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="BaseScene.cpp">
+      <Filter>ソース ファイル\シーン関連</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>ソース ファイル\シーン関連</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScene.cpp">
+      <Filter>ソース ファイル\シーン関連</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソース ファイル\シーン関連</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TitleScene.cpp">
+      <Filter>ソース ファイル\シーン関連</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -31,6 +52,21 @@
     </ClInclude>
     <ClInclude Include="Children.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BaseScene.h">
+      <Filter>ヘッダー ファイル\シーン関連</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TitleScene.h">
+      <Filter>ヘッダー ファイル\シーン関連</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PlayScene.h">
+      <Filter>ヘッダー ファイル\シーン関連</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScene.h">
+      <Filter>ヘッダー ファイル\シーン関連</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>ヘッダー ファイル\シーン関連</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>ヘッダー ファイル</Filter>
