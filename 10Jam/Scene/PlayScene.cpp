@@ -21,7 +21,7 @@ void PlayScene::Update() {
 
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
-	if (keys[KEY_INPUT_SPACE] == true) {
+	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::TITLE);
 	}
 }

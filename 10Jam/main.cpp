@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetMainWindowText(TITLE);
 
 	// 画面サイズの最大サイズ、カラービット数を設定(モニターの解像度に合わせる)
-	SetGraphMode(window_width, window_height, 32);
+	SetGraphMode((int)window_width,(int)window_height, 32);
 
 	// 画面サイズを設定(解像度との比率で設定)
 	SetWindowSizeExtendRate(1.0);
@@ -45,8 +45,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SceneManager* sceneManager_ = SceneManager::GetInstance();
 	sceneManager_->Initialize(SceneManager::SceneName::PLAY);
-	SceneChanger* sceneChanger = new SceneChanger();
-	sceneChanger->Initialize();
 	// ゲームループ
 	while (1) {
 
@@ -62,10 +60,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// 更新処理
 		sceneManager_->Update();
-		sceneChanger->Update();
 		// 描画処理
 		sceneManager_->Draw();
-		sceneChanger->Draw();
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
 		ScreenFlip();
