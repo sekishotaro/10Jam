@@ -32,6 +32,9 @@ public:
 
 	XMFLOAT2& GetPos() { return pos; }
 	XMFLOAT2& GetMoveVec() { return moveVec; }
+	int GetChildrenNum() { return childrenNum; }
+
+	void HitChildren();
 private:
 
 	XMFLOAT2 pos = { 600.0f, 410.0f };
@@ -42,4 +45,6 @@ private:
 	char oldkeys[256] = { 0 };
 	//”¼Œa
 	const float radius = 10.0f;
+
+	int childrenNum = 0;
 };

@@ -31,17 +31,19 @@ private:
 	/// 自機と当たり判定
 	/// </summary>
 	/// <param name="PlayerPos"></param>
-	void Collision(XMFLOAT2& PlayerPos);
+	void Collision(Player& player);
 
 
 
 private:
 	//拘束状態確認
-	bool FreeFlag = true;
+	bool freeFlag = true;
 	//位置
 	XMFLOAT2 pos = { 600.0f, 410.0f };
 	//半径
 	const float radius = 8.0f;
+	//拘束番号
+	int restraintTh = 0;
 };
 
 
