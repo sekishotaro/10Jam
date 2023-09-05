@@ -1,7 +1,7 @@
 #include "DxLib.h"
 #include "SceneManager.h"
 
-	// ウィンドウのタイトルに表示する文字列
+// ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "Test";
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
