@@ -6,6 +6,9 @@ const char TITLE[] = "Test";
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	// Log.txtを出力しない
+	SetOutApplicationLogValidFlag(FALSE);
+
 	// ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
 
@@ -82,6 +85,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;
 		}
 	}
+
+	DxLib_End();
 
 	return 0;				// ソフトの終了 
 }
