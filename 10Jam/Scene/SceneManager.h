@@ -1,6 +1,5 @@
 #pragma once
 #include "BaseScene.h"
-#include <string>
 #include <memory>
 
 class SceneManager {
@@ -10,18 +9,12 @@ public:
 	PLAY,
 	RESULT
 	};
-	/// <summary>
-	/// インストラクタ
-	/// </summary>
-	SceneManager(const SceneName SceneName);
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
-	~SceneManager();
+	static SceneManager* GetInstance();
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(const SceneName sceneName);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -30,9 +23,23 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
+
+
+	void ChangeScene(const SceneName sceneName);
 private:
-	BaseScene* CreateScene(const SceneName sceneName);
-	BaseScene* scene_ = nullptr;
+	std::unique_ptr<BaseScene> CreateScene(const SceneName sceneName);
+
+	//シーン終了
+	bool endResquest_ = false;
+	//今のシーン
+	std::unique_ptr<BaseScene> scene_ = nullptr;
+	//次のシーン
+	std::unique_ptr<BaseScene> nextScene_ = nullptr;
+private:
+	~SceneManager() = default;
+	SceneManager() = default;
+	SceneManager(const SceneManager&) = delete;
+	void operator =(const SceneManager&) = delete;
 
 };
 

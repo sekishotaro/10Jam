@@ -1,4 +1,5 @@
 #include "PlayScene.h"
+#include "SceneManager.h"
 
 PlayScene::PlayScene() {
 }
@@ -18,6 +19,11 @@ void PlayScene::Update() {
 	player->Update();
 	//children1->Update();
 
+	// 最新のキーボード情報を取得
+	GetHitKeyStateAll(keys);
+	if (keys[KEY_INPUT_SPACE] == true) {
+		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::TITLE);
+	}
 }
 
 void PlayScene::Draw() {

@@ -1,4 +1,6 @@
 #pragma once
+#include "DxLib.h"
+
 class BaseScene {
 public:
 	BaseScene();

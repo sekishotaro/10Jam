@@ -22,6 +22,7 @@ public:
 private:
 	Player* player = nullptr;
 	Children* children1=nullptr;
+	char keys[256] = { 0 };
 
 
 
