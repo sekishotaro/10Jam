@@ -44,6 +44,8 @@ private:
 	const float radius = 8.0f;
 	//S‘©”Ô†
 	int restraintTh = 0;
+
+	XMFLOAT2 moveVec[10] = {};
 };
 
 
