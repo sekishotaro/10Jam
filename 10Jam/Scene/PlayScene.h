@@ -2,6 +2,8 @@
 #include "BaseScene.h"
 #include "../Player.h"
 #include "../Children.h"
+#include <memory>
+#include "Cannon.h"
 
 class PlayScene : public BaseScene {
 public:
@@ -21,6 +23,7 @@ public:
 	void Draw() override;
 private:
 	Player* player = nullptr;
+	std::unique_ptr<Cannon> cannon_ = nullptr;
 	Children* children1 = nullptr;
 	Children* children2 = nullptr;
 	Children* children3 = nullptr;

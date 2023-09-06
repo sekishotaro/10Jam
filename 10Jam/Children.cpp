@@ -1,28 +1,28 @@
 #include "Children.h"
 #include "math.h"
 
-Children::Children(float x, float y)
+Children::Children(XMFLOAT2 pos, Player* player)
 {
-	pos.x = x;
-	pos.y = y;
+	this->pos = pos;
+	player_ = player;
 }
 
 Children::~Children()
 {
 }
 
-void Children::Update(Player& player)
+void Children::Update()
 {
 	move = {};
 
 	//“–‚½‚è”»’è
-	TracColProcess(player);
+	TracColProcess();
 
 	if (freeFlag == true) return;
 
 	//ˆÚ“®
 
-	TrackMove(player);
+	TrackMove();
 
 
 
@@ -32,16 +32,16 @@ void Children::Update(Player& player)
 
 void Children::Draw()
 {
-	DrawCircle((int)pos.x, (int)pos.y, radius, GetColor(255, 255, 255), true);
+	DrawCircleAA((int)pos.x, (int)pos.y, radius,64, GetColor(255, 255, 255), true);
 }
 
-bool Children::Collision(Player& player)
+bool Children::Collision()
 {
-	float r = radius + player.radius;
+	float r = radius + player_->radius;
 
-	float a = pos.x - player.GetPos().x;
-	float b = pos.y - player.GetPos().y;
-	float c = (float)sqrt(a * a + b * b);
+	float a = pos.x - player_->GetPos().x;
+	float b = pos.y - player_->GetPos().y;
+	float c = sqrtf(a * a + b * b);
 
 	if (c <= r)
 	{
@@ -50,24 +50,24 @@ bool Children::Collision(Player& player)
 	return false;
 }
 
-void Children::TracColProcess(Player& player)
+void Children::TracColProcess()
 {
 	if (freeFlag == false) return;
 
-	if (Collision(player) == true)
+	if (Collision() == true)
 	{
 		freeFlag = false;
 		//‚¸‚ê–hŽ~‚Ì‚½‚ß‚¢‚Á‚½‚ñŽ©‹@’†‰›À•W‚Éƒ[ƒv
-		pos = player.GetPos();
-		player.HitChildren();
+		pos = player_->GetPos();
+		player_->HitChildren();
 
-		restraintTh = player.GetChildrenNum();
+		restraintTh = player_->GetChildrenNum();
 	}
 }
 
-void Children::TrackMove(Player& player)
+void Children::TrackMove()
 {
-	restrainMoveVec.push_back(player.GetMoveVec());
+	restrainMoveVec.push_back(player_->GetMoveVec());
 
 	if (restrainMoveVec.size() < (13 * restraintTh)) return;
 

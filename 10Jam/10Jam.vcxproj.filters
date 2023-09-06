@@ -22,15 +22,18 @@
     <Filter Include="Helper">
       <UniqueIdentifier>{e6fee53c-c91a-4bc1-a3ac-ced2dfff326f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\子供関連">
+      <UniqueIdentifier>{37b98448-97ea-43ca-aa52-2ddaf15e9ec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\子供関連">
+      <UniqueIdentifier>{174347a3-d957-42e7-b3f7-dd8f46037cec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Children.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\TitleScene.cpp">
@@ -57,12 +60,15 @@
     <ClCompile Include="Helper\Helper.cpp">
       <Filter>Helper</Filter>
     </ClCompile>
+    <ClCompile Include="Children.cpp">
+      <Filter>ソース ファイル\子供関連</Filter>
+    </ClCompile>
+    <ClCompile Include="Chara\Cannon.cpp">
+      <Filter>ソース ファイル\子供関連</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Children.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\BaseScene.h">
@@ -91,6 +97,12 @@
     </ClInclude>
     <ClInclude Include="Helper\Helper.h">
       <Filter>Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Children.h">
+      <Filter>ヘッダー ファイル\子供関連</Filter>
+    </ClInclude>
+    <ClInclude Include="Chara\Cannon.h">
+      <Filter>ヘッダー ファイル\子供関連</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

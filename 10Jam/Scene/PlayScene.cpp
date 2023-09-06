@@ -12,20 +12,23 @@ PlayScene::~PlayScene() {
 
 void PlayScene::Initialize() {
 	player = new Player();
-	children1 = new Children(150.0f, 255.0f);
-	children2 = new Children(300.0f, 255.0f);
-	children3 = new Children(450.0f, 255.0f);
-	children4 = new Children(600.0f, 255.0f);
-	children5 = new Children(750.0f, 255.0f);
+	cannon_ = std::make_unique<Cannon>();
+	cannon_->SetPlayer(player);
+	children1 = new Children({150.0f, 255.0f},player);
+	children2 = new Children({300.0f, 255.0f},player);
+	children3 = new Children({450.0f, 255.0f},player);
+	children4 = new Children({600.0f, 255.0f},player);
+	children5 = new Children({750.0f, 255.0f},player);
 }
 
 void PlayScene::Update() {
 	player->Update();
-	children1->Update(*player);
-	children2->Update(*player);
-	children3->Update(*player);
-	children4->Update(*player);
-	children5->Update(*player);
+	cannon_->Update();
+	children1->Update();
+	children2->Update();
+	children3->Update();
+	children4->Update();
+	children5->Update();
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
@@ -34,6 +37,7 @@ void PlayScene::Update() {
 }
 
 void PlayScene::Draw() {
+	cannon_->Draw();
 	player->Draw();
 	children1->Draw();
 	children2->Draw();

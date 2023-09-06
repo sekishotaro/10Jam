@@ -13,13 +13,13 @@ private: // エイリアス
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
 
-	Children(float x, float y);
+	Children(XMFLOAT2 pos,Player* player);
 	~Children();
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(Player& player);
+	void Update();
 
 	/// <summary>
 	/// 描画
@@ -32,17 +32,18 @@ private:
 	/// 自機と当たり判定
 	/// </summary>
 	/// <param name="PlayerPos"></param>
-	bool Collision(Player& player);
+	bool Collision();
 
 
-	void TracColProcess(Player& player);
+	void TracColProcess();
 	
 	/// <summary>
 	/// 追跡移動
 	/// </summary>
-	void TrackMove(Player& player);
+	void TrackMove();
 
 private:
+	Player* player_ = nullptr;
 	//拘束状態確認
 	bool freeFlag = true;
 	//位置
