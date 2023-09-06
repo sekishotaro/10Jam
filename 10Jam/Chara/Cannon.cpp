@@ -38,8 +38,8 @@ void Cannon::Spawn() {
 		// -100以上100以下の値を等確率で発生させる
 		std::uniform_int_distribution<> dist(-100,100);
 		// 一様整数分布で乱数を生成する
-		float positionX = dist(engine);
-		float positionY = dist(engine);
+		float positionX = (float)dist(engine);
+		float positionY = (float)dist(engine);
 		DirectX::XMFLOAT2 pos = { player_->GetPos().x + positionX ,player_->GetPos().y + positionY };
 		std::unique_ptr<Children> children = std::make_unique<Children>(pos, player_);
 		Childrens.push_back(std::move(children));

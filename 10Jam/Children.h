@@ -41,7 +41,10 @@ private:
 	/// “®‚­‚©Ž~‚Ü‚é‚©
 	/// </summary>
 	void MountMove();
-
+	/// <summary>
+	/// Ž©“®ˆÚ“®
+	/// </summary>
+	void MoveFree();
 	void TracColProcess();
 	
 	/// <summary>
@@ -55,8 +58,8 @@ private:
 	bool freeFlag = true;
 	//“®‚«ŠÖ˜A
 	bool isMove = false;
-	
-
+	float vel = 0.0f;
+	float dir = 1.0f;
 	//ˆÊ’u
 	XMFLOAT2 pos = { 600.0f, 410.0f };
 	XMFLOAT2 move = { 0.0f, 0.0f };

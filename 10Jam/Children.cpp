@@ -1,38 +1,36 @@
 #include "Children.h"
 #include "math.h"
+#include <random>
 
-Children::Children(XMFLOAT2 pos, Player* player)
-{
+Children::Children(XMFLOAT2 pos, Player* player) {
+	MountMove();
+
 	this->pos = pos;
 	player_ = player;
 }
 
-Children::~Children()
-{
+Children::~Children() {
 }
 
-void Children::Update()
-{
+void Children::Update() {
 	//当たり判定
 	TracColProcess();
 	Follow2Player();
+	MoveFree();
 }
 
-void Children::Draw()
-{
-	DrawCircleAA((int)pos.x, (int)pos.y, radius,64, GetColor(255, 255, 255), true);
+void Children::Draw() {
+	DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 255, 255), true);
 }
 
-bool Children::Collision()
-{
+bool Children::Collision() {
 	float r = radius + player_->radius;
 
 	float a = pos.x - player_->GetPos().x;
 	float b = pos.y - player_->GetPos().y;
 	float c = sqrtf(a * a + b * b);
 
-	if (c <= r)
-	{
+	if (c <= r) {
 		return true;
 	}
 	return false;
@@ -50,17 +48,40 @@ void Children::Follow2Player() {
 }
 
 void Children::MountMove() {
+	std::random_device seed_gen;
+	std::default_random_engine engine(seed_gen());
 
-
+	// -100以上100以下の値を等確率で発生させる
+	std::uniform_int_distribution<> dist(0, 100);
+	int rand = dist(engine);
+	if (rand < 30) {
+		if (rand < 15) {
+			dir = -1.0f;
+		} else {
+			dir = 1.0f;
+		}
+		isMove = true;
+	} else {
+		isMove = false;
+	}
 
 }
 
-void Children::TracColProcess()
-{
+void Children::MoveFree() {
+	if (!freeFlag) return;
+	if (!isMove) return;
+	move = {};
+	vel += 0.05f;
+	move.x = cosf(vel) * 4.5f;
+	move.y = sinf(vel) * 4.5f;
+	pos.x += move.x * dir;
+	pos.y += move.y * dir;
+}
+
+void Children::TracColProcess() {
 	if (freeFlag == false) return;
 
-	if (Collision() == true)
-	{
+	if (Collision() == true) {
 		freeFlag = false;
 		//ずれ防止のためいったん自機中央座標にワープ
 		pos = player_->GetPos();
@@ -70,8 +91,7 @@ void Children::TracColProcess()
 	}
 }
 
-void Children::TrackMove()
-{
+void Children::TrackMove() {
 	restrainMoveVec.push_back(player_->GetMoveVec());
 
 	if (restrainMoveVec.size() < (13 * restraintTh)) return;
