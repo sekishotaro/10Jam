@@ -5,7 +5,25 @@
 
 class Particle
 {
+private:
+	Particle(const Particle&) = delete;
+	Particle& operator=(const Particle&) = delete;
+	Particle() = default;
+
 public:
+	/// @brief シングルトンのインスタンスを取得する
+	inline static Particle* Ins()
+	{
+		static Particle p{};
+		return &p;
+	}
+
+	/// @brief Ins関数を呼ぶ
+	inline static Particle* GetInstance()
+	{
+		return Ins();
+	}
+
 	struct ColorRGB
 	{
 		uint8_t red = 0ui8;
@@ -48,9 +66,10 @@ private:
 		int Draw() const;
 	};
 
-	std::forward_list<Grain> grains;
+	std::forward_list<Grain> grains{};
 
 public:
+	/// @brief 粒を追加
 	void AddGrain(unsigned life,
 				  const XMFLOAT2& startPos,
 				  const XMFLOAT2& endPos,
@@ -59,15 +78,25 @@ public:
 				  ColorRGB startColor,
 				  ColorRGB endColor);
 
+	/// @brief 更新処理。各シーンで毎フレーム呼ぶ。
 	void Update();
 
+	/// @brief 描画処理。各シーンで毎フレーム呼ぶ。
 	void Draw();
 
+	/// @brief 放射状に人がるパーティクルを開始
 	void Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, ColorRGB color);
 
+	/// @brief 粒が一つもないかどうか
 	inline bool IsEmpty() const
 	{
 		return grains.empty();
+	}
+
+	/// @brief 粒の全削除
+	inline void Clear()
+	{
+		grains.clear();
 	}
 };
 
