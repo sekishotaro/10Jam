@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseScene.h"
+#include "SceneChanger.h"
+
 #include <memory>
 
 class SceneManager {
@@ -28,6 +30,11 @@ public:
 	void ChangeScene(const SceneName sceneName);
 private:
 	std::unique_ptr<BaseScene> CreateScene(const SceneName sceneName);
+	/// <summary>
+	/// シーンチェンジャーが終わってるか確認
+	/// </summary>
+	/// <returns></returns>
+	bool CheckChanger();
 
 	//シーン終了
 	bool endResquest_ = false;
@@ -35,6 +42,9 @@ private:
 	std::unique_ptr<BaseScene> scene_ = nullptr;
 	//次のシーン
 	std::unique_ptr<BaseScene> nextScene_ = nullptr;
+	//シーンチェンジ
+	std::unique_ptr<SceneChanger> sceneChanger_ = nullptr;
+
 private:
 	~SceneManager() = default;
 	SceneManager() = default;

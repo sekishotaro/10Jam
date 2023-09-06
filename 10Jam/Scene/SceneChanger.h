@@ -22,6 +22,17 @@ public:
 	/// ï`âÊ
 	/// </summary>
 	void Draw();
+
+	/// <summary>
+	/// ÉQÉbÉ^Å[&setter
+	/// </summary>
+	void SetIsStart() { isStart = true; }
+	bool GetIsStart() { return isStart; }
+
+	void SetIsClose(const bool& flag) { isClose = true; }
+	bool GetIsClose() { return isClose; }
+
+
 private:
 	float frame_ = 0.f, kFrameMax = 45.f, frameNow_ = 0.0f;
 	float r = 0.f;

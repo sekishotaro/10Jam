@@ -71,16 +71,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Chara\Cannon.cpp" />
     <ClCompile Include="Children.cpp" />
     <ClCompile Include="Helper\Easing.cpp" />
     <ClCompile Include="Helper\Helper.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Chara\Cannon.h" />
     <ClInclude Include="Children.h" />
     <ClInclude Include="Helper\Easing.h" />
     <ClInclude Include="Helper\Helper.h" />
