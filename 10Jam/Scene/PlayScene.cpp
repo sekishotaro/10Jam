@@ -1,5 +1,6 @@
 #include "PlayScene.h"
 #include "SceneManager.h"
+#include "ScoreManager.h"
 
 PlayScene::PlayScene() {
 }
@@ -11,6 +12,7 @@ PlayScene::~PlayScene() {
 }
 
 void PlayScene::Initialize() {
+	ScoreManager::GetInstance()->ResetScore();
 	player = new Player();
 	cannon_ = std::make_unique<Cannon>();
 	cannon_->SetPlayer(player);
@@ -44,4 +46,7 @@ void PlayScene::Draw() {
 	children3->Draw();
 	children4->Draw();
 	children5->Draw();
+
+
+	ScoreManager::GetInstance()->Draw();
 }

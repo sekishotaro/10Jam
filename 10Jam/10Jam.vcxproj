@@ -71,16 +71,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(ProjectDir)Score\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(ProjectDir)Score\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(ProjectDir)Score\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Scene\;$(ProjectDir)Helper\;$(ProjectDir)Chara\;$(ProjectDir)Score\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -161,6 +161,7 @@
     <ClCompile Include="Scene\SceneChanger.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
+    <ClCompile Include="Score\ScoreManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chara\Cannon.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Scene\SceneChanger.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\TitleScene.h" />
+    <ClInclude Include="Score\ScoreManager.h" />
     <ClInclude Include="Sound.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
