@@ -16,7 +16,7 @@ void Children::Update(Player& player)
 	move = {};
 
 	//当たり判定
-	Collision(player);
+	TracColProcess(player);
 
 	if (freeFlag == true) return;
 
@@ -35,16 +35,9 @@ void Children::Draw()
 	DrawCircle((int)pos.x, (int)pos.y, radius, GetColor(255, 255, 255), true);
 }
 
-void Children::Collision(Player& player)
+bool Children::Collision(Player& player)
 {
-	if (freeFlag == false) return;
-
-
-	//自機
-	float PlayerRadius = 10.0f;
-
-	float r = radius + PlayerRadius;
-
+	float r = radius + player.radius;
 
 	float a = pos.x - player.GetPos().x;
 	float b = pos.y - player.GetPos().y;
@@ -52,14 +45,24 @@ void Children::Collision(Player& player)
 
 	if (c <= r)
 	{
+		return true;
+	}
+	return false;
+}
+
+void Children::TracColProcess(Player& player)
+{
+	if (freeFlag == false) return;
+
+	if (Collision(player) == true)
+	{
 		freeFlag = false;
 		//ずれ防止のためいったん自機中央座標にワープ
 		pos = player.GetPos();
 		player.HitChildren();
-		
+
 		restraintTh = player.GetChildrenNum();
 	}
-
 }
 
 void Children::TrackMove(Player& player)
