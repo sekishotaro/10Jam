@@ -13,21 +13,9 @@ Children::~Children()
 
 void Children::Update()
 {
-	move = {};
-
 	//“–‚½‚è”»’è
 	TracColProcess();
-
-	if (freeFlag == true) return;
-
-	//ˆÚ“®
-
-	TrackMove();
-
-
-
-	pos.x += move.x;
-	pos.y += move.y;
+	Follow2Player();
 }
 
 void Children::Draw()
@@ -48,6 +36,23 @@ bool Children::Collision()
 		return true;
 	}
 	return false;
+}
+
+void Children::Follow2Player() {
+	if (freeFlag == true) return;
+	move = {};
+
+	//ˆÚ“®
+	TrackMove();
+
+	pos.x += move.x;
+	pos.y += move.y;
+}
+
+void Children::MountMove() {
+
+
+
 }
 
 void Children::TracColProcess()
@@ -74,5 +79,4 @@ void Children::TrackMove()
 	move = restrainMoveVec[0];
 
 	restrainMoveVec.erase(restrainMoveVec.begin());
-
 }

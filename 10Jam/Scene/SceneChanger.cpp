@@ -11,7 +11,7 @@ SceneChanger::~SceneChanger() {
 
 void SceneChanger::Initialize() {
 	frame_ = 0.f, kFrameMax = 45.f, frameNow_ = 0.0f;
-	r = 0.f;
+	r = 0.0f;
 	isStart = false;
 	isClose = false;
 
@@ -38,11 +38,14 @@ void SceneChanger::Update() {
 		} else {
 			frame_ = 0.0f;
 			frameNow_ = 0.0f;
+			isVisible = false;
 			isClose = false;
 		}
 	}
 }
 
 void SceneChanger::Draw() {
-	DrawCircleAA(640.f, 360.f, r, 128, GetColor(255, 255, 255), TRUE);
+	if (isVisible) {
+		DrawCircleAA(640.f, 360.f, r, 128, GetColor(255, 255, 255), TRUE);
+	}
 }
