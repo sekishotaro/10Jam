@@ -34,7 +34,7 @@ void SceneChanger::Update() {
 		frame_ += 1.0f;
 		frameNow_ = frame_ / kFrameMax;
 		if (frameNow_ <= 1.0f) {
-			r = Ease(In, Quad, frameNow_, 600.f, 0.0f);
+			r = Ease(In, Quad, frameNow_, 630.f, 0.0f);
 		} else {
 			frame_ = 0.0f;
 			frameNow_ = 0.0f;
