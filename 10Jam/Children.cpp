@@ -1,8 +1,11 @@
 #include "Children.h"
 #include "math.h"
+#include <random>
 
 Children::Children(XMFLOAT2 pos, Player* player)
 {
+	MountMove();
+
 	this->pos = pos;
 	player_ = player;
 }
@@ -50,8 +53,17 @@ void Children::Follow2Player() {
 }
 
 void Children::MountMove() {
+	std::random_device seed_gen;
+	std::default_random_engine engine(seed_gen());
 
+	// -100ˆÈã100ˆÈ‰º‚Ì’l‚ğ“™Šm—¦‚Å”­¶‚³‚¹‚é
+	std::uniform_int_distribution<> dist(0, 100);
+	int rand = dist(engine);
+	if (rand < 30) {
+		isMove = true;
+	} else {
 
+	}
 
 }
 
