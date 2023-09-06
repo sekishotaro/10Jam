@@ -2,6 +2,7 @@
 #include "math.h"
 #include <random>
 #include <ScoreManager.h>
+#include <ScrollManager.h>
 
 Children::Children(XMFLOAT2 pos, Player* player) {
 	MountMove();
@@ -18,6 +19,7 @@ void Children::Update() {
 	TracColProcess();
 	Follow2Player();
 	MoveFree();
+	ScrollMove();
 }
 
 void Children::Draw() {
@@ -101,4 +103,10 @@ void Children::TrackMove() {
 	move = restrainMoveVec[0];
 
 	restrainMoveVec.erase(restrainMoveVec.begin());
+}
+
+void Children::ScrollMove() {
+	XMFLOAT2 scroll = ScrollManager::GetInstance()->GetMove();
+	pos.x -= scroll.x;
+	pos.y -= scroll.y;
 }

@@ -52,6 +52,7 @@ private:
 	/// </summary>
 	void TrackMove();
 
+	void ScrollMove();
 private:
 	Player* player_ = nullptr;
 	//S‘©ó‘ÔŠm”F
