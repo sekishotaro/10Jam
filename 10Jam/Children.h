@@ -2,6 +2,7 @@
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include "Player.h"
+#include <vector>
 #pragma once
 
 class Children
@@ -31,21 +32,29 @@ private:
 	/// ©‹@‚Æ“–‚½‚è”»’è
 	/// </summary>
 	/// <param name="PlayerPos"></param>
-	void Collision(Player& player);
+	bool Collision(Player& player);
 
 
+	void TracColProcess(Player& player);
+	
+	/// <summary>
+	/// ’ÇÕˆÚ“®
+	/// </summary>
+	void TrackMove(Player& player);
 
 private:
 	//S‘©ó‘ÔŠm”F
 	bool freeFlag = true;
 	//ˆÊ’u
 	XMFLOAT2 pos = { 600.0f, 410.0f };
+	XMFLOAT2 move = { 0.0f, 0.0f };
 	//”¼Œa
 	const float radius = 8.0f;
 	//S‘©”Ô†
 	int restraintTh = 0;
 
 	XMFLOAT2 moveVec[10] = {};
+	std::vector<XMFLOAT2> restrainMoveVec;
 };
 
 

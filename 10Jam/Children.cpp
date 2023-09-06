@@ -13,12 +13,21 @@ Children::~Children()
 
 void Children::Update(Player& player)
 {
+	move = {};
+
+	//“–‚½‚è”»’è
 	Collision(player);
 
 	if (freeFlag == true) return;
 
+	//ˆÚ“®
+
+	TrackMove(player);
 
 
+
+	pos.x += move.x;
+	pos.y += move.y;
 }
 
 void Children::Draw()
@@ -44,9 +53,23 @@ void Children::Collision(Player& player)
 	if (c <= r)
 	{
 		freeFlag = false;
+		//‚¸‚ê–hŽ~‚Ì‚½‚ß‚¢‚Á‚½‚ñŽ©‹@’†‰›À•W‚Éƒ[ƒv
+		pos = player.GetPos();
 		player.HitChildren();
-
+		
 		restraintTh = player.GetChildrenNum();
 	}
+
+}
+
+void Children::TrackMove(Player& player)
+{
+	restrainMoveVec.push_back(player.GetMoveVec());
+
+	if (restrainMoveVec.size() < (13 * restraintTh)) return;
+
+	move = restrainMoveVec[0];
+
+	restrainMoveVec.erase(restrainMoveVec.begin());
 
 }

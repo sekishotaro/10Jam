@@ -54,7 +54,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	DrawCircle((int)pos.x, (int)pos.y, 10.0f, GetColor(0.0f, 0.0f, 255.0f), true);
+	DrawCircle((int)pos.x, (int)pos.y, radius, GetColor(110.0f, 239.0f, 255.0f), true);
 }
 
 void Player::HitChildren()

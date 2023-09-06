@@ -47,13 +47,11 @@ private:
 	char keys[256] = { 0 };
 	// 1ループ(フレーム)前のキーボード情報
 	char oldkeys[256] = { 0 };
-	//半径
-	const float radius = 10.0f;
+	
 	int childrenNum = 0;
-
-
 	//入力
 	float rota = 0.0f;
-
-
+public:
+	//半径
+	const float radius = 20.0f;
 };
