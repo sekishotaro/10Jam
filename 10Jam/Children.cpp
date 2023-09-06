@@ -1,6 +1,7 @@
 #include "Children.h"
 #include "math.h"
 #include <random>
+#include <ScoreManager.h>
 
 Children::Children(XMFLOAT2 pos, Player* player) {
 	MountMove();
@@ -83,6 +84,7 @@ void Children::TracColProcess() {
 
 	if (Collision() == true) {
 		freeFlag = false;
+		ScoreManager::GetInstance()->AddScore(10);
 		//‚¸‚ê–hŽ~‚Ì‚½‚ß‚¢‚Á‚½‚ñŽ©‹@’†‰›À•W‚Éƒ[ƒv
 		pos = player_->GetPos();
 		player_->HitChildren();
