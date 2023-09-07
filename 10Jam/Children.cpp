@@ -195,6 +195,7 @@ bool Children::Spawn() {
 		isSpawn = false;
 		radius = 8.0f;
 	}
+	Particle::Ins()->Ripple(pos, 60u, 64.f, 1ui8, Particle::ColorRGB{ 0xff, 0x22, 0x22 }, 16ui8);
 	return true;
 }
 

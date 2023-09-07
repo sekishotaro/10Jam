@@ -143,7 +143,7 @@ void Particle::Update()
 
 void Particle::Draw()
 {
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, 64);
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
 	for (auto& i : grains)
 	{
 		i.Draw();
