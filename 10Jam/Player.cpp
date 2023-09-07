@@ -99,7 +99,7 @@ void Player::Draw() {
 void Player::HitChildren() {
 	AddCoin();
 	childrenNum++;
-	Particle::Ins()->Fireworks(pos, 60u, radius * 3.f, 8ui8, Particle::ColorRGB{255, 255, 34});
+	Particle::Ins()->Fireworks(pos, 60u, radius * 3.f, 8ui8, Particle::ColorRGB{ 255, 255, 34 }, true, 8ui8);
 }
 
 void Player::Childrendelete()
