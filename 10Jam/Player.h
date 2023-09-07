@@ -1,6 +1,8 @@
 #include <Windows.h>
 #include <d3d12.h>
 #include <DirectXMath.h>
+#include "Score/ScoreManager.h"
+
 #pragma once
 
 class Player
@@ -45,6 +47,7 @@ private:
 	void Move();
 	void CoinDash();
 	void Dash();
+	void RotaUpdate();
 private:
 
 	XMFLOAT2 pos = { 600.0f, 410.0f };
@@ -57,6 +60,7 @@ private:
 	int childrenNum = 0;
 	//“ü—Í
 	float rota = 0.0f;
+	float rotaVal = 3.0f;
 
 	bool isBoost = false;
 	float boostFrame = 0.0f;

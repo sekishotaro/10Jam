@@ -19,6 +19,9 @@ public:
 	/// スコアリセット
 	/// </summary>
 	void ResetScore() { score = 0; }
+
+	static int GetScore() { return score; }
+
 private:
 	static int score;
 private:

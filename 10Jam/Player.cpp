@@ -79,11 +79,14 @@ void Player::Childrendelete()
 
 void Player::Move()
 {
+
+	RotaUpdate();
+
 	if (keys[KEY_INPUT_D] == 1)
 	{
-		rota -= 2.0f;
+		rota -= rotaVal;
 	} else if (keys[KEY_INPUT_A] == 1) {
-		rota += 2.0f;
+		rota += rotaVal;
 	}
 
 	static XMFLOAT2 vec = { 0.0f, 3.0f };
@@ -128,6 +131,31 @@ void Player::Dash() {
 	if (boostFrame== kBoostFrameMax) {
 		boostFrame = 0.0f;
 		isBoost = false;
+	}
+}
+
+void Player::RotaUpdate()
+{
+	
+	if (ScoreManager::GetScore() >= 2000)
+	{
+		rotaVal = 0.5f;
+	}
+	else if (ScoreManager::GetScore() >= 2000)
+	{
+		rotaVal = 1.0f;
+	}
+	else if (ScoreManager::GetScore() >= 1500)
+	{
+		rotaVal = 1.5f;
+	}
+	else if (ScoreManager::GetScore() >= 1000)
+	{
+		rotaVal = 2.0f;
+	}
+	else if (ScoreManager::GetScore() >= 500)
+	{
+		rotaVal = 2.5f;
 	}
 }
 

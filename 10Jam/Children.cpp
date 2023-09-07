@@ -28,7 +28,15 @@ void Children::Update() {
 }
 
 void Children::Draw() {
-	DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 255, 255), true);
+
+	if (freeFlag == true)
+	{
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 255, 255), true);
+	}
+	else
+	{
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(110 + restraintTh, 239, 255), true);
+	}
 }
 
 bool Children::Collision() {
@@ -128,7 +136,10 @@ void Children::TrackChildrenColProcess()
 	if (Collision() == true)
 	{
 		//グローバル変数に保管　保管されていた数より多い場合上書き
-		trackChilHitNum = restraintTh;
+		if (trackChilHitNum <= restraintTh)
+		{
+			trackChilHitNum = restraintTh;
+		}
 	}
 }
 
