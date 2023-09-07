@@ -11,6 +11,7 @@ PlayScene::~PlayScene() {
 
 void PlayScene::Initialize() {
 	ScoreManager::GetInstance()->ResetScore();
+	backScreen = std::make_unique<BackScreen>();
 	player = std::make_unique<Player>();
 	cannon_ = std::make_unique<Cannon>();
 	cannon_->SetPlayer(player.get());
@@ -23,7 +24,7 @@ void PlayScene::Update() {
 	player->Update();
 	cannon_->Update();
 	accel->Update();
-
+	backScreen->Update();
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::TITLE);
 	}
@@ -32,6 +33,7 @@ void PlayScene::Update() {
 }
 
 void PlayScene::Draw() {
+	backScreen->Draw();
 	accel->Draw();
 	cannon_->Draw();
 	player->Draw();

@@ -49,8 +49,8 @@ private:
 	void Dash();
 	void RotaUpdate();
 private:
-
 	XMFLOAT2 pos = { 600.0f, 410.0f };
+	XMFLOAT2 moveAdd = {};
 	XMFLOAT2 moveVec = { 0.0f, 0.0f };
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
@@ -73,6 +73,7 @@ private:
 	float kCoinFrameMax = 30.0f;
 
 public:
+	bool isStop = false;
 	//半径
 	const float radius = 20.0f;
 };
