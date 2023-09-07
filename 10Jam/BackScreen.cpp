@@ -19,10 +19,10 @@ void BackScreen::Update() {
 
 void BackScreen::Draw() {
 	for (int i = 0; i < 60;i++) {
-		DrawLine(0,(50*(i-30))+ (int)sub.y, 1280, (50 * (i - 30)) + (int)sub.y,GetColor(200,200,200),1);
+		DrawLine(0,(50*(i-30))- (int)sub.y, 1280, (50 * (i - 30)) - (int)sub.y,GetColor(200,200,200),1);
 	}
 	for (int i = 0; i < 80;i++) {
-		DrawLine((50 * (i - 30)) + (int)sub.x, 0, (50 * (i - 30)) + (int)sub.x, 720, GetColor(200, 200, 200), 1);
+		DrawLine((50 * (i - 30)) - (int)sub.x, 0, (50 * (i - 30)) - (int)sub.x, 720, GetColor(200, 200, 200), 1);
 	}
 
 }

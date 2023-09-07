@@ -2,6 +2,7 @@
 #include "Helper.h"
 #include <DirectXMath.h>
 #include <random>
+#include <ScoreManager.h>
 Cannon::Cannon() {
 
 
@@ -55,7 +56,8 @@ void Cannon::Update() {
 	for (std::unique_ptr<Children>& children : Childrens) {
 		children->TrackChilOrganize();
 	}
-
+	const int score = 100;
+	ScoreManager::GetInstance()->AddScore(Children::GetHitNum()* score);
 	Children::TrackChilHitNumReset();
 }
 
