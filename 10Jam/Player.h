@@ -36,10 +36,12 @@ public:
 
 	void HitChildren();
 
+	void AddCoin() {getCoin = true; coinFrame= 0.0f;}
 	void SetBoost(const bool isBoost) { this->isBoost = isBoost; }
 	bool GetBoost() { return isBoost; }
 private:
 	void Move();
+	void CoinDash();
 	void Dash();
 private:
 
@@ -58,6 +60,12 @@ private:
 	float boostFrame = 0.0f;
 	float kBoostFrameMax = 120.0f;
 	float accel = 1.0f;
+
+	bool getCoin = false;
+	float coinBoost = 1.0f;
+	float coinFrame = 0.0f;
+	float kCoinFrameMax = 30.0f;
+
 public:
 	//”¼Œa
 	const float radius = 20.0f;

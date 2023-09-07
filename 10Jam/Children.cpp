@@ -92,7 +92,6 @@ void Children::TracColProcess() {
 		//‚¸‚ê–h~‚Ì‚½‚ß‚¢‚Á‚½‚ñ©‹@’†‰›À•W‚Éƒ[ƒv
 		pos = player_->GetPos();
 		player_->HitChildren();
-
 		restraintTh = player_->GetChildrenNum();
 	}
 }
