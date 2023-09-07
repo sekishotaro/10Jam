@@ -36,9 +36,11 @@ public:
 
 	void HitChildren();
 
+	void SetBoost(const bool isBoost) { this->isBoost = isBoost; }
+	bool GetBoost() { return isBoost; }
 private:
 	void Move();
-
+	void Dash();
 private:
 
 	XMFLOAT2 pos = { 600.0f, 410.0f };
@@ -51,6 +53,11 @@ private:
 	int childrenNum = 0;
 	//“ü—Í
 	float rota = 0.0f;
+
+	bool isBoost = false;
+	float boostFrame = 0.0f;
+	float kBoostFrameMax = 120.0f;
+	float accel = 1.0f;
 public:
 	//”¼Œa
 	const float radius = 20.0f;
