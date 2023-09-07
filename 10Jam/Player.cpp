@@ -45,6 +45,11 @@ void Player::HitChildren()
 	childrenNum++;
 }
 
+void Player::Childrendelete()
+{
+	childrenNum--;
+}
+
 void Player::Move()
 {
 	if (keys[KEY_INPUT_D] == true)

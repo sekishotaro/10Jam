@@ -124,6 +124,7 @@ void Children::DleteChildrenCheck()
 	if (restraintTh <= trackChilHitNum)
 	{
 		deleteFlag = true;
+		player_->Childrendelete();
 	}
 	else
 	{
@@ -133,5 +134,9 @@ void Children::DleteChildrenCheck()
 
 void Children::TrackChilOrganize()
 {
-	restraintTh -= (trackChilHitNum + 1);
+	restraintTh -= (trackChilHitNum);
+	pos = player_->GetPos();
+	tailFlag = false;
+	restrainMoveVec.clear();
+	restrainMoveVec.push_back(player_->GetMoveVec());
 }

@@ -36,6 +36,8 @@ public:
 
 	void HitChildren();
 
+	void Childrendelete();
+
 private:
 	void Move();
 
