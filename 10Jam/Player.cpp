@@ -25,6 +25,7 @@ void Player::Update() {
 	}
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
+	CoinDash();
 	Dash();
 	Move();
 	pos.x += moveVec.x;
@@ -56,9 +57,17 @@ void Player::Update() {
 
 void Player::Draw() {
 	DrawCircleAA(pos.x,pos.y, radius,64, GetColor(110, 239, 255), true);
+	if (isBoost) {
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(110, 110, 255), true);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(10, 125, 10), false,5.0f);
+	}
+	if (getCoin) {
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 255, 0), true);
+	}
 }
 
 void Player::HitChildren() {
+	AddCoin();
 	childrenNum++;
 	Particle::Ins()->Fireworks(pos, 60u, radius * 3.f, 8ui8, Particle::ColorRGB{255, 255, 34});
 }
@@ -84,7 +93,21 @@ void Player::Move() {
 	moveVec.y = vec.x * sinf(sita) - vec.y * cosf(sita);
 	moveVec.x *=accel;
 	moveVec.y *=accel;
+	moveVec.x *= coinBoost;
+	moveVec.y *= coinBoost;
 
+}
+
+void Player::CoinDash() {
+	if (!getCoin) { return; }
+	coinFrame += 1.0f;
+	coinBoost = 1.1f;
+	Clamp(coinFrame, 0.0f, kCoinFrameMax);
+	if (coinFrame == kCoinFrameMax) {
+		coinBoost = 1.0f;
+		coinFrame = 0.0f;
+		getCoin = false;
+	}
 }
 
 void Player::Dash() {
