@@ -12,6 +12,17 @@ Cannon::~Cannon() {
 
 void Cannon::Initialize() {
 	assert(player_);
+	//ç≈èâÇÃÉXÉ|Å[Éìêî
+	const int firstSpawnNum = 5;
+	std::unique_ptr<Children> child[firstSpawnNum];
+	child[0]= std::make_unique<Children>(DirectX:: XMFLOAT2{150.0f, 255.0f}, player_);
+	child[1] = std::make_unique<Children>(DirectX::XMFLOAT2{300.0f, 255.0f}, player_);
+	child[2] = std::make_unique<Children>(DirectX::XMFLOAT2{450.0f, 255.0f}, player_);
+	child[3] = std::make_unique<Children>(DirectX::XMFLOAT2{600.0f, 255.0f}, player_);
+	child[4] = std::make_unique<Children>(DirectX::XMFLOAT2{750.0f, 255.0f}, player_);
+	for (int i = 0; i < firstSpawnNum;i++) {
+		Childrens.push_back(std::move(child[i]));
+	}
 }
 
 void Cannon::Update() {
