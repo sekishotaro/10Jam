@@ -5,6 +5,7 @@
 #include <ScrollManager.h>
 #include <Helper.h>
 #include <Easing.h>
+#include "Particle.h"
 
 int Children::trackChilHitNum = 0;
 
@@ -25,6 +26,9 @@ void Children::Update() {
 	MoveFree();
 	ScrollMove();
 	TrackChildrenColProcess();
+
+	// 波紋エフェクト更新
+	UpdateRippleEffect();
 }
 
 void Children::Draw() {
@@ -104,7 +108,7 @@ void Children::TrackMove()
 	//自機の移動量保存
 	restrainMoveVec.push_back(player_->GetMoveVec());
 	//最後尾になるように待たせる
-	if (restrainMoveVec.size() < (trackDis * restraintTh)) return;
+	if (restrainMoveVec.size() < size_t(trackDis * restraintTh)) return;
 	//最後尾まで行ったか確認フラグ
 	tailFlag = true;
 	//移動量接地
@@ -184,12 +188,34 @@ bool Children::Spawn() {
 	if (!isSpawn) { return false; }
 	ScrollMove();
 	spawnFrame += 1.0f;
-	Clamp(spawnFrame,0.0f, kSpawnFrameMax);
+	Clamp(spawnFrame, 0.0f, kSpawnFrameMax);
 	float sizeFrame = spawnFrame / kSpawnFrameMax;
-	radius = Ease(Out,Elastic, sizeFrame,0,8.0f);
+	radius = Ease(Out, Elastic, sizeFrame, 0, 8.0f);
 	if (spawnFrame == kSpawnFrameMax) {
 		isSpawn = false;
 		radius = 8.0f;
 	}
+	Particle::Ins()->Ripple(pos, 60u, 64.f, 1ui8, Particle::ColorRGB{ 0xff, 0x22, 0x22 }, 16ui8);
 	return true;
+}
+
+void Children::UpdateRippleEffect()
+{
+	// 3フレームに1回波紋エフェクトを出す
+	constexpr uint8_t particleInterval = 3u;
+	particleFrame = ++particleFrame % particleInterval;
+	if (0 == particleFrame)
+	{
+		// 描画する頂点数
+		constexpr uint8_t vertexCount = 4ui8;
+		// 発生してから何フレームで消えるか
+		constexpr unsigned life = 16u;
+		// 終了時点での半径
+		constexpr float endRadius = 64.f;
+		// 波紋の色
+		constexpr auto rippleColor = Particle::ColorRGB{ 0x22, 0xff, 0xff };
+
+		// 波紋エフェクト開始
+		Particle::Ins()->Ripple(pos, life, endRadius, 1ui8, rippleColor, vertexCount);
+	}
 }

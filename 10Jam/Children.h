@@ -79,6 +79,9 @@ private:
 	void ScrollMove();
 
 	bool Spawn();
+
+	/// @brief 波紋エフェクト更新
+	void UpdateRippleEffect();
 private:
 	Player* player_ = nullptr;
 	
@@ -106,6 +109,8 @@ private:
 
 	//追跡最後尾確認フラグ
 	bool tailFlag = false;
+
+	uint8_t particleFrame = 0ui8;
 
 	//追跡子供と自機の当たった番号
 	static int trackChilHitNum;
