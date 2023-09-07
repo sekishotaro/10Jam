@@ -5,6 +5,7 @@
 #include <memory>
 #include "Cannon.h"
 #include <AccelSpot.h>
+#include <BackScreen.h>
 
 class PlayScene : public BaseScene {
 public:
@@ -23,6 +24,7 @@ public:
 	/// </summary>
 	void Draw() override;
 private:
+	std::unique_ptr<BackScreen> backScreen = nullptr;
 	std::unique_ptr<Player> player = nullptr;
 	std::unique_ptr<Cannon> cannon_ = nullptr;
 	std::unique_ptr<AccelSpot> accel = nullptr;
