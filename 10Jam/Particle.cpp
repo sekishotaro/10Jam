@@ -65,7 +65,8 @@ Particle::Grain::Grain(unsigned life,
 					   Particle::ColorRGB startColor,
 					   Particle::ColorRGB endColor,
 					   bool fillFlag,
-					   uint8_t posnum) :
+					   uint8_t posnum,
+					   float thickness) :
 	lifeMax(life), life(life),
 	startPos(startPos), pos(startPos),
 	endPos(endPos),
@@ -74,7 +75,8 @@ Particle::Grain::Grain(unsigned life,
 	startColor(startColor),
 	endColor(endColor),
 	fillFlag(fillFlag),
-	posnum(posnum)
+	posnum(posnum),
+	thickness(thickness)
 {
 }
 
@@ -96,7 +98,7 @@ void Particle::Grain::Update()
 
 int Particle::Grain::Draw() const
 {
-	return DxLib::DrawCircleAA(pos.x, pos.y, r, int(posnum), color, fillFlag ? TRUE : FALSE);
+	return DxLib::DrawCircleAA(pos.x, pos.y, r, int(posnum), color, fillFlag ? TRUE : FALSE, thickness);
 }
 
 void Particle::AddGrain(unsigned life,
@@ -107,9 +109,10 @@ void Particle::AddGrain(unsigned life,
 						ColorRGB startColor,
 						ColorRGB endColor,
 						bool fillFlag,
-						uint8_t posnum)
+						uint8_t posnum,
+						float thickness)
 {
-	grains.emplace_front(life, startPos, endPos, startR, endR, startColor, endColor, fillFlag, posnum);
+	grains.emplace_front(life, startPos, endPos, startR, endR, startColor, endColor, fillFlag, posnum, thickness);
 }
 
 void Particle::Update()
@@ -125,7 +128,7 @@ void Particle::Update()
 			// 寿命が来ていたら、粒を出して遅延情報から削除
 			if (d.nowFrame >= d.delayFrame)
 			{
-				AddGrain(d.life, d.startPos, d.endPos, d.startR, d.endR, d.startColor, d.endColor, d.fillFlag, d.posnum);
+				AddGrain(d.life, d.startPos, d.endPos, d.startR, d.endR, d.startColor, d.endColor, d.fillFlag, d.posnum, d.thickness);
 				return true;
 			}
 			// 寿命がまだなら更新
@@ -170,7 +173,7 @@ void Particle::Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, 
 	}
 }
 
-void Particle::Ripple(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color, uint8_t posnum)
+void Particle::Ripple(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color, uint8_t posnum, float startRange, float thickness)
 {
 	for (uint8_t i = 0; i < count; ++i)
 	{
@@ -184,11 +187,12 @@ void Particle::Ripple(const XMFLOAT2& centerPos, unsigned life, float range, uin
 		n.startPos = centerPos;
 		n.endPos = centerPos;
 		n.life = life;
-		n.startR = 0.f;
+		n.startR = startRange;
 		n.endR = range;
 		n.startColor = color;
 		n.endColor = ColorRGB{ 0, 0, 0 };
 		n.fillFlag = false;
 		n.posnum = posnum;
+		n.thickness = thickness;
 	}
 }
