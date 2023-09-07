@@ -121,6 +121,11 @@ void Children::TrackChilHitNumReset()
 
 void Children::DleteChildrenCheck()
 {
+	if (freeFlag == true)
+	{
+		deleteFlag = false;
+		return;
+	}
 	if (restraintTh <= trackChilHitNum)
 	{
 		deleteFlag = true;
@@ -134,6 +139,8 @@ void Children::DleteChildrenCheck()
 
 void Children::TrackChilOrganize()
 {
+	if (freeFlag == true) return;
+
 	restraintTh -= (trackChilHitNum);
 	pos = player_->GetPos();
 	tailFlag = false;
