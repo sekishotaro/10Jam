@@ -2,6 +2,7 @@
 
 #include <DirectXMath.h>
 #include <forward_list>
+#include <memory>
 
 class Particle
 {
@@ -50,6 +51,7 @@ private:
 		float r = 1.f;
 		unsigned lifeMax = 1u;
 		unsigned color;
+		bool fillFlag;
 
 	public:
 		Grain(unsigned life,
@@ -58,7 +60,8 @@ private:
 			  float startR,
 			  float endR,
 			  ColorRGB startColor,
-			  ColorRGB endColor);
+			  ColorRGB endColor,
+			  bool fillFlag = true);
 
 		inline unsigned GetLife() const { return life; }
 
@@ -68,6 +71,22 @@ private:
 
 	std::forward_list<Grain> grains{};
 
+	struct DelayGrainData
+	{
+		uint16_t delayFrame = 0ui16;
+		uint16_t nowFrame = 0ui16;
+
+		unsigned life;
+		XMFLOAT2 startPos;
+		XMFLOAT2 endPos;
+		float startR;
+		float endR;
+		ColorRGB startColor;
+		ColorRGB endColor;
+		bool fillFlag = true;
+	};
+	std::forward_list<DelayGrainData> delayGrainData{};
+
 public:
 	/// @brief 粒を追加
 	void AddGrain(unsigned life,
@@ -76,7 +95,8 @@ public:
 				  float startR,
 				  float endR,
 				  ColorRGB startColor,
-				  ColorRGB endColor);
+				  ColorRGB endColor,
+				  bool fillFlag = true);
 
 	/// @brief 更新処理。各シーンで毎フレーム呼ぶ。
 	void Update();
@@ -85,7 +105,11 @@ public:
 	void Draw();
 
 	/// @brief 放射状に人がるパーティクルを開始
-	void Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, ColorRGB color);
+	void Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, ColorRGB color, bool fillFlag = true);
+
+	/// @brief 波紋を開始
+	/// @param count 時間内に生成する個数
+	void Ripple(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, ColorRGB color);
 
 	/// @brief 粒が一つもないかどうか
 	inline bool IsEmpty() const

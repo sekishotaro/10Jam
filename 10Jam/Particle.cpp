@@ -43,14 +43,16 @@ Particle::Grain::Grain(unsigned life,
 					   float startR,
 					   float endR,
 					   Particle::ColorRGB startColor,
-					   Particle::ColorRGB endColor) :
+					   Particle::ColorRGB endColor,
+					   bool fillFlag) :
 	lifeMax(life), life(life),
 	startPos(startPos), pos(startPos),
 	endPos(endPos),
 	startR(startR), r(startR),
 	endR(endR),
 	startColor(startColor),
-	endColor(endColor)
+	endColor(endColor),
+	fillFlag(fillFlag)
 {
 }
 
@@ -68,7 +70,7 @@ void Particle::Grain::Update()
 
 int Particle::Grain::Draw() const
 {
-	return DxLib::DrawCircleAA(pos.x, pos.y, r, 32, color);
+	return DxLib::DrawCircleAA(pos.x, pos.y, r, 64, color, fillFlag ? TRUE : FALSE);
 }
 
 void Particle::AddGrain(unsigned life,
@@ -77,13 +79,30 @@ void Particle::AddGrain(unsigned life,
 						float startR,
 						float endR,
 						ColorRGB startColor,
-						ColorRGB endColor)
+						ColorRGB endColor,
+						bool fillFlag)
 {
-	grains.emplace_front(life, startPos, endPos, startR, endR, startColor, endColor);
+	grains.emplace_front(life, startPos, endPos, startR, endR, startColor, endColor, fillFlag);
 }
 
 void Particle::Update()
 {
+	// 遅延生成情報更新
+	delayGrainData.remove_if(
+		[&](DelayGrainData& d)
+		{
+			// 寿命が来ていたら、粒を出して遅延情報から削除
+			if (d.nowFrame >= d.delayFrame)
+			{
+				AddGrain(d.life, d.startPos, d.endPos, d.startR, d.endR, d.startColor, d.endColor, d.fillFlag);
+				return true;
+			}
+			// 寿命がまだなら更新
+			++d.nowFrame;
+			return false;
+		});
+
+	// 寿命が尽きた粒は消してから更新
 	grains.remove_if([](const Grain& g) { return 0u >= g.GetLife(); });
 	for (auto& i : grains)
 	{
@@ -101,7 +120,7 @@ void Particle::Draw()
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
-void Particle::Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color)
+void Particle::Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color, bool fillFlag)
 {
 	XMFLOAT2 endPos{};
 	float angleRad{};
@@ -116,6 +135,28 @@ void Particle::Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, 
 		endPos.x += centerPos.x;
 		endPos.y += centerPos.y;
 
-		AddGrain(life, centerPos, endPos, 16.f, 0.f, color, color);
+		AddGrain(life, centerPos, endPos, 16.f, 0.f, color, color, fillFlag);
+	}
+}
+
+void Particle::Ripple(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color)
+{
+	for (uint8_t i = 0; i < count; ++i)
+	{
+		const float rate = float(i) / float(count);
+
+		delayGrainData.emplace_front();
+		auto& n = delayGrainData.front();
+		n.nowFrame = 0ui16;
+		n.delayFrame = uint16_t(float(life) * rate);
+
+		n.startPos = centerPos;
+		n.endPos = centerPos;
+		n.life = life;
+		n.startR = 0.f;
+		n.endR = range;
+		n.startColor = color;
+		n.endColor = ColorRGB{ 0, 0, 0 };
+		n.fillFlag = false;
 	}
 }
