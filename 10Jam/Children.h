@@ -26,6 +26,22 @@ public:
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// 削除確認フラグ
+	/// </summary>
+	static bool DleteCheck();
+	/// <summary>
+	/// 追跡子供の番号リセット
+	/// </summary>
+	static void TrackChilHitNumReset();
+
+	/// <summary>
+	/// 自分が消される子供かを確認する
+	/// </summary>
+	/// <returns></returns>
+	void DleteChildrenCheck();
+
+	void TrackChilOrganize();
 
 private:
 	/// <summary>
@@ -48,17 +64,24 @@ private:
 	void TracColProcess();
 	
 	/// <summary>
+	/// 自由な子との当たり判定処理
+	/// </summary>
+	void FreeChildrenColProcess();
+	/// <summary>
 	/// 追跡移動
 	/// </summary>
 	void TrackMove();
+	/// <summary>
+	/// 追跡している子との当たり判定処理
+	/// </summary>
+	void TrackChildrenColProcess();
 
 	void ScrollMove();
 
 	bool Spawn();
 private:
 	Player* player_ = nullptr;
-	//拘束状態確認
-	bool freeFlag = true;
+	
 	//動き関連
 	bool isMove = false;
 	float vel = 0.0f;
@@ -74,9 +97,23 @@ private:
 	float radius = 8.0f;
 	//拘束番号
 	int restraintTh = 0;
-
+	//追跡移動間隔
+	int trackDis = 15;
+	//当たり判定を受け付けない最低拘束番号
+	int unColRestrainTh = 5;
 	XMFLOAT2 moveVec[10] = {};
 	std::vector<XMFLOAT2> restrainMoveVec;
+
+	//追跡最後尾確認フラグ
+	bool tailFlag = false;
+
+	//追跡子供と自機の当たった番号
+	static int trackChilHitNum;
+public:
+	//削除確認フラグ
+	bool deleteFlag = false;
+	//拘束状態確認
+	bool freeFlag = true;
 };
 
 

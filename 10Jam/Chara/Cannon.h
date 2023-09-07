@@ -27,5 +27,5 @@ private:
 	std::list<std::unique_ptr<Children>> Childrens = {};
 	Player* player_ = nullptr;
 	float coolTimer_ = 0.0f;
-	float kCoolTimer = 180.0f;
+	float kCoolTimer = 60.0f;
 };

@@ -38,6 +38,8 @@ public:
 
 	void SetBoost(const bool isBoost) { this->isBoost = isBoost; }
 	bool GetBoost() { return isBoost; }
+	void Childrendelete();
+
 private:
 	void Move();
 	void Dash();

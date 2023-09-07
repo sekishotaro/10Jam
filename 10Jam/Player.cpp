@@ -63,8 +63,15 @@ void Player::HitChildren() {
 	Particle::Ins()->Fireworks(pos, 60u, radius * 3.f, 8ui8, Particle::ColorRGB{255, 255, 34});
 }
 
-void Player::Move() {
-	if (keys[KEY_INPUT_D] == 1) {
+void Player::Childrendelete()
+{
+	childrenNum--;
+}
+
+void Player::Move()
+{
+	if (keys[KEY_INPUT_D] == true)
+	{
 		rota -= 2.0f;
 	} else if (keys[KEY_INPUT_A] == 1) {
 		rota += 2.0f;
