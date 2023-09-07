@@ -79,6 +79,9 @@ private:
 	void ScrollMove();
 
 	bool Spawn();
+
+	/// @brief 波紋エフェクト更新
+	void UpdateRippleEffect();
 private:
 	Player* player_ = nullptr;
 	

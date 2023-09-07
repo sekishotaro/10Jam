@@ -27,17 +27,8 @@ void Children::Update() {
 	ScrollMove();
 	TrackChildrenColProcess();
 
-	// 3フレームに1回波紋エフェクトを出す
-	constexpr uint8_t particleInterval = 3u;
-	particleFrame = ++particleFrame % particleInterval;
-	if (0 == particleFrame)
-	{
-		constexpr uint8_t vertexCount = 4ui8;
-		constexpr unsigned life = 16u;
-		constexpr float endRadius = 64.f;
-		constexpr auto rippleColor = Particle::ColorRGB{ 0x22, 0xff, 0xff };
-		Particle::Ins()->Ripple(pos, life, endRadius, 1ui8, rippleColor, vertexCount);
-	}
+	// 波紋エフェクト更新
+	UpdateRippleEffect();
 }
 
 void Children::Draw() {
@@ -51,6 +42,7 @@ bool Children::Collision() {
 	float b = pos.y - player_->GetPos().y;
 	float c = sqrtf(a * a + b * b);
 
+	return c <= r;
 	if (c <= r) {
 		return true;
 	}
@@ -205,4 +197,19 @@ bool Children::Spawn() {
 		radius = 8.0f;
 	}
 	return true;
+}
+
+void Children::UpdateRippleEffect()
+{
+	// 3フレームに1回波紋エフェクトを出す
+	constexpr uint8_t particleInterval = 3u;
+	particleFrame = ++particleFrame % particleInterval;
+	if (0 == particleFrame)
+	{
+		constexpr uint8_t vertexCount = 4ui8;
+		constexpr unsigned life = 16u;
+		constexpr float endRadius = 64.f;
+		constexpr auto rippleColor = Particle::ColorRGB{ 0x22, 0xff, 0xff };
+		Particle::Ins()->Ripple(pos, life, endRadius, 1ui8, rippleColor, vertexCount);
+	}
 }
