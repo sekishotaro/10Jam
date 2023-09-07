@@ -49,22 +49,14 @@ void Player::Update() {
 	pos.y += moveVec.y;
 	Clamp(pos.x, 140.f, 1140.f);
 	Clamp(pos.y, 80.f, 640.f);
-	if (pos.x >= 1140.0f) {
-		ScrollManager::GetInstance()->SetMove({ moveVec.x ,moveVec.y });
-	} else if (pos.x <= 140.0f) {
-		ScrollManager::GetInstance()->SetMove({ moveVec.x ,moveVec.y });
-	} else {
+
+	if ((pos.x > 140.0f && pos.x < 1140.0f) && (pos.y > 80.0f && pos.y < 640.0f)) {
 		ScrollManager::GetInstance()->SetMove({ 0 ,0 });
-	}
-	if (pos.y >= 640.0f) {
+
+	} else {
 		ScrollManager::GetInstance()->SetMove({ moveVec.x ,moveVec.y });
 
-	} else if (pos.y <= 80.0f) {
-		ScrollManager::GetInstance()->SetMove({ moveVec.x ,moveVec.y });
-	} else {
-		ScrollManager::GetInstance()->SetMove({ 0 ,0 });
 	}
-
 }
 
 void Player::Draw() {
