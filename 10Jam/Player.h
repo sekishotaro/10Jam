@@ -46,7 +46,6 @@ private:
 	void CoinDash();
 	void Dash();
 private:
-
 	XMFLOAT2 pos = { 600.0f, 410.0f };
 	XMFLOAT2 moveAdd = {};
 	XMFLOAT2 moveVec = { 0.0f, 0.0f };
@@ -70,6 +69,7 @@ private:
 	float kCoinFrameMax = 30.0f;
 
 public:
+	bool isStop = false;
 	//”¼Œa
 	const float radius = 20.0f;
 };
