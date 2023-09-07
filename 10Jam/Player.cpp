@@ -33,13 +33,26 @@ void Player::Update() {
 	Clamp(pos.x, 140.f, 1140.f);
 	Clamp(pos.y, 80.f, 640.f);
 
-	if ((pos.x > 140.0f && pos.x < 1140.0f) && (pos.y > 80.0f && pos.y < 640.0f)) {
-		ScrollManager::GetInstance()->SetMove({ 0 ,0 });
+	XMFLOAT2 a = {};
+
+	if ((pos.x > 140.0f && pos.x < 1140.0f)) {
+		a.x = 0;
 
 	} else {
-		ScrollManager::GetInstance()->SetMove({ moveVec.x ,moveVec.y });
+		a.x = moveVec.x;
 
 	}
+
+	if ((pos.y > 80.0f && pos.y < 640.0f)) {
+		a.y = 0;
+
+	}
+	else {
+		a.y = moveVec.y;
+
+	}
+
+	ScrollManager::GetInstance()->SetMove(a);
 }
 
 void Player::Draw() {
