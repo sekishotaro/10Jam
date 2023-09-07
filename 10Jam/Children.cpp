@@ -96,7 +96,9 @@ void Children::TracColProcess() {
 }
 
 void Children::TrackMove() {
-	restrainMoveVec.push_back(player_->GetMoveVec());
+	XMFLOAT2 scroll = ScrollManager::GetInstance()->GetMove();
+	XMFLOAT2 moveVec = { player_->GetMoveVec().x + scroll.x,player_->GetMoveVec().y + scroll.y };
+	restrainMoveVec.push_back(moveVec);
 
 	if (restrainMoveVec.size() < (13 * restraintTh)) return;
 

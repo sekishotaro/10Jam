@@ -31,7 +31,7 @@ public:
 	void Draw();
 
 	XMFLOAT2& GetPos() { return pos; }
-	XMFLOAT2& GetMoveVec() { return moveVec; }
+	XMFLOAT2 GetMoveVec() { return moveVec; }
 	int GetChildrenNum() { return childrenNum; }
 
 	void HitChildren();
