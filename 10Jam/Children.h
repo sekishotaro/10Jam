@@ -30,6 +30,10 @@ public:
 	/// 削除確認フラグ
 	/// </summary>
 	static bool DleteCheck();
+	/// <summary>
+	/// 追跡子供の番号リセット
+	/// </summary>
+	static void TrackChilHitNumReset();
 
 	/// <summary>
 	/// 自分が消される子供かを確認する
@@ -37,6 +41,7 @@ public:
 	/// <returns></returns>
 	void DleteChildrenCheck();
 
+	void TrackChilOrganize();
 
 private:
 	/// <summary>
@@ -67,8 +72,7 @@ private:
 
 private:
 	Player* player_ = nullptr;
-	//拘束状態確認
-	bool freeFlag = true;
+	
 	//動き関連
 	bool isMove = false;
 	
@@ -92,9 +96,11 @@ private:
 
 	//追跡子供と自機の当たった番号
 	static int trackChilHitNum;
-
+public:
 	//削除確認フラグ
 	bool deleteFlag = false;
+	//拘束状態確認
+	bool freeFlag = true;
 };
 
 

@@ -19,7 +19,33 @@ void Cannon::Update() {
 	for (std::unique_ptr<Children>& children : Childrens) {
 		children->Update();
 	}
+	
+	//削除するか確認
+	if (Children::DleteCheck() == false) return;
+	//削除する子供の判別
+	for (std::unique_ptr<Children>& children : Childrens)
+	{
+		children->DleteChildrenCheck();
+	}
+	//削除する子供を削除
+	for (auto itr = Childrens.begin(); itr != Childrens.end();)
+	{
 
+		if (itr->get()->deleteFlag == true)
+		{
+			itr = Childrens.erase(itr);
+		}
+		else
+		{
+			++itr;
+		}
+	}
+	//残った子供の処理
+	for (std::unique_ptr<Children>& children : Childrens) {
+		children->TrackChilOrganize();
+	}
+
+	Children::TrackChilHitNumReset();
 }
 
 void Cannon::Draw() {

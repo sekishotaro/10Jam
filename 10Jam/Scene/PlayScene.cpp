@@ -18,8 +18,6 @@ void PlayScene::Update() {
 	player->Update();
 	cannon_->Update();
 
-	//追従子供との当たり判定結果処理
-	Children::TrackChilHitProcess();
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {

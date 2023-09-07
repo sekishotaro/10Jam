@@ -109,14 +109,19 @@ void Children::TrackChildrenColProcess()
 bool Children::DleteCheck()
 {
 	//’ÇÕq‹Ÿ‚É“–‚½‚Á‚½”Ô†‚ª0‚È‚ç–³‚µ
-	if (trackChilHitNum == 0) false;
+	if (trackChilHitNum == 0) return false;
 
 	return true;
 }
 
+void Children::TrackChilHitNumReset()
+{
+	trackChilHitNum = 0;
+}
+
 void Children::DleteChildrenCheck()
 {
-	if (trackChilHitNum <= restraintTh)
+	if (restraintTh <= trackChilHitNum)
 	{
 		deleteFlag = true;
 	}
@@ -124,4 +129,9 @@ void Children::DleteChildrenCheck()
 	{
 		deleteFlag = false;
 	}
+}
+
+void Children::TrackChilOrganize()
+{
+	restraintTh -= (trackChilHitNum + 1);
 }
