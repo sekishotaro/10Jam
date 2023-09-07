@@ -6,6 +6,8 @@
 #include <Helper.h>
 #include <Easing.h>
 
+int Children::trackChilHitNum = 0;
+
 Children::Children(XMFLOAT2 pos, Player* player) {
 	MountMove();
 	this->pos = pos;

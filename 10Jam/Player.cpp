@@ -70,7 +70,7 @@ void Player::Childrendelete()
 
 void Player::Move()
 {
-	if (keys[KEY_INPUT_D] == true)
+	if (keys[KEY_INPUT_D] == 1)
 	{
 		rota -= 2.0f;
 	} else if (keys[KEY_INPUT_A] == 1) {
