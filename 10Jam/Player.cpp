@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include <Helper.h>
 #include <ScrollManager.h>
+#include "Particle.h"
 
 Player::Player() {
 }
@@ -25,24 +26,6 @@ void Player::Update() {
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
 
-	//if (keys[KEY_INPUT_S] == true)
-	//{
-	//	moveVec.y += 2.0f;
-	//}
-	//else if (keys[KEY_INPUT_W] == true)
-	//{
-	//	moveVec.y -= 2.0f;
-	//}
-
-	//if (keys[KEY_INPUT_D] == true)
-	//{
-	//	moveVec.x += 2.0f;
-	//}
-	//else if (keys[KEY_INPUT_A] == true)
-	//{
-	//	moveVec.x -= 2.0f;
-	//}
-	Dash();
 	Move();
 	pos.x += moveVec.x;
 	pos.y += moveVec.y;
@@ -77,6 +60,7 @@ void Player::Draw() {
 
 void Player::HitChildren() {
 	childrenNum++;
+	Particle::Ins()->Fireworks(pos, 60u, radius * 3.f, 8ui8, Particle::ColorRGB{255, 255, 34});
 }
 
 void Player::Move() {
