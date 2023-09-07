@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BackScreen.cpp" />
     <ClCompile Include="Chara\AccelSpot.cpp" />
     <ClCompile Include="Chara\Cannon.cpp" />
     <ClCompile Include="Children.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Scene\SceneChanger.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\TitleScene.h" />
+    <ClInclude Include="Score\BackScreen.h" />
     <ClInclude Include="Score\ScoreManager.h" />
     <ClInclude Include="Score\ScrollManager.h" />
     <ClInclude Include="Sound.h" />
