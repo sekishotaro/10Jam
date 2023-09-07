@@ -9,5 +9,6 @@ ScoreManager* ScoreManager::GetInstance() {
 }
 
 void ScoreManager::Draw() {
-	DrawFormatString(1000, 0, GetColor(255,255,255),"SCORE: %d", score);
+	SetFontSize(64);
+	DrawFormatString(900, 20, GetColor(255,255,255),"SCORE:%d", score);
 }
