@@ -1,6 +1,7 @@
 #include "Particle.h"
 #include <DxLib.h>
 #include <cmath>
+#include <ScrollManager.h>
 
 using namespace DirectX;
 
@@ -35,6 +36,25 @@ namespace
 		return XMFLOAT2(vec.x * std::cos(angleRad) - vec.y * std::sin(angleRad),
 						vec.x * std::sin(angleRad) + vec.y * std::cos(angleRad));
 	}
+
+	inline XMFLOAT2 operator+(const XMFLOAT2& l, const XMFLOAT2& r)
+	{
+		return XMFLOAT2(l.x + r.x, l.y + r.y);
+	}
+	inline XMFLOAT2 operator-(const XMFLOAT2& l, const XMFLOAT2& r)
+	{
+		return l + XMFLOAT2(-r.x, -r.y);
+	}
+	inline void operator+=(XMFLOAT2& l, const XMFLOAT2& r)
+	{
+		l.x += r.x;
+		l.y += r.y;
+	}
+	inline void operator-=(XMFLOAT2& l, const XMFLOAT2& r)
+	{
+		l.x -= r.x;
+		l.y -= r.y;
+	}
 }
 
 Particle::Grain::Grain(unsigned life,
@@ -58,6 +78,10 @@ Particle::Grain::Grain(unsigned life,
 
 void Particle::Grain::Update()
 {
+	const auto scr = ScrollManager::GetInstance()->GetMove();
+	startPos -= scr;
+	endPos -= scr;
+
 	const float rate = static_cast<float>(lifeMax - life) / static_cast<float>(lifeMax);
 
 	pos = lerp(startPos, endPos, rate);
@@ -91,6 +115,10 @@ void Particle::Update()
 	delayGrainData.remove_if(
 		[&](DelayGrainData& d)
 		{
+			const auto scr = ScrollManager::GetInstance()->GetMove();
+			d.startPos -= scr;
+			d.endPos -= scr;
+
 			// Žõ–½‚ª—ˆ‚Ä‚¢‚½‚çA—±‚ðo‚µ‚Ä’x‰„î•ñ‚©‚çíœ
 			if (d.nowFrame >= d.delayFrame)
 			{
