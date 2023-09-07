@@ -1,6 +1,7 @@
 #include "PlayScene.h"
 #include "SceneManager.h"
 #include "ScoreManager.h"
+#include "../Particle.h"
 
 PlayScene::PlayScene() {
 }
@@ -9,6 +10,8 @@ PlayScene::~PlayScene() {
 	delete player;
 	delete children1;
 	delete children2;
+
+	Particle::Ins()->Clear();
 }
 
 void PlayScene::Initialize() {
@@ -36,6 +39,8 @@ void PlayScene::Update() {
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::TITLE);
 	}
+
+	Particle::Ins()->Update();
 }
 
 void PlayScene::Draw() {
@@ -47,6 +52,8 @@ void PlayScene::Draw() {
 	children4->Draw();
 	children5->Draw();
 
+
+	Particle::Ins()->Draw();
 
 	ScoreManager::GetInstance()->Draw();
 }

@@ -1,14 +1,19 @@
-#include "DxLib.h"
+#include <DxLib.h>
 #include "SceneManager.h"
 #include <SceneChanger.h>
-
-// ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "Test";
-
-#define window_width  1280.f
-#define window_height  720.f
+#include <array>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+	// ウィンドウのタイトルに表示する文字列
+	constexpr char TITLE[] = "Test";
+
+	// ウィンドウの大きさ
+	constexpr int window_width = 1280;
+	constexpr int window_height = 720;
+
+	// Log.txtを出力しない
+	SetOutApplicationLogValidFlag(FALSE);
+
 	// ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
 
@@ -20,7 +25,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetMainWindowText(TITLE);
 
 	// 画面サイズの最大サイズ、カラービット数を設定(モニターの解像度に合わせる)
-	SetGraphMode((int)window_width,(int)window_height, 32);
+	SetGraphMode(window_width, window_height, 32);
 
 	// 画面サイズを設定(解像度との比率で設定)
 	SetWindowSizeExtendRate(1.0);
@@ -28,57 +33,55 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 画面の背景色を設定する
 	SetBackgroundColor(0x30, 0x30, 0x30);
 
-
-	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
+	// ＤＸライブラリ初期化処理
+	if (DxLib_Init() == -1)
 	{
-		return -1;			// エラーが起きたら直ちに終了
+		return -1; // エラーが起きたら直ちに終了
 	}
 
 	// (ダブルバッファ)描画先グラフィック領域は裏面を指定
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	// 最新のキーボード情報用
-	char keys[256] = { 0 };
+	// 文字描画にアンチエイリアスと枠線を付ける
+	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE_4X4);
 
-	// 1ループ(フレーム)前のキーボード情報
-	char oldkeys[256] = { 0 };
+	constexpr size_t keyCount = 256u;
+	std::array<char, keyCount> keys{};
+	std::array<char, keyCount> oldkeys{};
 
 	SceneManager* sceneManager_ = SceneManager::GetInstance();
 	sceneManager_->Initialize(SceneManager::SceneName::PLAY);
-	// ゲームループ
-	while (1) {
 
+	// ゲームループ
+	while (ProcessMessage() == 0 &&
+		   CheckHitKey(KEY_INPUT_ESCAPE) != 1) 	{
 		// 画面クリア
 		ClearDrawScreen();
-		// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
-		for (int i = 0; i < 256; i++) {
-			oldkeys[i] = keys[i];
-		}
+
+		// 最新のキーボード情報だったものは
+		// 1フレーム前のキーボード情報として保存
+		oldkeys = keys;
+
 		// 最新のキーボード情報を取得
-		GetHitKeyStateAll(keys);
+		GetHitKeyStateAll(keys.data());
+
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
 		sceneManager_->Update();
 		// 描画処理
 		sceneManager_->Draw();
+
 		//---------  ここまでにプログラムを記述  ---------//
+
 		// (ダブルバッファ)裏面
 		ScreenFlip();
 
-		// 20ミリ秒待機(疑似60FPS)
-		WaitTimer(20);
-
-		// Windowsシステムからくる情報を処理する
-		if (ProcessMessage() == -1) {
-			break;
-		}
-
-		// ESCキーが押されたらループから抜ける
-		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) {
-			break;
-		}
+		// 16ミリ秒待機(疑似60FPS)
+		WaitTimer(16);
 	}
 
-	return 0;				// ソフトの終了 
+	DxLib_End();
+
+	return 0;				// ソフトの終了
 }
