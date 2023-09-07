@@ -39,6 +39,8 @@ public:
 	void AddCoin() {getCoin = true; coinFrame= 0.0f;}
 	void SetBoost(const bool isBoost) { this->isBoost = isBoost; }
 	bool GetBoost() { return isBoost; }
+	void Childrendelete();
+
 private:
 	void Move();
 	void CoinDash();
