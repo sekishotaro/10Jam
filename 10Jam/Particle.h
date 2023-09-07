@@ -53,6 +53,7 @@ private:
 		unsigned color;
 		bool fillFlag;
 		uint8_t posnum;
+		float thickness = 1.f;
 
 	public:
 		Grain(unsigned life,
@@ -63,7 +64,8 @@ private:
 			  ColorRGB startColor,
 			  ColorRGB endColor,
 			  bool fillFlag = true,
-			  uint8_t posnum = 4ui8);
+			  uint8_t posnum = 4ui8,
+			  float thickness = 1.f);
 
 		inline unsigned GetLife() const { return life; }
 
@@ -87,6 +89,7 @@ private:
 		ColorRGB endColor;
 		bool fillFlag = true;
 		uint8_t posnum;
+		float thickness = 1.f;
 	};
 	std::forward_list<DelayGrainData> delayGrainData{};
 
@@ -100,7 +103,8 @@ public:
 				  ColorRGB startColor,
 				  ColorRGB endColor,
 				  bool fillFlag = true,
-				  uint8_t posnum = 4ui8);
+				  uint8_t posnum = 4ui8,
+				  float thickness = 1.f);
 
 	/// @brief 更新処理。各シーンで毎フレーム呼ぶ。
 	void Update();
@@ -113,7 +117,7 @@ public:
 
 	/// @brief 波紋を開始
 	/// @param count 時間内に生成する個数
-	void Ripple(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, ColorRGB color, uint8_t posnum = 4ui8);
+	void Ripple(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, ColorRGB color, uint8_t posnum = 4ui8, float startRange = 0.f, float thickness = 1.f);
 
 	/// @brief 粒が一つもないかどうか
 	inline bool IsEmpty() const
