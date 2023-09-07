@@ -14,17 +14,22 @@ void PlayScene::Initialize() {
 	cannon_ = std::make_unique<Cannon>();
 	cannon_->SetPlayer(player.get());
 	cannon_->Initialize();
+	accel = std::make_unique<AccelSpot>(DirectX::XMFLOAT2{ 600,200 }, player.get());
+	accel->Initialize();
 }
 
 void PlayScene::Update() {
 	player->Update();
 	cannon_->Update();
+	accel->Update();
+
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::TITLE);
 	}
 }
 
 void PlayScene::Draw() {
+	accel->Draw();
 	cannon_->Draw();
 	player->Draw();
 

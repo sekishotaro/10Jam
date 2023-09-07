@@ -4,6 +4,7 @@
 #include "../Children.h"
 #include <memory>
 #include "Cannon.h"
+#include <AccelSpot.h>
 
 class PlayScene : public BaseScene {
 public:
@@ -24,5 +25,6 @@ public:
 private:
 	std::unique_ptr<Player> player = nullptr;
 	std::unique_ptr<Cannon> cannon_ = nullptr;
+	std::unique_ptr<AccelSpot> accel = nullptr;
 };
 
