@@ -27,10 +27,16 @@ void Children::Update() {
 	ScrollMove();
 	TrackChildrenColProcess();
 
-	particleFrame = ++particleFrame % 3u;
+	// 3フレームに1回波紋エフェクトを出す
+	constexpr uint8_t particleInterval = 3u;
+	particleFrame = ++particleFrame % particleInterval;
 	if (0 == particleFrame)
 	{
-		Particle::Ins()->Ripple(pos, 16u, 64.f, 1ui8, Particle::ColorRGB{ 0x22, 0xff, 0xff });
+		constexpr uint8_t vertexCount = 4ui8;
+		constexpr unsigned life = 16u;
+		constexpr float endRadius = 64.f;
+		constexpr auto rippleColor = Particle::ColorRGB{ 0x22, 0xff, 0xff };
+		Particle::Ins()->Ripple(pos, life, endRadius, 1ui8, rippleColor, vertexCount);
 	}
 }
 
