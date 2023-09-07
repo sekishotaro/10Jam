@@ -53,6 +53,8 @@ private:
 	void TrackMove();
 
 	void ScrollMove();
+
+	bool Spawn();
 private:
 	Player* player_ = nullptr;
 	//çSë©èÛë‘ämîF
@@ -61,11 +63,15 @@ private:
 	bool isMove = false;
 	float vel = 0.0f;
 	float dir = 1.0f;
+	//
+	bool isSpawn = true;
+	float spawnFrame = 0.0f;
+	float kSpawnFrameMax = 15.0f;
 	//à íu
 	XMFLOAT2 pos = { 600.0f, 410.0f };
 	XMFLOAT2 move = { 0.0f, 0.0f };
 	//îºåa
-	const float radius = 8.0f;
+	float radius = 8.0f;
 	//çSë©î‘çÜ
 	int restraintTh = 0;
 

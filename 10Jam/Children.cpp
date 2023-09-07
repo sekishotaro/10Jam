@@ -3,10 +3,11 @@
 #include <random>
 #include <ScoreManager.h>
 #include <ScrollManager.h>
+#include <Helper.h>
+#include <Easing.h>
 
 Children::Children(XMFLOAT2 pos, Player* player) {
 	MountMove();
-
 	this->pos = pos;
 	player_ = player;
 }
@@ -15,6 +16,7 @@ Children::~Children() {
 }
 
 void Children::Update() {
+	if (Spawn()) { return; }
 	//“–‚½‚è”»’è
 	TracColProcess();
 	Follow2Player();
@@ -109,4 +111,18 @@ void Children::ScrollMove() {
 	XMFLOAT2 scroll = ScrollManager::GetInstance()->GetMove();
 	pos.x -= scroll.x;
 	pos.y -= scroll.y;
+}
+
+bool Children::Spawn() {
+	if (!isSpawn) { return false; }
+	ScrollMove();
+	spawnFrame += 1.0f;
+	Clamp(spawnFrame,0.0f, kSpawnFrameMax);
+	float sizeFrame = spawnFrame / kSpawnFrameMax;
+	radius = Ease(Out,Elastic, sizeFrame,0,8.0f);
+	if (spawnFrame == kSpawnFrameMax) {
+		isSpawn = false;
+		radius = 8.0f;
+	}
+	return true;
 }
