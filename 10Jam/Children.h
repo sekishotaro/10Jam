@@ -43,6 +43,7 @@ public:
 
 	void TrackChilOrganize();
 
+	static const int GetHitNum() { return trackChilHitNum; }
 private:
 	/// <summary>
 	/// Ž©‹@‚Æ“–‚½‚è”»’è
@@ -79,6 +80,8 @@ private:
 	void ScrollMove();
 
 	bool Spawn();
+
+
 private:
 	Player* player_ = nullptr;
 	

@@ -101,6 +101,7 @@ void Children::TracColProcess() {
 
 void Children::TrackMove()
 {
+	if (player_->isStop) { return; }
 	//Ž©‹@‚ÌˆÚ“®—Ê•Û‘¶
 	restrainMoveVec.push_back(player_->GetMoveVec());
 	//ÅŒã”ö‚É‚È‚é‚æ‚¤‚É‘Ò‚½‚¹‚é

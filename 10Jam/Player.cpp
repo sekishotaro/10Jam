@@ -39,25 +39,28 @@ void Player::Update() {
 
 	if ((pos.x > 140.0f && pos.x < 1140.0f)) {
 		overMove.x = 0;
+		isStop = false;
 	} else {
 		overMove.x = moveVec.x;
 		Clamp(moveAdd.x, kScrollMin, kScrollMax);
 		if(pos.x == 140.0f){
 			if (moveAdd.x == kScrollMin) {
 				overMove.x = 0;
-				moveVec.x = 0;
+				moveVec.x =0.0f;
+				isStop = true;
 			}
 		} else {
 			if (moveAdd.x == kScrollMax) {
 				overMove.x = 0;
-				moveVec.x = 0;
+				moveVec.x = 0.0f;
+				isStop = true;
 			}
 		}
 	}
 
 	if ((pos.y > 80.0f && pos.y < 640.0f)) {
 		overMove.y = 0;
-
+		isStop = false;
 	}
 	else {
 		overMove.y = moveVec.y;
@@ -65,12 +68,14 @@ void Player::Update() {
 		if (pos.y == 80.0f) {
 			if (moveAdd.y == kScrollMin) {
 				overMove.y = 0;
-				moveVec.y = 0;
+				moveVec.y  = 0.0f;
+				isStop = true;
 			}
 		} else {
 			if (moveAdd.y == kScrollMax) {
 				overMove.y = 0;
-				moveVec.y = 0;
+				moveVec.y = 0.0f;
+				isStop = true;
 			}
 		}
 	}
