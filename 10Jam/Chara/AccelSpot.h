@@ -26,5 +26,8 @@ public:
 private:
 	XMFLOAT2 pos_ = {};
 	float radius = 30.f;
+	float spotRadius = 30.0f;
+	float spotframe = 0.0f;
+	int color = GetColor(100, 100, 255);
 	Player* player_ = nullptr;
 };

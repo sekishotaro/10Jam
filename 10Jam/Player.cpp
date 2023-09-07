@@ -25,7 +25,7 @@ void Player::Update() {
 	}
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
-
+	Dash();
 	Move();
 	pos.x += moveVec.x;
 	pos.y += moveVec.y;
