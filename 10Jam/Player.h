@@ -48,6 +48,7 @@ private:
 private:
 
 	XMFLOAT2 pos = { 600.0f, 410.0f };
+	XMFLOAT2 moveAdd = {};
 	XMFLOAT2 moveVec = { 0.0f, 0.0f };
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };

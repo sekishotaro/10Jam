@@ -33,26 +33,51 @@ void Player::Update() {
 	Clamp(pos.x, 140.f, 1140.f);
 	Clamp(pos.y, 80.f, 640.f);
 
-	XMFLOAT2 a = {};
+	XMFLOAT2 overMove = {};
+	const float kScrollMin = -500.0f;
+	const float kScrollMax = 500.0f;
 
 	if ((pos.x > 140.0f && pos.x < 1140.0f)) {
-		a.x = 0;
-
+		overMove.x = 0;
 	} else {
-		a.x = moveVec.x;
-
+		overMove.x = moveVec.x;
+		Clamp(moveAdd.x, kScrollMin, kScrollMax);
+		if(pos.x == 140.0f){
+			if (moveAdd.x == kScrollMin) {
+				overMove.x = 0;
+				moveVec.x = 0;
+			}
+		} else {
+			if (moveAdd.x == kScrollMax) {
+				overMove.x = 0;
+				moveVec.x = 0;
+			}
+		}
 	}
 
 	if ((pos.y > 80.0f && pos.y < 640.0f)) {
-		a.y = 0;
+		overMove.y = 0;
 
 	}
 	else {
-		a.y = moveVec.y;
-
+		overMove.y = moveVec.y;
+		Clamp(moveAdd.y, kScrollMin, kScrollMax);
+		if (pos.y == 80.0f) {
+			if (moveAdd.y == kScrollMin) {
+				overMove.y = 0;
+				moveVec.y = 0;
+			}
+		} else {
+			if (moveAdd.y == kScrollMax) {
+				overMove.y = 0;
+				moveVec.y = 0;
+			}
+		}
 	}
+	moveAdd.x+= overMove.x;
+	moveAdd.y+= overMove.y;
 
-	ScrollManager::GetInstance()->SetMove(a);
+	ScrollManager::GetInstance()->SetMove(overMove);
 }
 
 void Player::Draw() {
