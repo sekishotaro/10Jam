@@ -27,7 +27,6 @@ void Player::Update() {
 	GetHitKeyStateAll(keys);
 
 	Move();
-
 	pos.x += moveVec.x;
 	pos.y += moveVec.y;
 	Clamp(pos.x, 140.f, 1140.f);
@@ -56,7 +55,7 @@ void Player::Update() {
 }
 
 void Player::Draw() {
-	DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(110, 239, 255), true);
+	DrawCircleAA(pos.x,pos.y, radius,64, GetColor(110, 239, 255), true);
 }
 
 void Player::HitChildren() {
@@ -65,24 +64,40 @@ void Player::HitChildren() {
 }
 
 void Player::Move() {
-	if (keys[KEY_INPUT_D] == true) {
+	if (keys[KEY_INPUT_D] == 1) {
 		rota -= 2.0f;
-	} else if (keys[KEY_INPUT_A] == true) {
+	} else if (keys[KEY_INPUT_A] == 1) {
 		rota += 2.0f;
 	}
 
-	static XMFLOAT2 vec = { 0.0f, 2.0f };
+	static XMFLOAT2 vec = { 0.0f, 3.0f };
 
-	if (keys[KEY_INPUT_W] == true) {
-		vec = { 0.0f, 2.0f };
-	} else if (keys[KEY_INPUT_S] == true) {
+	if (keys[KEY_INPUT_W] == 1) {
+		vec = { 0.0f, 3.0f };
+	} else if (keys[KEY_INPUT_S] == 1) {
 		vec = { 0.0f, 0.0f };
 	}
 
 	float sita = rota * 3.1415f / 108.0f;
 
-	moveVec.x = vec.x * cos(sita) - vec.y * sin(sita);
-	moveVec.y = vec.x * sin(sita) - vec.y * cos(sita);
+	moveVec.x = vec.x * cosf(sita) - vec.y * sinf(sita);
+	moveVec.y = vec.x * sinf(sita) - vec.y * cosf(sita);
+	moveVec.x *=accel;
+	moveVec.y *=accel;
 
+}
+
+void Player::Dash() {
+	if(!isBoost){
+		accel = 1.0f;
+		return;
+	}
+	boostFrame++;
+	Clamp(boostFrame,0.0f, kBoostFrameMax);
+	accel = 1.5f;
+	if (boostFrame== kBoostFrameMax) {
+		boostFrame = 0.0f;
+		isBoost = false;
+	}
 }
 
