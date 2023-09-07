@@ -1,6 +1,7 @@
 #include "PlayScene.h"
 #include "SceneManager.h"
 #include "ScoreManager.h"
+#include "../Particle.h"
 
 PlayScene::PlayScene() {
 }
@@ -22,11 +23,15 @@ void PlayScene::Update() {
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::TITLE);
 	}
+
+	Particle::Ins()->Update();
 }
 
 void PlayScene::Draw() {
 	cannon_->Draw();
 	player->Draw();
+
+	Particle::Ins()->Draw();
 
 	ScoreManager::GetInstance()->Draw();
 }
