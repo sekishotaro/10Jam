@@ -42,7 +42,6 @@ bool Children::Collision() {
 	float b = pos.y - player_->GetPos().y;
 	float c = sqrtf(a * a + b * b);
 
-	return c <= r;
 	if (c <= r) {
 		return true;
 	}
@@ -206,10 +205,16 @@ void Children::UpdateRippleEffect()
 	particleFrame = ++particleFrame % particleInterval;
 	if (0 == particleFrame)
 	{
+		// 描画する頂点数
 		constexpr uint8_t vertexCount = 4ui8;
+		// 発生してから何フレームで消えるか
 		constexpr unsigned life = 16u;
+		// 終了時点での半径
 		constexpr float endRadius = 64.f;
+		// 波紋の色
 		constexpr auto rippleColor = Particle::ColorRGB{ 0x22, 0xff, 0xff };
+
+		// 波紋エフェクト開始
 		Particle::Ins()->Ripple(pos, life, endRadius, 1ui8, rippleColor, vertexCount);
 	}
 }
