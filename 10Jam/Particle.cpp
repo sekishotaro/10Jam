@@ -64,7 +64,8 @@ Particle::Grain::Grain(unsigned life,
 					   float endR,
 					   Particle::ColorRGB startColor,
 					   Particle::ColorRGB endColor,
-					   bool fillFlag) :
+					   bool fillFlag,
+					   uint8_t posnum) :
 	lifeMax(life), life(life),
 	startPos(startPos), pos(startPos),
 	endPos(endPos),
@@ -72,7 +73,8 @@ Particle::Grain::Grain(unsigned life,
 	endR(endR),
 	startColor(startColor),
 	endColor(endColor),
-	fillFlag(fillFlag)
+	fillFlag(fillFlag),
+	posnum(posnum)
 {
 }
 
@@ -94,7 +96,7 @@ void Particle::Grain::Update()
 
 int Particle::Grain::Draw() const
 {
-	return DxLib::DrawCircleAA(pos.x, pos.y, r, 64, color, fillFlag ? TRUE : FALSE);
+	return DxLib::DrawCircleAA(pos.x, pos.y, r, int(posnum), color, fillFlag ? TRUE : FALSE);
 }
 
 void Particle::AddGrain(unsigned life,
@@ -104,9 +106,10 @@ void Particle::AddGrain(unsigned life,
 						float endR,
 						ColorRGB startColor,
 						ColorRGB endColor,
-						bool fillFlag)
+						bool fillFlag,
+						uint8_t posnum)
 {
-	grains.emplace_front(life, startPos, endPos, startR, endR, startColor, endColor, fillFlag);
+	grains.emplace_front(life, startPos, endPos, startR, endR, startColor, endColor, fillFlag, posnum);
 }
 
 void Particle::Update()
@@ -122,7 +125,7 @@ void Particle::Update()
 			// 寿命が来ていたら、粒を出して遅延情報から削除
 			if (d.nowFrame >= d.delayFrame)
 			{
-				AddGrain(d.life, d.startPos, d.endPos, d.startR, d.endR, d.startColor, d.endColor, d.fillFlag);
+				AddGrain(d.life, d.startPos, d.endPos, d.startR, d.endR, d.startColor, d.endColor, d.fillFlag, d.posnum);
 				return true;
 			}
 			// 寿命がまだなら更新
@@ -148,7 +151,7 @@ void Particle::Draw()
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
-void Particle::Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color, bool fillFlag)
+void Particle::Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color, bool fillFlag, uint8_t posnum)
 {
 	XMFLOAT2 endPos{};
 	float angleRad{};
@@ -163,11 +166,11 @@ void Particle::Fireworks(const XMFLOAT2& centerPos, unsigned life, float range, 
 		endPos.x += centerPos.x;
 		endPos.y += centerPos.y;
 
-		AddGrain(life, centerPos, endPos, 16.f, 0.f, color, color, fillFlag);
+		AddGrain(life, centerPos, endPos, 16.f, 0.f, color, color, fillFlag, posnum);
 	}
 }
 
-void Particle::Ripple(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color)
+void Particle::Ripple(const XMFLOAT2& centerPos, unsigned life, float range, uint8_t count, Particle::ColorRGB color, uint8_t posnum)
 {
 	for (uint8_t i = 0; i < count; ++i)
 	{
@@ -186,5 +189,6 @@ void Particle::Ripple(const XMFLOAT2& centerPos, unsigned life, float range, uin
 		n.startColor = color;
 		n.endColor = ColorRGB{ 0, 0, 0 };
 		n.fillFlag = false;
+		n.posnum = posnum;
 	}
 }

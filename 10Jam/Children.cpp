@@ -5,6 +5,7 @@
 #include <ScrollManager.h>
 #include <Helper.h>
 #include <Easing.h>
+#include "Particle.h"
 
 int Children::trackChilHitNum = 0;
 
@@ -25,6 +26,12 @@ void Children::Update() {
 	MoveFree();
 	ScrollMove();
 	TrackChildrenColProcess();
+
+	particleFrame = ++particleFrame % 3u;
+	if (0 == particleFrame)
+	{
+		Particle::Ins()->Ripple(pos, 16u, 64.f, 1ui8, Particle::ColorRGB{ 0x22, 0xff, 0xff });
+	}
 }
 
 void Children::Draw() {
@@ -104,7 +111,7 @@ void Children::TrackMove()
 	//自機の移動量保存
 	restrainMoveVec.push_back(player_->GetMoveVec());
 	//最後尾になるように待たせる
-	if (restrainMoveVec.size() < (trackDis * restraintTh)) return;
+	if (restrainMoveVec.size() < size_t(trackDis * restraintTh)) return;
 	//最後尾まで行ったか確認フラグ
 	tailFlag = true;
 	//移動量接地
@@ -184,9 +191,9 @@ bool Children::Spawn() {
 	if (!isSpawn) { return false; }
 	ScrollMove();
 	spawnFrame += 1.0f;
-	Clamp(spawnFrame,0.0f, kSpawnFrameMax);
+	Clamp(spawnFrame, 0.0f, kSpawnFrameMax);
 	float sizeFrame = spawnFrame / kSpawnFrameMax;
-	radius = Ease(Out,Elastic, sizeFrame,0,8.0f);
+	radius = Ease(Out, Elastic, sizeFrame, 0, 8.0f);
 	if (spawnFrame == kSpawnFrameMax) {
 		isSpawn = false;
 		radius = 8.0f;
