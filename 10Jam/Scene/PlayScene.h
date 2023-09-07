@@ -24,15 +24,6 @@ public:
 private:
 	Player* player = nullptr;
 	std::unique_ptr<Cannon> cannon_ = nullptr;
-	Children* children1 = nullptr;
-	Children* children2 = nullptr;
-	Children* children3 = nullptr;
-	Children* children4 = nullptr;
-	Children* children5 = nullptr;
 	char keys[256] = { 0 };
-
-
-
-
 };
 

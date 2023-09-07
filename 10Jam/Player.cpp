@@ -28,28 +28,11 @@ void Player::Update()
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
 
-	//if (keys[KEY_INPUT_S] == true)
-	//{
-	//	moveVec.y += 2.0f;
-	//}
-	//else if (keys[KEY_INPUT_W] == true)
-	//{
-	//	moveVec.y -= 2.0f;
-	//}
-
-	//if (keys[KEY_INPUT_D] == true)
-	//{
-	//	moveVec.x += 2.0f;
-	//}
-	//else if (keys[KEY_INPUT_A] == true)
-	//{
-	//	moveVec.x -= 2.0f;
-	//}
-
 	Move();
 
 	pos.x += moveVec.x;
 	pos.y += moveVec.y;
+
 }
 
 void Player::Draw()
