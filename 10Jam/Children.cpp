@@ -6,6 +6,8 @@
 #include <Helper.h>
 #include <Easing.h>
 
+int Children::trackChilHitNum = 0;
+
 Children::Children(XMFLOAT2 pos, Player* player) {
 	MountMove();
 	this->pos = pos;
@@ -22,6 +24,7 @@ void Children::Update() {
 	Follow2Player();
 	MoveFree();
 	ScrollMove();
+	TrackChildrenColProcess();
 }
 
 void Children::Draw() {
@@ -96,14 +99,79 @@ void Children::TracColProcess() {
 	}
 }
 
-void Children::TrackMove() {
+void Children::TrackMove()
+{
+	//自機の移動量保存
 	restrainMoveVec.push_back(player_->GetMoveVec());
-
-	if (restrainMoveVec.size() < (13 * restraintTh)) return;
-
+	//最後尾になるように待たせる
+	if (restrainMoveVec.size() < (trackDis * restraintTh)) return;
+	//最後尾まで行ったか確認フラグ
+	tailFlag = true;
+	//移動量接地
 	move = restrainMoveVec[0];
-
+	//削除
 	restrainMoveVec.erase(restrainMoveVec.begin());
+}
+
+void Children::TrackChildrenColProcess()
+{
+	//自由子供は早期リターン
+	if (freeFlag == true) return;
+
+	//追跡子供になったばかりの場合は判定しない
+	if (tailFlag == false) return;
+
+	//自機からX個以下の子供の場合は判定しない
+	if (restraintTh <= unColRestrainTh) return;
+
+	//自機との当たり判定
+	if (Collision() == true)
+	{
+		//グローバル変数に保管　保管されていた数より多い場合上書き
+		trackChilHitNum = restraintTh;
+	}
+}
+
+bool Children::DleteCheck()
+{
+	//追跡子供に当たった番号が0なら無し
+	if (trackChilHitNum == 0) return false;
+
+	return true;
+}
+
+void Children::TrackChilHitNumReset()
+{
+	trackChilHitNum = 0;
+}
+
+void Children::DleteChildrenCheck()
+{
+	if (freeFlag == true)
+	{
+		deleteFlag = false;
+		return;
+	}
+	if (restraintTh <= trackChilHitNum)
+	{
+		deleteFlag = true;
+		player_->Childrendelete();
+	}
+	else
+	{
+		deleteFlag = false;
+	}
+}
+
+void Children::TrackChilOrganize()
+{
+	if (freeFlag == true) return;
+
+	restraintTh -= (trackChilHitNum);
+	pos = player_->GetPos();
+	tailFlag = false;
+	restrainMoveVec.clear();
+	restrainMoveVec.push_back(player_->GetMoveVec());
 }
 
 void Children::ScrollMove() {
