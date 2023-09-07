@@ -26,7 +26,7 @@ public:
 	/// <summary>
 	/// ÉQÉbÉ^Å[&setter
 	/// </summary>
-	void SetIsStart() { isStart = true; }
+	void SetIsStart() { isStart = true; isVisible = true; }
 	bool GetIsStart() { return isStart; }
 
 	void SetIsClose(const bool& flag) { isClose = true; }
@@ -38,6 +38,6 @@ private:
 	float r = 0.f;
 	bool isStart = true;
 	bool isClose = false;
-
+	bool isVisible = false;
 };
 

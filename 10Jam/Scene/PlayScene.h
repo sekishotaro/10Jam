@@ -30,9 +30,5 @@ private:
 	Children* children4 = nullptr;
 	Children* children5 = nullptr;
 	char keys[256] = { 0 };
-
-
-
-
 };
 

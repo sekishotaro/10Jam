@@ -33,8 +33,18 @@ private:
 	/// </summary>
 	/// <param name="PlayerPos"></param>
 	bool Collision();
-
-
+	/// <summary>
+	/// プレイヤー追従処理
+	/// </summary>
+	void Follow2Player();
+	/// <summary>
+	/// 動くか止まるか
+	/// </summary>
+	void MountMove();
+	/// <summary>
+	/// 自動移動
+	/// </summary>
+	void MoveFree();
 	void TracColProcess();
 	
 	/// <summary>
@@ -42,10 +52,15 @@ private:
 	/// </summary>
 	void TrackMove();
 
+	void ScrollMove();
 private:
 	Player* player_ = nullptr;
 	//拘束状態確認
 	bool freeFlag = true;
+	//動き関連
+	bool isMove = false;
+	float vel = 0.0f;
+	float dir = 1.0f;
 	//位置
 	XMFLOAT2 pos = { 600.0f, 410.0f };
 	XMFLOAT2 move = { 0.0f, 0.0f };
