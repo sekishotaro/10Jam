@@ -49,7 +49,7 @@ public:
 	/// @return ƒGƒ‰[‚ª‚ ‚ê‚Îtrue
 	inline bool Play(int handle, bool topPositionFlag = true, int playType = DX_PLAYTYPE_LOOP)
 	{
-		return -1 == DxLib::PlaySoundMem(handle, DX_PLAYTYPE_LOOP, topPositionFlag ? TRUE : FALSE);
+		return -1 == DxLib::PlaySoundMem(handle, playType, topPositionFlag ? TRUE : FALSE);
 	}
 
 	/// @brief ‰¹º‚ÌÄ¶‚ğ’â~‚·‚é
