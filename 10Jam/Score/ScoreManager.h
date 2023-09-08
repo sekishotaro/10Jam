@@ -1,4 +1,7 @@
 #pragma once
+
+#include <DirectXMath.h>
+
 class ScoreManager {
 public:
 
@@ -14,7 +17,7 @@ public:
 	/// スコア増加
 	/// </summary>
 	/// <param name="add"></param>
-	void AddScore(const int add) { score += add; }
+	void AddScore(const int add, unsigned particleNum = 1u, const DirectX::XMFLOAT2& particleStartPos = { 640.f, 360.f });
 	/// <summary>
 	/// スコアリセット
 	/// </summary>

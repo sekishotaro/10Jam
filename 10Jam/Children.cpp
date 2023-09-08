@@ -103,7 +103,7 @@ void Children::TracColProcess() {
 
 	if (Collision() == true) {
 		freeFlag = false;
-		ScoreManager::GetInstance()->AddScore(10);
+		ScoreManager::GetInstance()->AddScore(10, 1u, player_->GetPos());
 		//‚¸‚ê–hŽ~‚Ì‚½‚ß‚¢‚Á‚½‚ñŽ©‹@’†‰›À•W‚Éƒ[ƒv
 		pos = player_->GetPos();
 		player_->HitChildren();
