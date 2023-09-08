@@ -11,11 +11,25 @@ ScoreManager* ScoreManager::GetInstance() {
 	return &instance;
 }
 
-void ScoreManager::Draw() {
-	SetFontSize(64);
-	DrawFormatString(895, 25, GetColor(100, 100, 100), "SCORE:%d", score);
-	DrawFormatString(900, 20, GetColor(255,255,255),"SCORE:%d", score);
+ScoreManager::ScoreManager() {
+	constexpr int edgeSize = 2;
+	font = LoadFontDataToHandle("Resources/FZゴンタかな_32.dft", edgeSize);
+}
 
+void ScoreManager::Draw() {
+
+	constexpr size_t bufLen = 32u;
+	char tmp[bufLen]{};
+	sprintf_s(tmp, bufLen, "スコア: %d", score);
+
+	static unsigned backColor = GetColor(100, 100, 100);
+	static unsigned mainColor = GetColor(255, 255, 255);
+	static unsigned edgeColor = GetColor(0, 0, 0);
+
+	constexpr int verticalFlag = FALSE;
+
+	DrawStringFToHandle(16.f, 24.f, tmp, backColor, font, edgeColor, verticalFlag);
+	DrawStringFToHandle(20.f, 20.f, tmp, mainColor, font, edgeColor, verticalFlag);
 }
 
 void ScoreManager::AddScore(const int add, unsigned particleNum, const DirectX::XMFLOAT2& particleStartPos) {

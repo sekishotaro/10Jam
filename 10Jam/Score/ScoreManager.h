@@ -27,9 +27,11 @@ public:
 
 private:
 	static int score;
+	int font = -1;
+
 private:
+	ScoreManager();
 	~ScoreManager() = default;
-	ScoreManager() = default;
 	ScoreManager(const ScoreManager&) = delete;
 	void operator =(const ScoreManager&) = delete;
 };
