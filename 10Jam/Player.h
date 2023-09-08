@@ -41,11 +41,16 @@ public:
 	void AddCoin() {getCoin = true; coinFrame= 0.0f;}
 	void SetBoost(const bool isBoost) { this->isBoost = isBoost; }
 	bool GetBoost() { return isBoost; }
+	
+	void SetGear(const bool isGear) { this->isGear = isGear; }
+	bool GetGear() { return isGear; }
+
 	void Childrendelete();
 
 private:
 	void Move();
 	void CoinDash();
+	void GearDash();
 	void Dash();
 	void RotaUpdate();
 private:
@@ -66,6 +71,12 @@ private:
 	float boostFrame = 0.0f;
 	float kBoostFrameMax = 120.0f;
 	float accel = 1.0f;
+
+	bool isGear = false;
+	float gearFrame = 0.0f;
+	float kGearFrameMax = 180.0f;
+	float gear = 1.0f;
+
 
 	bool getCoin = false;
 	float coinBoost = 1.0f;

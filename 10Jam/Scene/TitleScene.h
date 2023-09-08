@@ -1,5 +1,8 @@
 #pragma once
 #include "BaseScene.h"
+#include <memory>
+#include <BackScreen.h>
+
 
 class TitleScene : public BaseScene {
 public:
@@ -19,6 +22,8 @@ public:
 	void Draw() override;
 private:
 	char keys[256] = { 0 };
+	std::unique_ptr<BackScreen> backScreen = nullptr;
+
 
 };
 
