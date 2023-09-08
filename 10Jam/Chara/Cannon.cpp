@@ -56,8 +56,8 @@ void Cannon::Update() {
 	for (std::unique_ptr<Children>& children : Childrens) {
 		children->TrackChilOrganize();
 	}
-	const int score = 100;
-	ScoreManager::GetInstance()->AddScore(Children::GetHitNum()* score);
+	constexpr int scoreUnit = 100;
+	ScoreManager::GetInstance()->AddScore(Children::GetHitNum() * scoreUnit, 1u, player_->GetPos());
 	Children::TrackChilHitNumReset();
 }
 
