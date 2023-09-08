@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackScreen.cpp" />
+    <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="Chara\AccelSpot.cpp" />
     <ClCompile Include="Chara\Cannon.cpp" />
     <ClCompile Include="Children.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bloom.h" />
     <ClInclude Include="Chara\AccelSpot.h" />
     <ClInclude Include="Chara\Cannon.h" />
     <ClInclude Include="Children.h" />

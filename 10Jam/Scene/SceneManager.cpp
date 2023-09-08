@@ -1,20 +1,24 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 #include "PlayScene.h"
-
-
+#include "../Bloom.h"
 
 SceneManager* SceneManager::GetInstance() {
 	static SceneManager instance;
 	return &instance;
 }
 
-
 void SceneManager::Initialize(const SceneName sceneName) {
 	scene_ = CreateScene(sceneName);
 	scene_->Initialize();
 	sceneChanger_ = std::make_unique<SceneChanger>();
 	sceneChanger_->Initialize();
+
+	// ブルーム用描画先の初期化
+	Bloom::Ins()->InitBloomScreen();
+
+	// バイリニア補間で描画する
+	SetDrawMode(DX_DRAWMODE_BILINEAR);
 }
 
 void SceneManager::Update() {
