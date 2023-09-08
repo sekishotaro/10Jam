@@ -166,6 +166,7 @@
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="Score\ScoreManager.cpp" />
     <ClCompile Include="Score\ScrollManager.cpp" />
+    <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chara\AccelSpot.h" />

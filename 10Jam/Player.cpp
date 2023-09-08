@@ -3,8 +3,10 @@
 #include <Helper.h>
 #include <ScrollManager.h>
 #include "Particle.h"
+#include "Sound.h"
 
-Player::Player() {
+Player::Player() :
+	hitChildrenSe(Sound::Ins()->LoadFile("Resources/Sound/Sys_Set03-click.ogg")) {
 }
 
 Player::~Player() {
@@ -99,6 +101,8 @@ void Player::HitChildren() {
 	AddCoin();
 	childrenNum++;
 	Particle::Ins()->Fireworks(pos, 60u, radius * 3.f, 8ui8, Particle::ColorRGB{ 255, 255, 34 }, true, 8ui8);
+	bool ret = Sound::Ins()->Play(hitChildrenSe, true, DX_PLAYTYPE_BACK);
+	assert(!ret);
 }
 
 void Player::Childrendelete() {
@@ -106,7 +110,6 @@ void Player::Childrendelete() {
 }
 
 void Player::Move() {
-
 	RotaUpdate();
 
 	if (keys[KEY_INPUT_D] == 1) {
@@ -131,7 +134,6 @@ void Player::Move() {
 	moveVec.y *= accel;
 	moveVec.x *= coinBoost;
 	moveVec.y *= coinBoost;
-
 }
 
 void Player::CoinDash() {
@@ -174,4 +176,3 @@ void Player::RotaUpdate() {
 		rotaVal = 2.5f;
 	}
 }
-
