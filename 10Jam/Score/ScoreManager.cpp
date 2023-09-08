@@ -6,6 +6,14 @@ using namespace DirectX;
 
 int ScoreManager::score = 0;
 
+namespace
+{
+	constexpr XMFLOAT2 scorePosLT = XMFLOAT2(20.f, 20.f);
+	constexpr float scoreShadowDiff = 4.f;
+	constexpr XMFLOAT2 scoreShadowPosLT = XMFLOAT2(scorePosLT.x - scoreShadowDiff,
+												   scorePosLT.y + scoreShadowDiff);
+}
+
 ScoreManager* ScoreManager::GetInstance() {
 	static ScoreManager instance;
 	return &instance;
@@ -28,8 +36,8 @@ void ScoreManager::Draw() {
 
 	constexpr int verticalFlag = FALSE;
 
-	DrawStringFToHandle(16.f, 24.f, tmp, backColor, font, edgeColor, verticalFlag);
-	DrawStringFToHandle(20.f, 20.f, tmp, mainColor, font, edgeColor, verticalFlag);
+	DrawStringFToHandle(scoreShadowPosLT.x, scoreShadowPosLT.y, tmp, backColor, font, edgeColor, verticalFlag);
+	DrawStringFToHandle(scorePosLT.x, scorePosLT.y, tmp, mainColor, font, edgeColor, verticalFlag);
 }
 
 void ScoreManager::AddScore(const int add, unsigned particleNum, const DirectX::XMFLOAT2& particleStartPos) {
@@ -40,7 +48,7 @@ void ScoreManager::AddScore(const int add, unsigned particleNum, const DirectX::
 		// スコアのスプライトまで飛ぶパーティクル
 		Particle::Ins()->AddGrain(30u,
 								  XMFLOAT2(particleStartPos.x, particleStartPos.y + float(i) * 10.f),
-								  XMFLOAT2(1000.f, 75.f),
+								  scorePosLT,
 								  16.f, 16.f,
 								  Particle::ColorRGB{ 255, 128, 128 },
 								  Particle::ColorRGB{ 255, 128, 128 },
