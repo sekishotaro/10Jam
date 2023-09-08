@@ -153,6 +153,7 @@
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="Chara\AccelSpot.cpp" />
     <ClCompile Include="Chara\Cannon.cpp" />
+    <ClCompile Include="Chara\GearSpot.cpp" />
     <ClCompile Include="Children.cpp" />
     <ClCompile Include="Helper\Easing.cpp" />
     <ClCompile Include="Helper\Helper.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="Chara\AccelSpot.h" />
     <ClInclude Include="Chara\Cannon.h" />
+    <ClInclude Include="Chara\GearSpot.h" />
     <ClInclude Include="Children.h" />
     <ClInclude Include="Helper\Easing.h" />
     <ClInclude Include="Helper\Helper.h" />
