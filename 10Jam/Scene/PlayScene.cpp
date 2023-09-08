@@ -1,12 +1,15 @@
 #include "PlayScene.h"
-#include "SceneManager.h"
 #include "ScoreManager.h"
 #include "../Particle.h"
+#include "../Sound.h"
+#include "../Bloom.h"
 
 PlayScene::PlayScene() {
 }
 
 PlayScene::~PlayScene() {
+	// •`‰ææ‚ð— ‰æ–Ê‚É‚·‚é
+	SetDrawScreen(DX_SCREEN_BACK);
 }
 
 void PlayScene::Initialize() {
@@ -18,6 +21,12 @@ void PlayScene::Initialize() {
 	cannon_->Initialize();
 	accel = std::make_unique<AccelSpot>(DirectX::XMFLOAT2{ 600,200 }, player.get());
 	accel->Initialize();
+
+	// •`‰ææ‚ðmainScreen‚É‚·‚é
+	SetDrawScreen(Bloom::Ins()->mainScreen);
+
+	bgmHandle = Sound::Ins()->LoadFile("Resources/Sound/D_rhythmaze_119.ogg");
+	Sound::Ins()->Play(bgmHandle, true, DX_PLAYTYPE_LOOP);
 	gear = std::make_unique<GearSpot>(DirectX::XMFLOAT2{ 1000,500 }, player.get());
 	gear->Initialize();
 	count=GetNowCount();
@@ -31,7 +40,7 @@ void PlayScene::Update() {
 
 	backScreen->Update();
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
-		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::TITLE);
+		ChangeNextScene(SceneManager::SceneName::TITLE);
 	}
 
 	Particle::Ins()->Update();
@@ -45,6 +54,27 @@ void PlayScene::Draw() {
 	player->Draw();
 
 	Particle::Ins()->Draw();
+
+	// •`‰ææ‚ð— ‰æ–Ê‚É‚·‚é
+	SetDrawScreen(DX_SCREEN_BACK);
+
+	// mainScreen‚Ì“à—e‚ð•`‰æ‚·‚é
+	DrawGraphF(0, 0, Bloom::Ins()->mainScreen, FALSE);
+
+	// ‚Ú‚©‚µ‚½‚à‚Ì‚ð•`‰æ‚·‚é
+	Bloom::Ins()->UpdateBloomScreen();
+	Bloom::Ins()->DrawBloomScreen();
+
+	// ƒXƒRƒA‚ð•`‰æ
+	// ƒXƒRƒA‚Éƒuƒ‹[ƒ€‚Í‚©‚¯‚È‚¢
 	DrawFormatString(640,20,GetColor(255,255,255),"%d",(GetNowCount()-count)/1000);
 	ScoreManager::GetInstance()->Draw();
+
+	// •`‰ææ‚ðmainScreen‚É‚·‚é
+	SetDrawScreen(Bloom::Ins()->mainScreen);
+}
+
+void PlayScene::ChangeNextScene(SceneManager::SceneName scene) {
+	Sound::Ins()->Stop(bgmHandle);
+	SceneManager::GetInstance()->ChangeScene(scene);
 }

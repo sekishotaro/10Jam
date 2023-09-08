@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackScreen.cpp" />
+    <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="Chara\AccelSpot.cpp" />
     <ClCompile Include="Chara\Cannon.cpp" />
     <ClCompile Include="Chara\GearSpot.cpp" />
@@ -167,8 +168,10 @@
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="Score\ScoreManager.cpp" />
     <ClCompile Include="Score\ScrollManager.cpp" />
+    <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bloom.h" />
     <ClInclude Include="Chara\AccelSpot.h" />
     <ClInclude Include="Chara\Cannon.h" />
     <ClInclude Include="Chara\GearSpot.h" />

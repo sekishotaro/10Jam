@@ -1,9 +1,9 @@
+#pragma once
+
 #include <Windows.h>
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include "Score/ScoreManager.h"
-
-#pragma once
 
 class Player
 {
@@ -38,7 +38,7 @@ public:
 
 	void HitChildren();
 
-	void AddCoin() {getCoin = true; coinFrame= 0.0f;}
+	void AddCoin() { getCoin = true; coinFrame = 0.0f; }
 	void SetBoost(const bool isBoost) { this->isBoost = isBoost; }
 	bool GetBoost() { return isBoost; }
 	
@@ -82,6 +82,8 @@ private:
 	float coinBoost = 1.0f;
 	float coinFrame = 0.0f;
 	float kCoinFrameMax = 30.0f;
+
+	const int hitChildrenSe = 0;
 
 public:
 	bool isStop = false;
