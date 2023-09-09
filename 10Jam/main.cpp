@@ -50,7 +50,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	std::array<char, keyCount> oldkeys{};
 
 	SceneManager* sceneManager_ = SceneManager::GetInstance();
-	sceneManager_->Initialize(SceneManager::SceneName::PLAY);
+	sceneManager_->Initialize(SceneManager::SceneName::TITLE);
 
 	// ƒQ[ƒ€ƒ‹[ƒv
 	while (ProcessMessage() == 0 &&

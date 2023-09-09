@@ -11,6 +11,7 @@ void TitleScene::Initialize() {
 }
 
 void TitleScene::Update() {
+	backScreen = std::make_unique<BackScreen>();
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
 	if (keys[KEY_INPUT_RETURN] == true) {
@@ -19,4 +20,8 @@ void TitleScene::Update() {
 }
 
 void TitleScene::Draw() {
+
+	backScreen->Draw();
+
+	DrawFormatString(600,300,GetColor(255,255,255),"タイトルです。エンターでプレイ");
 }

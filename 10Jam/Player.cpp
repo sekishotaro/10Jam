@@ -28,6 +28,7 @@ void Player::Update() {
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
 	CoinDash();
+	GearDash();
 	Dash();
 	Move();
 	pos.x += moveVec.x;
@@ -92,6 +93,10 @@ void Player::Draw() {
 		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(110, 110, 255), true);
 		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(10, 125, 10), false, 5.0f);
 	}
+	if (isGear) {
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(10, 125, 10), true);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(110, 110, 255), false, 5.0f);
+	}
 	if (getCoin) {
 		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 255, 0), true);
 	}
@@ -113,9 +118,9 @@ void Player::Move() {
 	RotaUpdate();
 
 	if (keys[KEY_INPUT_D] == 1) {
-		rota -= rotaVal * accel;
+		rota -= rotaVal * accel * gear;
 	} else if (keys[KEY_INPUT_A] == 1) {
-		rota += rotaVal * accel;
+		rota += rotaVal * accel * gear;
 	}
 
 	static XMFLOAT2 vec = { 0.0f, 3.0f };
@@ -145,6 +150,20 @@ void Player::CoinDash() {
 		coinBoost = 1.0f;
 		coinFrame = 0.0f;
 		getCoin = false;
+	}
+}
+
+void Player::GearDash() {
+	if (!isGear) {
+		gear = 1.0f;
+		return;
+	}
+	gearFrame++;
+	Clamp(gearFrame, 0.0f, kGearFrameMax);
+	gear = 2.0f;
+	if (gearFrame == kGearFrameMax) {
+		gearFrame = 0.0f;
+		isGear = false;
 	}
 }
 
