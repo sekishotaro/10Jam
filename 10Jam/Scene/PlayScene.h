@@ -27,7 +27,7 @@ public:
 	void Draw() override;
 private:
 	void ChangeNextScene(SceneManager::SceneName scene);
-
+	bool StartUpdate();
 private:
 	std::unique_ptr<BackScreen> backScreen = nullptr;
 	std::unique_ptr<Player> player = nullptr;
@@ -36,7 +36,8 @@ private:
 	std::unique_ptr<GearSpot> gear = nullptr;
 
 	int count = 0;
-
+	bool isStart = true;
+	int startCount = 0;
 	int bgmHandle;
 };
 
