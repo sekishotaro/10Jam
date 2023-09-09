@@ -29,10 +29,11 @@ void PlayScene::Initialize() {
 	Sound::Ins()->Play(bgmHandle, true, DX_PLAYTYPE_LOOP);
 	gear = std::make_unique<GearSpot>(DirectX::XMFLOAT2{ 1000,500 }, player.get());
 	gear->Initialize();
-	count=GetNowCount();
+	startCount =GetNowCount();
 }
 
 void PlayScene::Update() {
+	if(!StartUpdate()){ return; } 
 	player->Update();
 	cannon_->Update();
 	accel->Update();
@@ -67,7 +68,11 @@ void PlayScene::Draw() {
 
 	// スコアを描画
 	// スコアにブルームはかけない
-	DrawFormatString(640,20,GetColor(255,255,255),"%d",(GetNowCount()-count)/1000);
+	if (isStart) {
+		DrawFormatString(600, 360, GetColor(255, 255, 255), "%d", 3 - (GetNowCount() - startCount) / 1000);
+	} else {
+		DrawFormatString(640, 20, GetColor(255, 255, 255), "%d", (GetNowCount() - count) / 1000);
+	}
 	ScoreManager::GetInstance()->Draw();
 
 	// 描画先をmainScreenにする
@@ -77,4 +82,17 @@ void PlayScene::Draw() {
 void PlayScene::ChangeNextScene(SceneManager::SceneName scene) {
 	Sound::Ins()->Stop(bgmHandle);
 	SceneManager::GetInstance()->ChangeScene(scene);
+}
+
+bool PlayScene::StartUpdate() {
+	if (!isStart) {
+		return true;
+	}
+	if (((GetNowCount() - startCount) / 1000) == 4) {
+		isStart = false;
+		count = GetNowCount();
+		return true;
+	} else {
+		return false;
+	}
 }
