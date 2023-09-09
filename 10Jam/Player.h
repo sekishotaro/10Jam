@@ -76,4 +76,6 @@ public:
 	bool isStop = false;
 	//”¼Œa
 	const float radius = 20.0f;
+
+	bool playerStop = false;
 };

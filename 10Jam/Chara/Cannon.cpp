@@ -3,6 +3,7 @@
 #include <DirectXMath.h>
 #include <random>
 #include <ScoreManager.h>
+#include <vector>
 Cannon::Cannon() {
 
 
@@ -27,25 +28,75 @@ void Cannon::Initialize() {
 }
 
 void Cannon::Update() {
+	//全フレームで削除処理があった場合残った子供の移動処理
+	if (deleteChilFlag == true)
+	{
+		//残った子供が0人の場合はスルー
+		if (Children::GetTracChildrenNum() <= 0)
+		{
+			deleteChilFlag = false;
+		}
+		else
+		{
+			//子供を移動させる。
+			for (std::unique_ptr<Children>& children : Childrens) {
+				if (children->freeFlag == true) continue;
+				children->ChilAlignment(time, alignmentMaxTime);
+			}
+
+			//時間がたったら終わり
+			if (TimeProgress() == true)
+			{
+				deleteChilFlag = false;
+				time = 0.0f;
+			}
+			else
+			{
+				return;
+			}
+		}
+	}
+	
 	Spawn();
 	for (std::unique_ptr<Children>& children : Childrens) {
 		children->Update();
 	}
 	
+
 	//削除するか確認
 	if (Children::DleteCheck() == false) return;
+	//連結子供削除フラグ
+	deleteChilFlag = true;
+	//残りの連結子供の数
+	int TracChildrenNum = Children::GetTracChildrenNum();
+	int HitNum = Children::GetHitNum();
+	int num = TracChildrenNum - HitNum;
+	//残りの連結子供の数分番号1から位置と移動量を保存
+	DirectX::XMFLOAT2* a = new DirectX::XMFLOAT2[num];
+	std::vector<DirectX::XMFLOAT2>* moveChil = new std::vector<DirectX::XMFLOAT2>[num];
+	
 	//削除する子供の判別
 	for (std::unique_ptr<Children>& children : Childrens)
 	{
 		children->DleteChildrenCheck();
+		//削除しない子供ならcontinue
+		if (children->deleteFlag == false) continue;
+		// 連結番号
+		int Anum = children->GetRestraintTh();
+		if (num == 0) continue;
+		if (Anum > num) continue;
+		
+
+		a[Anum -1] = children->GetPos();
+		moveChil[Anum - 1] = children->GetRestrainMoveVec();
 	}
 	//削除する子供を削除
 	for (auto itr = Childrens.begin(); itr != Childrens.end();)
 	{
-
 		if (itr->get()->deleteFlag == true)
 		{
 			itr = Childrens.erase(itr);
+			Children::trackChildrenNum--;
 		}
 		else
 		{
@@ -53,12 +104,16 @@ void Cannon::Update() {
 		}
 	}
 	//残った子供の処理
+	int count = 0;
 	for (std::unique_ptr<Children>& children : Childrens) {
-		children->TrackChilOrganize();
+		if (children->freeFlag == true) continue;
+		children->TrackChilOrganize(a[count], moveChil[count], count);
+		count++;
 	}
 	const int score = 100;
 	ScoreManager::GetInstance()->AddScore(Children::GetHitNum()* score);
-	Children::TrackChilHitNumReset();
+	delete[] a;
+ 	Children::TrackChilHitNumReset();
 }
 
 void Cannon::Draw() {
@@ -84,4 +139,13 @@ void Cannon::Spawn() {
 		Childrens.push_back(std::move(children));
 		coolTimer_ = 0;
 	}
+}
+
+bool Cannon::TimeProgress()
+{
+	float flame = 60.0f;
+	time += 1.0f / flame;
+
+	if (time >= alignmentMaxTime) return true;
+	return false;
 }
