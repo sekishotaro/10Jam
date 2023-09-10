@@ -67,6 +67,7 @@ public:
 	DirectX::XMFLOAT2 GetPos() { return pos; }
 	std::vector<DirectX::XMFLOAT2> GetRestrainMoveVec() { return restrainMoveVec; }
 	int GetRestraintTh() { return restraintTh; }
+	bool GetTailFlag() { return tailFlag; }
 private:
 	/// <summary>
 	/// 自機と当たり判定
@@ -143,8 +144,11 @@ private:
 
 	//削除整列後再び削除するためのクールタイム
 	static float coolTime;
-	float coolTimeMax = 5.0f;
+	float coolTimeMax = 3.0f;
 	
+	//削除後整列があるか確認フラグ
+	bool alignmentFlag = false;
+
 public:
 	//追跡子供全体数
 	static int trackChildrenNum;

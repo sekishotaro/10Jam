@@ -27,7 +27,7 @@ void Cannon::Initialize() {
 	}
 }
 
-void Cannon::Update() {
+void Cannon::Update() {	
 	//全フレームで削除処理があった場合残った子供の移動処理
 	if (deleteChilFlag == true)
 	{
@@ -58,6 +58,7 @@ void Cannon::Update() {
 	}
 	
 	Spawn();
+
 	for (std::unique_ptr<Children>& children : Childrens) {
 		children->Update();
 	}
@@ -65,16 +66,21 @@ void Cannon::Update() {
 
 	//削除するか確認
 	if (Children::DleteCheck() == false) return;
-	//連結子供削除フラグ
+	//連結子供削除フラグ(整列の為)
 	deleteChilFlag = true;
-	//残りの連結子供の数
-	int TracChildrenNum = Children::GetTracChildrenNum();
-	int HitNum = Children::GetHitNum();
-	int num = TracChildrenNum - HitNum;
+	//整列で並び替える数
+	int alignmentNum = Children::GetHitNum();
+	int tracChilNum = Children::GetTracChildrenNum();
+	int remainder = Children::GetTracChildrenNum() - Children::GetHitNum();
+	//整列数が(整列全体数-当たった番号)より多い場合はあまりの数にする。
+	if (alignmentNum > remainder)
+	{
+		alignmentNum = remainder;
+	}
+
 	//残りの連結子供の数分番号1から位置と移動量を保存
-	DirectX::XMFLOAT2* a = new DirectX::XMFLOAT2[num];
-	std::vector<DirectX::XMFLOAT2>* moveChil = new std::vector<DirectX::XMFLOAT2>[num];
-	
+	DirectX::XMFLOAT2* a = new DirectX::XMFLOAT2[alignmentNum];
+	std::vector<DirectX::XMFLOAT2>* moveChil = new std::vector<DirectX::XMFLOAT2>[alignmentNum];
 	//削除する子供の判別
 	for (std::unique_ptr<Children>& children : Childrens)
 	{
@@ -82,13 +88,11 @@ void Cannon::Update() {
 		//削除しない子供ならcontinue
 		if (children->deleteFlag == false) continue;
 		// 連結番号
-		int Anum = children->GetRestraintTh();
-		if (num == 0) continue;
-		if (Anum > num) continue;
-		
+		int RestraintTh = children->GetRestraintTh();	//連結番号
+		if (alignmentNum < RestraintTh) continue;
 
-		a[Anum -1] = children->GetPos();
-		moveChil[Anum - 1] = children->GetRestrainMoveVec();
+		a[RestraintTh -1] = children->GetPos();
+		moveChil[RestraintTh - 1] = children->GetRestrainMoveVec();
 	}
 	//削除する子供を削除
 	for (auto itr = Childrens.begin(); itr != Childrens.end();)
@@ -104,10 +108,18 @@ void Cannon::Update() {
 		}
 	}
 	//残った子供の処理
-	int count = 0;
+	int count = 1;
 	for (std::unique_ptr<Children>& children : Childrens) {
 		if (children->freeFlag == true) continue;
-		children->TrackChilOrganize(a[count], moveChil[count], count);
+		int numA = tracChilNum - (tracChilNum - remainder);
+		int numB = children->GetRestraintTh();
+		if (numB <= numA) continue;
+		
+		//カウントが保存個数を超えたらエラー
+		if (count > alignmentNum) { assert(0); }
+
+		//後ろから数えて消した子供の数分置き換える。
+		children->TrackChilOrganize(a[count -1], moveChil[count -1], count -1);
 		count++;
 	}
 	const int score = 100;
@@ -143,9 +155,8 @@ void Cannon::Spawn() {
 
 bool Cannon::TimeProgress()
 {
+	if (time >= alignmentMaxTime) return true;
 	float flame = 60.0f;
 	time += 1.0f / flame;
-
-	if (time >= alignmentMaxTime) return true;
 	return false;
 }

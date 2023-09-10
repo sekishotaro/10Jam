@@ -33,6 +33,11 @@ private:
 
 	float alignmentMaxTime = 2.0f;
 	float time = 0.0f;
+
+	// 最新のキーボード情報用
+	char keys[256] = { 0 };
+	// 1ループ(フレーム)前のキーボード情報
+	char oldkeys[256] = { 0 };
 public:
 	bool deleteChilFlag = false;
 };

@@ -39,6 +39,10 @@ void Children::Draw() {
 	{
 		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 255, 255), true);
 	}
+	else if (coolTime < coolTimeMax)
+	{
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 246, 0), true);
+	}
 	else if( tailFlag == true)
 	{
 		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 55, 255), true);
@@ -47,6 +51,8 @@ void Children::Draw() {
 	{
 		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(55, 55, 255), true);
 	}
+
+	DrawFormatString(1000, 20, GetColor(255, 255, 255), "trackChil: %d", trackChildrenNum);
 }
 
 bool Children::Collision() {
@@ -135,10 +141,11 @@ void Children::TrackMove()
 
 void Children::TrackChildrenColProcess()
 {
-	//クールタイム中なら早期リターン
-	if (CoolTime() == true) return;
 	//自由子供は早期リターン
 	if (freeFlag == true) return;
+
+	//クールタイム中なら早期リターン
+	if (CoolTime() == true) return;
 
 	//追跡子供になったばかりの場合は判定しない
 	if (tailFlag == false) return;
@@ -194,10 +201,12 @@ void Children::DleteChildrenCheck()
 
 void Children::TrackChilOrganize(XMFLOAT2 alignmentPos, std::vector<XMFLOAT2> restrainMoveVec, int count)
 {
-	if (freeFlag == true) return;
+	//前提条件としてこの処理は整列処理を行う子供のみ来る。
 
+	if (freeFlag == true) return;
 	restraintTh = count + 1;
 	tailFlag = false;
+	alignmentFlag = true;
 	oldAliPos = pos;
 	this->alignmentPos = alignmentPos;
 	this->restrainMoveVec.clear();
@@ -206,11 +215,14 @@ void Children::TrackChilOrganize(XMFLOAT2 alignmentPos, std::vector<XMFLOAT2> re
 
 void Children::ChilAlignment(const float time, const float timeMax)
 {
+	if (alignmentFlag == false) return;
+
 	float timeRate = min(time / timeMax, 1.0f);	//タイムレート 0.0f->1.0f
 
 	if (time >= timeMax)
 	{
 		pos = alignmentPos;
+		alignmentFlag = false;
 		return;
 	}
 
@@ -263,9 +275,9 @@ void Children::UpdateRippleEffect()
 bool Children::CoolTime()
 {
 	const float flame = 60.0f;
-	coolTime += 1.0f / flame;
+	coolTime += 1.0f / (flame * (float)trackChildrenNum);
 
-	if (coolTime <= coolTimeMax)
+	if (coolTime < coolTimeMax)
 	{
 		return true;
 	}
