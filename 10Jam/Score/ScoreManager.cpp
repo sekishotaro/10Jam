@@ -9,9 +9,6 @@ int ScoreManager::score = 0;
 namespace
 {
 	constexpr XMFLOAT2 scorePosLT = XMFLOAT2(20.f, 20.f);
-	constexpr float scoreShadowDiff = 4.f;
-	constexpr XMFLOAT2 scoreShadowPosLT = XMFLOAT2(scorePosLT.x - scoreShadowDiff,
-												   scorePosLT.y + scoreShadowDiff);
 }
 
 ScoreManager* ScoreManager::GetInstance() {
@@ -28,7 +25,6 @@ void ScoreManager::Draw() {
 	static unsigned mainColor = GetColor(255, 255, 255);
 	static unsigned edgeColor = GetColor(0, 0, 0);
 
-	DrawStringF(scoreShadowPosLT.x, scoreShadowPosLT.y, tmp, backColor, edgeColor);
 	DrawStringF(scorePosLT.x, scorePosLT.y, tmp, mainColor, edgeColor);
 }
 
