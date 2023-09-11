@@ -137,7 +137,7 @@ void Cannon::Update() {
 	}
 
 	Particle::Ins()->Fireworks(player_->GetPos(),
-							   60u,
+							   120u,
 							   128.f,
 							   64ui8,
 							   Particle::ColorRGB{ 0xff,0x22,0x22 },
