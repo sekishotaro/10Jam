@@ -26,3 +26,9 @@ namespace EasingFunction {
 }
 
 float Ease(type Type, category Ease, float t, float start, float end);
+
+class Easing
+{
+public:
+	static float lerp(const float start, const float end, const float time);
+};

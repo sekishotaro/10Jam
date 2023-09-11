@@ -79,3 +79,8 @@ float Ease(type Type, category Ease, float t, float start, float end) {
         return false;
     }
 }
+
+float Easing::lerp(const float start, const float end, const float time)
+{
+    return start * (1.0f - time) + end * time;
+}

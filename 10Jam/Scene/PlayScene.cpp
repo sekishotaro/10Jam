@@ -34,6 +34,7 @@ void PlayScene::Initialize() {
 
 void PlayScene::Update() {
 	if(!StartUpdate()){ return; } 
+	player->playerStop = cannon_->deleteChilFlag;
 	player->Update();
 	cannon_->Update();
 	accel->Update();

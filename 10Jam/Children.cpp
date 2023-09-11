@@ -8,6 +8,8 @@
 #include "Particle.h"
 
 int Children::trackChilHitNum = 0;
+int Children::trackChildrenNum = 0;
+float Children::coolTime = 0.0f;
 
 Children::Children(XMFLOAT2 pos, Player* player) {
 	MountMove();
@@ -37,10 +39,20 @@ void Children::Draw() {
 	{
 		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 255, 255), true);
 	}
+	else if (coolTime < coolTimeMax)
+	{
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 246, 0), true);
+	}
+	else if( tailFlag == true)
+	{
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 55, 255), true);
+	}
 	else
 	{
-		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(110 + restraintTh, 239, 255), true);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(55, 55, 255), true);
 	}
+
+	DrawFormatString(1000, 20, GetColor(255, 255, 255), "trackChil: %d", trackChildrenNum);
 }
 
 bool Children::Collision() {
@@ -108,6 +120,7 @@ void Children::TracColProcess() {
 		pos = player_->GetPos();
 		player_->HitChildren();
 		restraintTh = player_->GetChildrenNum();
+		trackChildrenNum++;
 	}
 }
 
@@ -130,6 +143,9 @@ void Children::TrackChildrenColProcess()
 {
 	//自由子供は早期リターン
 	if (freeFlag == true) return;
+
+	//クールタイム中なら早期リターン
+	if (CoolTime() == true) return;
 
 	//追跡子供になったばかりの場合は判定しない
 	if (tailFlag == false) return;
@@ -159,15 +175,19 @@ bool Children::DleteCheck()
 void Children::TrackChilHitNumReset()
 {
 	trackChilHitNum = 0;
+	coolTime = 0.0f;
 }
 
 void Children::DleteChildrenCheck()
 {
+	//連結子供の場合チェックを付けずリターン
 	if (freeFlag == true)
 	{
 		deleteFlag = false;
 		return;
 	}
+
+	//自身の連結番号が当たった番号以下ならフラグを立てる
 	if (restraintTh <= trackChilHitNum)
 	{
 		deleteFlag = true;
@@ -179,15 +199,35 @@ void Children::DleteChildrenCheck()
 	}
 }
 
-void Children::TrackChilOrganize()
+void Children::TrackChilOrganize(XMFLOAT2 alignmentPos, std::vector<XMFLOAT2> restrainMoveVec, int count)
 {
-	if (freeFlag == true) return;
+	//前提条件としてこの処理は整列処理を行う子供のみ来る。
 
-	restraintTh -= (trackChilHitNum);
-	pos = player_->GetPos();
+	if (freeFlag == true) return;
+	restraintTh = count + 1;
 	tailFlag = false;
-	restrainMoveVec.clear();
-	restrainMoveVec.push_back(player_->GetMoveVec());
+	alignmentFlag = true;
+	oldAliPos = pos;
+	this->alignmentPos = alignmentPos;
+	this->restrainMoveVec.clear();
+	this->restrainMoveVec = restrainMoveVec;
+}
+
+void Children::ChilAlignment(const float time, const float timeMax)
+{
+	if (alignmentFlag == false) return;
+
+	float timeRate = min(time / timeMax, 1.0f);	//タイムレート 0.0f->1.0f
+
+	if (time >= timeMax)
+	{
+		pos = alignmentPos;
+		alignmentFlag = false;
+		return;
+	}
+
+	pos.x = Easing::lerp( oldAliPos.x, alignmentPos.x, timeRate);
+	pos.y = Easing::lerp(oldAliPos.y, alignmentPos.y, timeRate);
 }
 
 void Children::ScrollMove() {
@@ -230,4 +270,16 @@ void Children::UpdateRippleEffect()
 		// 波紋エフェクト開始
 		Particle::Ins()->Ripple(pos, life, endRadius, 1ui8, rippleColor, vertexCount);
 	}
+}
+
+bool Children::CoolTime()
+{
+	const float flame = 60.0f;
+	coolTime += 1.0f / (flame * (float)trackChildrenNum);
+
+	if (coolTime < coolTimeMax)
+	{
+		return true;
+	}
+	return false;
 }
