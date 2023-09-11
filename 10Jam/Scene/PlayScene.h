@@ -4,9 +4,7 @@
 #include "../Children.h"
 #include <memory>
 #include "Cannon.h"
-#include <AccelSpot.h>
 #include <BackScreen.h>
-#include "GearSpot.h"
 #include "SceneManager.h"
 
 class PlayScene : public BaseScene {
@@ -28,14 +26,17 @@ public:
 private:
 	void ChangeNextScene(SceneManager::SceneName scene);
 	bool StartUpdate();
+	bool FinishUpdate();
 private:
 	std::unique_ptr<BackScreen> backScreen = nullptr;
 	std::unique_ptr<Player> player = nullptr;
 	std::unique_ptr<Cannon> cannon_ = nullptr;
-	std::unique_ptr<AccelSpot> accel = nullptr;
-	std::unique_ptr<GearSpot> gear = nullptr;
+
+	bool isFinish = false;
 
 	int count = 0;
+	int playcount = 0;
+	const int kPlayCount = 60;
 	bool isStart = true;
 	int startCount = 0;
 	int bgmHandle;

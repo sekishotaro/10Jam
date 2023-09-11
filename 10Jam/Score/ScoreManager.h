@@ -8,26 +8,38 @@ public:
 	static ScoreManager* GetInstance();
 
 	/// <summary>
-	/// 描画
+	/// 謠冗判
 	/// </summary>
 	void Draw();
 
 
+	void ResultUpdate();
+
 	/// <summary>
-	/// スコア増加
+	/// 謠冗判
+	/// </summary>
+	void ResultDraw();
+
+	void ScoreSort();
+
+	/// <summary>
+	/// 繧ｹ繧ｳ繧｢蠅怜刈
 	/// </summary>
 	/// <param name="add"></param>
 	void AddScore(const int add, unsigned particleNum = 1u, const DirectX::XMFLOAT2& particleStartPos = { 640.f, 360.f });
 	/// <summary>
-	/// スコアリセット
+	/// 繧ｹ繧ｳ繧｢繝ｪ繧ｻ繝�繝�
 	/// </summary>
-	void ResetScore() { score = 0; }
+	void ResetScore() { score = 0; frame = 0.f; }
 
 	static int GetScore() { return score; }
 
 private:
 	static int score;
-
+	float frame = 0.0f;
+	float kFrameMax = 60.0f;
+	float scroll = -720;
+	static int result[3];
 private:
 	ScoreManager() = default;
 	~ScoreManager() = default;

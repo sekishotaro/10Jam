@@ -25,6 +25,14 @@ void Cannon::Initialize() {
 	for (int i = 0; i < firstSpawnNum;i++) {
 		Childrens.push_back(std::move(child[i]));
 	}
+	std::unique_ptr<AccelSpot> accel = std::make_unique<AccelSpot>(DirectX::XMFLOAT2{ 600,200 }, player_);
+	accel->Initialize();
+	std::unique_ptr<GearSpot> gear = std::make_unique<GearSpot>(DirectX::XMFLOAT2{ 1000,500 }, player_);
+	gear->Initialize();
+
+	accels.push_back(std::move(accel));
+	gears.push_back(std::move(gear));
+
 }
 
 void Cannon::Update() {	
@@ -58,11 +66,15 @@ void Cannon::Update() {
 	}
 	
 	Spawn();
-
+	SpotSpawn();
 	for (std::unique_ptr<Children>& children : Childrens) {
 		children->Update();
 	}
-	
+	for (std::unique_ptr<AccelSpot>& accel : accels) {
+		accel->Update();
+	}	for (std::unique_ptr<GearSpot>& gear : gears) {
+		gear->Update();
+	}
 
 	//削除するか確認
 	if (Children::DleteCheck() == false) return;
@@ -129,6 +141,11 @@ void Cannon::Update() {
 }
 
 void Cannon::Draw() {
+	for (std::unique_ptr<AccelSpot>& accel : accels) {
+		accel->Draw();
+	}	for (std::unique_ptr<GearSpot>& gear : gears) {
+		gear->Draw();
+	}
 	for (std::unique_ptr<Children>& children : Childrens) {
 		children->Draw();
 	}
@@ -151,6 +168,48 @@ void Cannon::Spawn() {
 		Childrens.push_back(std::move(children));
 		coolTimer_ = 0;
 	}
+}
+
+void Cannon::SpotSpawn() {
+	int nowscore = ScoreManager::GetInstance()->GetScore();
+	if(nowscore > mScore + 500){
+		mScore = nowscore;
+		isSpawn = true;
+	}
+	if (nowscore > mGscore + 1000) {
+		mGscore = nowscore;
+		isSpawnGear = true;
+	}
+	if (isSpawn|| isSpawnGear) {
+		std::random_device seed_gen;
+		std::default_random_engine engine(seed_gen());
+		// -100以上100以下の値を等確率で発生させる
+		std::uniform_int_distribution<> dist(140, 1140);
+		std::uniform_int_distribution<> distY(80, 640);
+
+		// 一様整数分布で乱数を生成する
+		float positionX = (float)dist(engine);
+		float positionY = (float)distY(engine);
+
+		if (isSpawn) {
+			if (accels.size()>2) {
+				accels.pop_front();
+			}
+			std::unique_ptr<AccelSpot> accel = std::make_unique<AccelSpot>(DirectX::XMFLOAT2{ positionX,positionY }, player_);
+			accel->Initialize();
+			accels.push_back(std::move(accel));
+			isSpawn = false;
+		} else {
+			if (gears.size() > 1) {
+				gears.pop_front();
+			}
+			std::unique_ptr<GearSpot> gear = std::make_unique<GearSpot>(DirectX::XMFLOAT2{ positionX,positionY }, player_);
+			gear->Initialize();
+			gears.push_back(std::move(gear));
+			isSpawnGear = false;
+		}
+	}
+
 }
 
 bool Cannon::TimeProgress()
