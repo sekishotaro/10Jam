@@ -22,8 +22,8 @@ void BackScreen::Draw() {
 	const int num = 120;
 	const int half = num / 2;
 	DirectX::XMFLOAT2 scroll = sub;
-	scroll.x = (int)scroll.x % 1280;
-	scroll.y = (int)scroll.y % 720;
+	scroll.x = (float)((int)scroll.x % 1280);
+	scroll.y = (float)((int)scroll.y % 720);
 
 	for (int i = 0; i < num; i++) {
 		DrawLine(0, (50 * (i - half)) - (int)scroll.y, 1280, (50 * (i - half)) - (int)scroll.y, GetColor(200, 200, 200), 1);
