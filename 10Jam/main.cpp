@@ -42,6 +42,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// (ダブルバッファ)描画先グラフィック領域は裏面を指定
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	// デフォルトのフォントを変更
+	constexpr int edgeSize = 2;
+	ChangeFontFromHandle(LoadFontDataToHandle("Resources/FZゴンタかな_32.dft", edgeSize));
+
 	// 文字描画にアンチエイリアスと枠線を付ける
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE_4X4);
 

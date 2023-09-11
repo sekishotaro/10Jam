@@ -33,7 +33,7 @@ void SceneManager::Update() {
 		scene_ = std::move(nextScene_);
 		scene_->Initialize();
 		nextScene_.reset();
-		sceneChanger_->SetIsClose(true);
+		sceneChanger_->SetIsClose();
 	}
 	scene_->Update();
 }
@@ -41,7 +41,6 @@ void SceneManager::Update() {
 void SceneManager::Draw() {
 	scene_->Draw();
 	sceneChanger_->Draw();
-
 }
 
 void SceneManager::ChangeScene(const SceneName sceneName) {
@@ -68,13 +67,6 @@ std::unique_ptr<BaseScene> SceneManager::CreateScene(const SceneName sceneName) 
 }
 
 bool SceneManager::CheckChanger() {
-	if (sceneChanger_->GetIsStart()) {
-		sceneChanger_->Update();
-		return true;
-	} else if (sceneChanger_->GetIsClose()) {
-		sceneChanger_->Update();
-		return true;
-	} else {
-		return false;
-	}
+	sceneChanger_->Update();
+	return sceneChanger_->GetPhase() != SceneChanger::PHASE::INVISIBLE;
 }

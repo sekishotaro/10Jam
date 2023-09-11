@@ -2,6 +2,43 @@
 #include "DxLib.h"
 #include "Easing.h"
 
+namespace
+{
+	inline float StartEase(float t)
+	{
+		return Ease(In, Quad, t, 0.f, 600.0f);
+	}
+
+	inline float EndEase(float t)
+	{
+		return Ease(In, Quad, t, 630.f, 0.f);
+	}
+}
+
+void SceneChanger::UpdateStart()
+{
+	UpdateFrame();
+	if (frame_ == 0u)
+	{
+		EndSceneChange();
+	} else
+	{
+		r = StartEase(float(frame_) / float(kFrameMax));
+	}
+}
+
+void SceneChanger::UpdateClose()
+{
+	UpdateFrame();
+	if (frame_ == 0u)
+	{
+		EndSceneChange();
+	} else
+	{
+		r = EndEase(float(frame_) / float(kFrameMax));
+	}
+}
+
 SceneChanger::SceneChanger() {
 }
 
@@ -10,42 +47,16 @@ SceneChanger::~SceneChanger() {
 }
 
 void SceneChanger::Initialize() {
-	frame_ = 0.f, kFrameMax = 45.f, frameNow_ = 0.0f;
+	frame_ = 0;
 	r = 0.0f;
-	isStart = false;
-	isClose = false;
-
 }
 
 void SceneChanger::Update() {
-	if (isStart) {
-		frame_ += 1.0f;
-		frameNow_ = frame_ / kFrameMax;
-		if (frameNow_ <= 1.1f) {
-			r = Ease(In, Quad, frameNow_, 0.f, 600.0f);
-		} else {
-			frame_ = 0.0f;
-			frameNow_ = 0.0f;
-			isStart = false;
-			return;
-		}
-	}
-	if (isClose) {
-		frame_ += 1.0f;
-		frameNow_ = frame_ / kFrameMax;
-		if (frameNow_ <= 1.0f) {
-			r = Ease(In, Quad, frameNow_, 630.f, 0.0f);
-		} else {
-			frame_ = 0.0f;
-			frameNow_ = 0.0f;
-			isVisible = false;
-			isClose = false;
-		}
-	}
+	updateProc();
 }
 
 void SceneChanger::Draw() {
-	if (isVisible) {
-		DrawCircleAA(640.f, 360.f, r, 128, GetColor(255, 255, 255), TRUE);
-	}
+	if (phase == PHASE::INVISIBLE) { return; }
+
+	DrawCircleAA(640.f, 360.f, r, 128, GetColor(255, 255, 255), TRUE);
 }

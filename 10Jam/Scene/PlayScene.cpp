@@ -8,8 +8,10 @@ PlayScene::PlayScene() {
 }
 
 PlayScene::~PlayScene() {
-	// •`‰ææ‚ð— ‰æ–Ê‚É‚·‚é
+	// æç”»å…ˆã‚’è£ç”»é¢ã«ã™ã‚‹
 	SetDrawScreen(DX_SCREEN_BACK);
+
+	Particle::Ins()->Clear();
 }
 
 void PlayScene::Initialize() {
@@ -20,7 +22,7 @@ void PlayScene::Initialize() {
 	cannon_->SetPlayer(player.get());
 	cannon_->Initialize();
 
-	// •`‰ææ‚ðmainScreen‚É‚·‚é
+	// æç”»å…ˆã‚’mainScreenã«ã™ã‚‹
 	SetDrawScreen(Bloom::Ins()->mainScreen);
 
 	bgmHandle = Sound::Ins()->LoadFile("Resources/Sound/D_rhythmaze_119.ogg");
@@ -41,24 +43,28 @@ void PlayScene::Update() {
 }
 
 void PlayScene::Draw() {
+	// æç”»å…ˆã‚’mainScreenã«ã™ã‚‹
+	SetDrawScreen(Bloom::Ins()->mainScreen);
+	ClearDrawScreen();
+
 	backScreen->Draw();
 	cannon_->Draw();
 	player->Draw();
 
 	Particle::Ins()->Draw();
 
-	// •`‰ææ‚ð— ‰æ–Ê‚É‚·‚é
+	// æç”»å…ˆã‚’è£ç”»é¢ã«ã™ã‚‹
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	// mainScreen‚Ì“à—e‚ð•`‰æ‚·‚é
+	// mainScreenã®å†…å®¹ã‚’æç”»ã™ã‚‹
 	DrawGraphF(0, 0, Bloom::Ins()->mainScreen, FALSE);
 
-	// ‚Ú‚©‚µ‚½‚à‚Ì‚ð•`‰æ‚·‚é
+	// ã¼ã‹ã—ãŸã‚‚ã®ã‚’æç”»ã™ã‚‹
 	Bloom::Ins()->UpdateBloomScreen();
 	Bloom::Ins()->DrawBloomScreen();
 
-	// ƒXƒRƒA‚ð•`‰æ
-	// ƒXƒRƒA‚Éƒuƒ‹[ƒ€‚Í‚©‚¯‚È‚¢
+	// ã‚¹ã‚³ã‚¢ã‚’æç”»
+	// ã‚¹ã‚³ã‚¢ã«ãƒ–ãƒ«ãƒ¼ãƒ ã¯ã‹ã‘ãªã„
 	if (isStart) {
 		DrawFormatString(600, 360, GetColor(255, 255, 255), "%d", 3 - (GetNowCount() - startCount) / 1000);
 	} else {
@@ -68,7 +74,7 @@ void PlayScene::Draw() {
 	if (isFinish) {
 		ScoreManager::GetInstance()->ResultDraw();
 	}
-	// •`‰ææ‚ðmainScreen‚É‚·‚é
+	// æç”»å…ˆã‚’mainScreenã«ã™ã‚‹
 	SetDrawScreen(Bloom::Ins()->mainScreen);
 }
 
