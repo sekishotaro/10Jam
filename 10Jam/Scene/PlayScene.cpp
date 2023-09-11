@@ -74,8 +74,6 @@ void PlayScene::Draw() {
 	if (isFinish) {
 		ScoreManager::GetInstance()->ResultDraw();
 	}
-	// 描画先をmainScreenにする
-	SetDrawScreen(Bloom::Ins()->mainScreen);
 }
 
 void PlayScene::ChangeNextScene(SceneManager::SceneName scene) {
