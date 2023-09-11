@@ -51,8 +51,6 @@ void Children::Draw() {
 	{
 		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(55, 55, 255), true);
 	}
-
-	DrawFormatString(1000, 20, GetColor(255, 255, 255), "trackChil: %d", trackChildrenNum);
 }
 
 bool Children::Collision() {
