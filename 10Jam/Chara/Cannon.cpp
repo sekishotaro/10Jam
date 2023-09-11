@@ -4,6 +4,7 @@
 #include <random>
 #include <ScoreManager.h>
 #include <vector>
+#include "../Particle.h"
 Cannon::Cannon() {
 
 
@@ -134,6 +135,14 @@ void Cannon::Update() {
 		children->TrackChilOrganize(a[count -1], moveChil[count -1], count -1);
 		count++;
 	}
+
+	Particle::Ins()->Fireworks(player_->GetPos(),
+							   60u,
+							   128.f,
+							   64ui8,
+							   Particle::ColorRGB{ 0xff,0x22,0x22 },
+							   true, 3ui8);
+
 	constexpr int scoreUnit = 100;
 	ScoreManager::GetInstance()->AddScore(Children::GetHitNum() * scoreUnit, 1u, player_->GetPos());
 	delete[] a;
