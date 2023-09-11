@@ -19,8 +19,9 @@ void Player::initialize() {
 }
 
 void Player::Update() {
-	moveVec = {};
+	if (playerStop == true) return;
 
+	moveVec = {};
 	// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
 	for (int i = 0; i < 256; i++) {
 		oldkeys[i] = keys[i];

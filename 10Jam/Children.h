@@ -40,10 +40,34 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	void DleteChildrenCheck();
+	/// <summary>
+	/// 残った連結している子供の位置、移動量を保存
+	/// </summary>
+	/// <param name="alignmentPos"></param>
+	/// <param name="restrainMoveVec"></param>
+	void TrackChilOrganize(XMFLOAT2 alignmentPos, std::vector<XMFLOAT2> restrainMoveVec, int count);
+	
+	/// <summary>
+	/// 連結した子供の整列
+	/// </summary>
+	/// <param name="time">整列割合時間</param>
+	void ChilAlignment(const float time, const float timeMax);
 
-	void TrackChilOrganize();
-
+	/// <summary>
+	/// 当たった連結子供の番号
+	/// </summary>
+	/// <returns></returns>
 	static const int GetHitNum() { return trackChilHitNum; }
+	/// <summary>
+	/// 連結子供の全体数
+	/// </summary>
+	/// <returns></returns>
+	static const int GetTracChildrenNum() { return trackChildrenNum; }
+
+	DirectX::XMFLOAT2 GetPos() { return pos; }
+	std::vector<DirectX::XMFLOAT2> GetRestrainMoveVec() { return restrainMoveVec; }
+	int GetRestraintTh() { return restraintTh; }
+	bool GetTailFlag() { return tailFlag; }
 private:
 	/// <summary>
 	/// 自機と当たり判定
@@ -65,10 +89,6 @@ private:
 	void TracColProcess();
 	
 	/// <summary>
-	/// 自由な子との当たり判定処理
-	/// </summary>
-	void FreeChildrenColProcess();
-	/// <summary>
 	/// 追跡移動
 	/// </summary>
 	void TrackMove();
@@ -81,8 +101,11 @@ private:
 
 	bool Spawn();
 
+	bool CoolTime();
+
 	/// @brief 波紋エフェクト更新
 	void UpdateRippleEffect();
+
 private:
 	Player* player_ = nullptr;
 	
@@ -108,6 +131,9 @@ private:
 	XMFLOAT2 moveVec[10] = {};
 	std::vector<XMFLOAT2> restrainMoveVec;
 
+	XMFLOAT2 alignmentPos = {};
+	XMFLOAT2 oldAliPos = {};
+
 	//追跡最後尾確認フラグ
 	bool tailFlag = false;
 
@@ -115,7 +141,17 @@ private:
 
 	//追跡子供と自機の当たった番号
 	static int trackChilHitNum;
+
+	//削除整列後再び削除するためのクールタイム
+	static float coolTime;
+	float coolTimeMax = 3.0f;
+	
+	//削除後整列があるか確認フラグ
+	bool alignmentFlag = false;
+
 public:
+	//追跡子供全体数
+	static int trackChildrenNum;
 	//削除確認フラグ
 	bool deleteFlag = false;
 	//拘束状態確認
