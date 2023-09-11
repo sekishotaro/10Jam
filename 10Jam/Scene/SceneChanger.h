@@ -1,6 +1,15 @@
 #pragma once
+#include <cstdint>
+#include <functional>
 class SceneChanger {
 public:
+	enum class PHASE : uint8_t
+	{
+		START,
+		CLOSE,
+		INVISIBLE
+	};
+
 	/// <summary>
 	/// インストラクタ
 	/// </summary>
@@ -26,18 +35,36 @@ public:
 	/// <summary>
 	/// ゲッター&setter
 	/// </summary>
-	void SetIsStart() { isStart = true; isVisible = true; }
-	bool GetIsStart() { return isStart; }
+	inline void SetIsStart() { phase = PHASE::START; updateProc = std::bind(&SceneChanger::UpdateStart, this);
+	}
+	inline bool GetIsStart() const { return phase == PHASE::START; }
 
-	void SetIsClose(const bool& flag) { isClose = true; }
-	bool GetIsClose() { return isClose; }
+	inline void SetIsClose() { phase = PHASE::CLOSE; updateProc = std::bind(&SceneChanger::UpdateClose, this); }
+	inline bool GetIsClose() const { return phase == PHASE::CLOSE; }
 
+	inline auto GetPhase() const { return phase; }
 
 private:
-	float frame_ = 0.f, kFrameMax = 45.f, frameNow_ = 0.0f;
+	static constexpr uint8_t kFrameMax = 45ui8;
+	uint8_t frame_ = 0;
 	float r = 0.f;
-	bool isStart = true;
-	bool isClose = false;
-	bool isVisible = false;
-};
+	PHASE phase = PHASE::INVISIBLE;
 
+	std::function<void()> updateProc = [] {};
+
+private:
+	/// @brief kFrameMaxの範囲内でframe_を増やす
+	inline void UpdateFrame()
+	{
+		frame_ = ++frame_ % kFrameMax;
+	}
+
+	inline void EndSceneChange()
+	{
+		phase = PHASE::INVISIBLE;
+		updateProc = [] {};
+	}
+
+	void UpdateStart();
+	void UpdateClose();
+};

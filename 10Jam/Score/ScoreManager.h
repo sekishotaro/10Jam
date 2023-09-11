@@ -27,9 +27,10 @@ public:
 
 private:
 	static int score;
+
 private:
-	~ScoreManager() = default;
 	ScoreManager() = default;
+	~ScoreManager() = default;
 	ScoreManager(const ScoreManager&) = delete;
 	void operator =(const ScoreManager&) = delete;
 };

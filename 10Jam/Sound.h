@@ -42,6 +42,15 @@ public:
 	/// @return -1ならエラー、それ以外ならサウンドハンドル
 	int LoadFile(const std::string& filePath);
 
+	/// @brief 音量を変更
+	/// @param handle 音声データのハンドル
+	/// @param volume 変更後の音量(0 ~ 255)
+	/// @return 
+	inline bool Volume(int handle, uint8_t volume)
+	{
+		return -1 == DxLib::SetVolumeSoundMem(int(volume), handle);
+	}
+
 	/// @brief 読み込んだ音声データを再生する
 	/// @param handle 再生する音声データのハンドル
 	/// @param topPositionFlag データの先頭から再生するかどうか
