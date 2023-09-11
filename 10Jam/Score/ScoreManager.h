@@ -13,6 +13,15 @@ public:
 	void Draw();
 
 
+	void ResultUpdate();
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void ResultDraw();
+
+	void ScoreSort();
+
 	/// <summary>
 	/// スコア増加
 	/// </summary>
@@ -21,12 +30,16 @@ public:
 	/// <summary>
 	/// スコアリセット
 	/// </summary>
-	void ResetScore() { score = 0; }
+	void ResetScore() { score = 0; frame = 0.f; }
 
 	static int GetScore() { return score; }
 
 private:
 	static int score;
+	float frame = 0.0f;
+	float kFrameMax = 60.0f;
+	float scroll = -720;
+	static int result[3];
 private:
 	~ScoreManager() = default;
 	ScoreManager() = default;

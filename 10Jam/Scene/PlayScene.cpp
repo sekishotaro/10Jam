@@ -19,39 +19,29 @@ void PlayScene::Initialize() {
 	cannon_ = std::make_unique<Cannon>();
 	cannon_->SetPlayer(player.get());
 	cannon_->Initialize();
-	accel = std::make_unique<AccelSpot>(DirectX::XMFLOAT2{ 600,200 }, player.get());
-	accel->Initialize();
 
 	// •`‰ææ‚ðmainScreen‚É‚·‚é
 	SetDrawScreen(Bloom::Ins()->mainScreen);
 
 	bgmHandle = Sound::Ins()->LoadFile("Resources/Sound/D_rhythmaze_119.ogg");
 	Sound::Ins()->Play(bgmHandle, true, DX_PLAYTYPE_LOOP);
-	gear = std::make_unique<GearSpot>(DirectX::XMFLOAT2{ 1000,500 }, player.get());
-	gear->Initialize();
+
 	startCount =GetNowCount();
 }
 
 void PlayScene::Update() {
 	if(!StartUpdate()){ return; } 
+	if (FinishUpdate()) { return; }
+	playcount = (GetNowCount() - count) / 1000;
 	player->playerStop = cannon_->deleteChilFlag;
 	player->Update();
 	cannon_->Update();
-	accel->Update();
-	gear->Update();
-
 	backScreen->Update();
-	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
-		ChangeNextScene(SceneManager::SceneName::TITLE);
-	}
-
 	Particle::Ins()->Update();
 }
 
 void PlayScene::Draw() {
 	backScreen->Draw();
-	accel->Draw();
-	gear->Draw();
 	cannon_->Draw();
 	player->Draw();
 
@@ -72,10 +62,12 @@ void PlayScene::Draw() {
 	if (isStart) {
 		DrawFormatString(600, 360, GetColor(255, 255, 255), "%d", 3 - (GetNowCount() - startCount) / 1000);
 	} else {
-		DrawFormatString(640, 20, GetColor(255, 255, 255), "%d", (GetNowCount() - count) / 1000);
+		DrawFormatString(550, 20, GetColor(255, 255, 255), "%d/%d", playcount, kPlayCount);
 	}
 	ScoreManager::GetInstance()->Draw();
-
+	if (isFinish) {
+		ScoreManager::GetInstance()->ResultDraw();
+	}
 	// •`‰ææ‚ðmainScreen‚É‚·‚é
 	SetDrawScreen(Bloom::Ins()->mainScreen);
 }
@@ -96,4 +88,18 @@ bool PlayScene::StartUpdate() {
 	} else {
 		return false;
 	}
+}
+
+bool PlayScene::FinishUpdate() {
+	if (playcount == 60 &&!isFinish){
+		playcount = 60;
+		ScoreManager::GetInstance()->ScoreSort();
+		isFinish = true;
+	}
+	if(!isFinish){return false;}
+	ScoreManager::GetInstance()->ResultUpdate();
+	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
+		ChangeNextScene(SceneManager::SceneName::TITLE);
+	}
+	return true;
 }
