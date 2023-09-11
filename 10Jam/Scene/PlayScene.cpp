@@ -10,6 +10,8 @@ PlayScene::PlayScene() {
 PlayScene::~PlayScene() {
 	// •`‰ææ‚ð— ‰æ–Ê‚É‚·‚é
 	SetDrawScreen(DX_SCREEN_BACK);
+
+	Particle::Ins()->Clear();
 }
 
 void PlayScene::Initialize() {
@@ -49,6 +51,10 @@ void PlayScene::Update() {
 }
 
 void PlayScene::Draw() {
+	// •`‰ææ‚ðmainScreen‚É‚·‚é
+	SetDrawScreen(Bloom::Ins()->mainScreen);
+	ClearDrawScreen();
+
 	backScreen->Draw();
 	accel->Draw();
 	gear->Draw();
@@ -75,9 +81,6 @@ void PlayScene::Draw() {
 		DrawFormatString(640, 20, GetColor(255, 255, 255), "%d", (GetNowCount() - count) / 1000);
 	}
 	ScoreManager::GetInstance()->Draw();
-
-	// •`‰ææ‚ðmainScreen‚É‚·‚é
-	SetDrawScreen(Bloom::Ins()->mainScreen);
 }
 
 void PlayScene::ChangeNextScene(SceneManager::SceneName scene) {
