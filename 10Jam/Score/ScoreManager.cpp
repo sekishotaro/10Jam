@@ -43,10 +43,10 @@ void ScoreManager::ResultDraw() {
 	DrawBox(0,0,1280,720,GetColor(0,0,0),true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
-	DrawFormatString(410, 100+scroll, GetColor(255, 255, 255), "SCORE:%d", score);
-	DrawFormatString(480, 300+scroll, GetColor(255, 255, 255), "1st:%d", result[0]);
-	DrawFormatString(480, 400+scroll, GetColor(255, 255, 255), "2nd:%d", result[1]);
-	DrawFormatString(480, 500+scroll, GetColor(255, 255, 255), "3rd:%d", result[2]);
+	DrawFormatString(410, 100+(int)scroll, GetColor(255, 255, 255), "SCORE:%d", score);
+	DrawFormatString(480, 300+(int)scroll, GetColor(255, 255, 255), "1st:%d", result[0]);
+	DrawFormatString(480, 400+(int)scroll, GetColor(255, 255, 255), "2nd:%d", result[1]);
+	DrawFormatString(480, 500+(int)scroll, GetColor(255, 255, 255), "3rd:%d", result[2]);
 
 }
 

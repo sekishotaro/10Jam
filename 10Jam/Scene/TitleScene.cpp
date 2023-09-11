@@ -14,7 +14,7 @@ void TitleScene::Update() {
 	backScreen = std::make_unique<BackScreen>();
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
-	if (keys[KEY_INPUT_RETURN] == true) {
+	if (keys[KEY_INPUT_RETURN] == 1) {
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::PLAY);
 	}
 }
