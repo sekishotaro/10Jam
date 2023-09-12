@@ -29,8 +29,8 @@ void GearSpot::Update() {
 		constexpr float interval_f = float(interval);
 		spotframe = ++spotframe % interval;
 
-		constexpr float startR = 60.f;
-		constexpr float endR = 75.f;
+		constexpr float startR = 70.f;
+		constexpr float endR = 85.f;
 		spotRadius = Ease(In, Linear, float(spotframe) / interval_f, startR, endR);
 
 		if (!spotframe) {

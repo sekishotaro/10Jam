@@ -18,6 +18,7 @@ void PlayScene::Initialize() {
 	ScoreManager::GetInstance()->ResetScore();
 	backScreen = std::make_unique<BackScreen>();
 	player = std::make_unique<Player>();
+	backScreen->SetPlayer(player.get());
 	cannon_ = std::make_unique<Cannon>();
 	cannon_->SetPlayer(player.get());
 	cannon_->Initialize();
@@ -38,7 +39,7 @@ void PlayScene::Update() {
 	player->playerStop = cannon_->deleteChilFlag;
 	player->Update();
 	cannon_->Update();
-	backScreen->Update();
+	backScreen->Update(playcount);
 	Particle::Ins()->Update();
 }
 
@@ -97,7 +98,7 @@ bool PlayScene::StartUpdate() {
 }
 
 bool PlayScene::FinishUpdate() {
-	if (playcount == 60 &&!isFinish){
+	if (playcount >= 60 &&!isFinish){
 		playcount = 60;
 		ScoreManager::GetInstance()->ScoreSort();
 		isFinish = true;

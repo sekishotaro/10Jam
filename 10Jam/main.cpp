@@ -2,10 +2,11 @@
 #include "SceneManager.h"
 #include <SceneChanger.h>
 #include <array>
+#include "resource.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	// ウィンドウのタイトルに表示する文字列
-	constexpr char TITLE[] = "Test";
+	constexpr char TITLE[] = "【井】（かこい）";
 
 	// ウィンドウの大きさ
 	constexpr int window_width = 1280;
@@ -16,7 +17,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
-
+	//アイコン設定
+	SetWindowIconID(IDI_ICON1);
 	// ウィンドウサイズを手動では変更させず、
 	// かつウィンドウサイズに合わせて拡大できないようにする
 	SetWindowSizeChangeEnableFlag(FALSE, FALSE);
