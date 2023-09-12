@@ -64,6 +64,8 @@ void PlayScene::ChangeNextScene(SceneManager::SceneName scene) {
 	Sound::Ins()->Stop(bgmHandle);
 	// パーティクルを消す
 	Particle::Ins()->Clear();
+	//子供の変数初期化
+	Children::End();
 	// スコアは非表示に戻す
 	ScoreManager::GetInstance()->drawResultFlag = false;
 	// シーンを切り替える

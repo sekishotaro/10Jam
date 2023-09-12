@@ -14,14 +14,13 @@ void BackScreen::Initialize() {
 }
 
 void BackScreen::Update(const int playCount, const int maxCount) {
-	DirectX::XMFLOAT2 scroll = ScrollManager::GetInstance()->GetMove();
+	const DirectX::XMFLOAT2 scroll = ScrollManager::GetInstance()->GetMove();
 	sub.x += scroll.x;
 	sub.y += scroll.y;
 
-	if (player_->GetBoost()) { color_ = GetColor(0, 150, 200); }
-	else if (player_->GetGear()) { color_ = GetColor(50, 150, 50); } else {
-		color_ = GetColor(200, 200, 200);
-	}
+	if (player_->GetBoost()) { color_ = GetColor(0, 255, 255); }
+	else if (player_->GetGear()) { color_ = GetColor(255, 0, 255); }
+	else { color_ = GetColor(255, 255, 255); }
 	
 	if (maxCount-playCount > 5) { return; }
 	frame += vel;

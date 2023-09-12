@@ -59,14 +59,14 @@ void Player::Update() {
 }
 
 void Player::Draw() {
+	// –{‘Ì
 	DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(110, 239, 255), true);
+
 	if (isBoost) {
-		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(110, 110, 255), true);
-		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(10, 125, 10), false, 5.0f);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(16, 16, 255), false, 5.0f);
 	}
 	if (isGear) {
-		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(10, 125, 10), true);
-		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(110, 110, 255), false, 5.0f);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 16, 255), false, 5.0f);
 	}
 	if (getCoin) {
 		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 255, 0), true);
@@ -95,12 +95,6 @@ void Player::Move() {
 	}
 
 	static XMFLOAT2 vec = { 0.0f, 3.0f };
-
-	if (keys[KEY_INPUT_W] == 1) {
-		vec = { 0.0f, 3.0f };
-	} else if (keys[KEY_INPUT_S] == 1) {
-		vec = { 0.0f, 0.0f };
-	}
 
 	float sita = rota * 3.1415f / 108.0f;
 
@@ -143,24 +137,28 @@ void Player::Dash() {
 		accel = 1.0f;
 		return;
 	}
-	boostFrame++;
-	Clamp(boostFrame, 0.0f, kBoostFrameMax);
 	accel = 1.5f;
-	if (boostFrame == kBoostFrameMax) {
-		boostFrame = 0.0f;
+	boostFrame = ++boostFrame % kBoostFrameMax;
+	if (boostFrame == 0) {
 		isBoost = false;
 	}
 }
 
 void Player::RotaUpdate() {
-
-	if (ScoreManager::GetScore() >= 2000) {
-		rotaVal = 2.0f;
-	} else if (ScoreManager::GetScore() >= 1500) {
-		rotaVal = 2.25f;
+	if (ScoreManager::GetScore() >= 4000) {
+		rotaVal = 0.5f;
+		radius = 28.f;
+	} else if (ScoreManager::GetScore() >= 2500) {
+		rotaVal = 1.0f;
+		radius = 26.f;
+	} else if (ScoreManager::GetScore() >= 1750) {
+		rotaVal = 1.5f;
+		radius = 24.0f;
 	} else if (ScoreManager::GetScore() >= 1000) {
-		rotaVal = 2.5f;
+		rotaVal = 2.0f;
+		radius = 22.0f;
 	} else if (ScoreManager::GetScore() >= 500) {
-		rotaVal = 2.75f;
+		rotaVal = 2.5f;
+		radius = 20.0f;
 	}
 }
