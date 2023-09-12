@@ -84,6 +84,12 @@
     <ClCompile Include="Chara\GearSpot.cpp">
       <Filter>ソース ファイル\シーン関連</Filter>
     </ClCompile>
+    <ClCompile Include="Bloom.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -140,5 +146,21 @@
     <ClInclude Include="Chara\GearSpot.h">
       <Filter>ヘッダー ファイル\シーン関連</Filter>
     </ClInclude>
+    <ClInclude Include="Bloom.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="10Jam.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Kakoi.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
 </Project>

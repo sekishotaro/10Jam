@@ -1,6 +1,7 @@
 #include "BackScreen.h"
 #include "ScrollManager.h"
 #include <Helper.h>
+#include <Easing.h>
 
 BackScreen::BackScreen() {
 
@@ -12,10 +13,28 @@ BackScreen::~BackScreen() {
 void BackScreen::Initialize() {
 }
 
-void BackScreen::Update() {
+void BackScreen::Update(const int playCount) {
 	DirectX::XMFLOAT2 scroll = ScrollManager::GetInstance()->GetMove();
 	sub.x += scroll.x;
 	sub.y += scroll.y;
+
+	if (player_->GetBoost()) { color_ = GetColor(0, 150, 200); }
+	else if (player_->GetGear()) { color_ = GetColor(50, 150, 50); } else {
+		color_ = GetColor(200, 200, 200);
+	}
+	
+	if (playCount < 55) { return; }
+	frame += vel;
+	Clamp(frame,0.f, kFrameMax);
+	if (frame==0.f) {
+		vel = 1.0f;
+	}
+	if (frame == kFrameMax) {
+		vel = -1.0f;
+	}
+	float fra = frame / kFrameMax;
+	int col = Ease(In,Linear, fra,200,0);
+	color_ = GetColor(200, col, col);
 }
 
 void BackScreen::Draw() {
@@ -26,7 +45,7 @@ void BackScreen::Draw() {
 	scroll.y = (float)((int)scroll.y % 720);
 
 	for (int i = 0; i < num; i++) {
-		DrawLine(0, (50 * (i - half)) - (int)scroll.y, 1280, (50 * (i - half)) - (int)scroll.y, GetColor(200, 200, 200), 1);
-		DrawLine((50 * (i - half)) - (int)scroll.x, 0, (50 * (i - half)) - (int)scroll.x, 720, GetColor(200, 200, 200), 1);
+		DrawLine(0, (50 * (i - half)) - (int)scroll.y, 1280, (50 * (i - half)) - (int)scroll.y, color_, 1);
+		DrawLine((50 * (i - half)) - (int)scroll.x, 0, (50 * (i - half)) - (int)scroll.x, 720, color_, 1);
 	}
 }
