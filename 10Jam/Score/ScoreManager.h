@@ -38,7 +38,7 @@ public:
 private:
 	static int score;
 	float frame = 0.0f;
-	float kFrameMax = 60.0f;
+	float kFrameMax = 90.0f;
 	float scroll = -720;
 	static int result[3];
 private:

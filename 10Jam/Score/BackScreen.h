@@ -1,6 +1,7 @@
 #pragma once
 #include"DxLib.h"
 #include "DirectXMath.h"
+#include "../Player.h"
 
 class BackScreen {
 public:
@@ -13,13 +14,19 @@ public:
 	/// <summary>
 	/// çXêV
 	/// </summary>
-	void Update();
+	void Update(const int playCount=0);
 	/// <summary>
 	/// ï`âÊ
 	/// </summary>
 	void Draw();
-private:
-	DirectX::XMFLOAT2 sub = {};
 
+	void SetPlayer(Player* player) { player_ = player; }
+private:
+	Player* player_=nullptr;
+	DirectX::XMFLOAT2 sub = {};
+	int color_ = GetColor(200, 200, 200);
+	float frame = 0.0f;
+	float kFrameMax = 15.f;
+	float vel = 1.0f;
 };
 
