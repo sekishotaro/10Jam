@@ -104,10 +104,23 @@ void Children::MountMove() {
 void Children::MoveFree() {
 	if (!freeFlag) return;
 	if (!isMove) return;
+	if (isSlow) {
+		slowframe++;
+		speed = 2.25f;
+		Clamp(slowframe, 0.f, kSlowframeMax);
+		if (slowframe == kSlowframeMax) {
+			isSlow = false;
+			slowframe = 0.0f;
+			dir *= -1.0f;
+			speed = 4.5f;
+		}
+	}
+
+
 	move = {};
 	vel += 0.05f;
-	move.x = cosf(vel) * 4.5f;
-	move.y = sinf(vel) * 4.5f;
+	move.x = cosf(vel) * speed;
+	move.y = sinf(vel) * speed;
 	pos.x += move.x * dir;
 	pos.y += move.y * dir;
 }
@@ -117,7 +130,11 @@ void Children::TracColProcess() {
 
 	if (Collision() == true) {
 		freeFlag = false;
-		ScoreManager::GetInstance()->AddScore(10, 1u, player_->GetPos());
+		if (!isMove) {
+			ScoreManager::GetInstance()->AddScore(10, 1u, player_->GetPos());
+		} else {
+			ScoreManager::GetInstance()->AddScore(50, 1u, player_->GetPos());
+		}
 		//‚¸‚ê–hŽ~‚Ì‚½‚ß‚¢‚Á‚½‚ñŽ©‹@’†‰›À•W‚Éƒ[ƒv
 		pos = player_->GetPos();
 		player_->HitChildren();
