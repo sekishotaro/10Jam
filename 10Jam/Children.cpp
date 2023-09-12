@@ -9,7 +9,7 @@
 
 int Children::trackChilHitNum = 0;
 int Children::trackChildrenNum = 0;
-float Children::coolTime = 0.0f;
+float Children::coolTime = 3.0f;
 
 Children::Children(XMFLOAT2 pos, Player* player) {
 	MountMove();
@@ -41,7 +41,7 @@ void Children::Draw() {
 	}
 	else if (coolTime < coolTimeMax)
 	{
-		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 241, 24), true);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(125, 125, 125), true);
 	}
 	else if (restraintTh <= unColRestrainTh)
 	{
@@ -49,11 +49,12 @@ void Children::Draw() {
 	}
 	else if( tailFlag == false)
 	{
-		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(200, 200, 200), true);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(125, 125, 125), true);
 	}
 	else
 	{
 		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(230, 50, 78), true);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 241, 24), false, 2.0f);
 	}
 }
 
@@ -294,6 +295,7 @@ void Children::UpdateRippleEffect()
 void Children::End()
 {
 	trackChildrenNum = 0;
+	trackChilHitNum = 0;
 }
 
 bool Children::CoolTime()
