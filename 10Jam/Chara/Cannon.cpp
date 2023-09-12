@@ -5,6 +5,10 @@
 #include <ScoreManager.h>
 #include <vector>
 #include "../Particle.h"
+
+#define DEG_TO_RAD(deg)  ((deg) / 180.0 * 3.14159265358979323846)
+
+using namespace DirectX;
 Cannon::Cannon() {
 
 
@@ -18,12 +22,12 @@ void Cannon::Initialize() {
 	//最初のスポーン数
 	const int firstSpawnNum = 5;
 	std::unique_ptr<Children> child[firstSpawnNum];
-	child[0]= std::make_unique<Children>(DirectX:: XMFLOAT2{150.0f, 255.0f}, player_);
-	child[1] = std::make_unique<Children>(DirectX::XMFLOAT2{300.0f, 255.0f}, player_);
-	child[2] = std::make_unique<Children>(DirectX::XMFLOAT2{450.0f, 255.0f}, player_);
-	child[3] = std::make_unique<Children>(DirectX::XMFLOAT2{600.0f, 255.0f}, player_);
-	child[4] = std::make_unique<Children>(DirectX::XMFLOAT2{750.0f, 255.0f}, player_);
-	for (int i = 0; i < firstSpawnNum;i++) {
+	child[0] = std::make_unique<Children>(DirectX::XMFLOAT2{ 150.0f, 255.0f }, player_);
+	child[1] = std::make_unique<Children>(DirectX::XMFLOAT2{ 300.0f, 255.0f }, player_);
+	child[2] = std::make_unique<Children>(DirectX::XMFLOAT2{ 450.0f, 255.0f }, player_);
+	child[3] = std::make_unique<Children>(DirectX::XMFLOAT2{ 600.0f, 255.0f }, player_);
+	child[4] = std::make_unique<Children>(DirectX::XMFLOAT2{ 750.0f, 255.0f }, player_);
+	for (int i = 0; i < firstSpawnNum; i++) {
 		Childrens.push_back(std::move(child[i]));
 	}
 	std::unique_ptr<AccelSpot> accel = std::make_unique<AccelSpot>(DirectX::XMFLOAT2{ 600,200 }, player_);
@@ -33,20 +37,15 @@ void Cannon::Initialize() {
 
 	accels.push_back(std::move(accel));
 	gears.push_back(std::move(gear));
-
 }
 
-void Cannon::Update() {	
+void Cannon::Update() {
 	//全フレームで削除処理があった場合残った子供の移動処理
-	if (deleteChilFlag == true)
-	{
+	if (deleteChilFlag == true) {
 		//残った子供が0人の場合はスルー
-		if (Children::GetTracChildrenNum() <= 0)
-		{
+		if (Children::GetTracChildrenNum() <= 0) {
 			deleteChilFlag = false;
-		}
-		else
-		{
+		} else {
 			//子供を移動させる。
 			for (std::unique_ptr<Children>& children : Childrens) {
 				if (children->freeFlag == true) continue;
@@ -54,18 +53,14 @@ void Cannon::Update() {
 			}
 
 			//時間がたったら終わり
-			if (TimeProgress() == true)
-			{
+			if (TimeProgress() == true) {
 				deleteChilFlag = false;
 				time = 0.0f;
-			}
-			else
-			{
+			} else {
 				return;
 			}
 		}
 	}
-	
 	Spawn();
 	SpotSpawn();
 	for (std::unique_ptr<Children>& children : Childrens) {
@@ -86,8 +81,7 @@ void Cannon::Update() {
 	int tracChilNum = Children::GetTracChildrenNum();
 	int remainder = Children::GetTracChildrenNum() - Children::GetHitNum();
 	//整列数が(整列全体数-当たった番号)より多い場合はあまりの数にする。
-	if (alignmentNum > remainder)
-	{
+	if (alignmentNum > remainder) {
 		alignmentNum = remainder;
 	}
 
@@ -95,8 +89,7 @@ void Cannon::Update() {
 	DirectX::XMFLOAT2* a = new DirectX::XMFLOAT2[alignmentNum];
 	std::vector<DirectX::XMFLOAT2>* moveChil = new std::vector<DirectX::XMFLOAT2>[alignmentNum];
 	//削除する子供の判別
-	for (std::unique_ptr<Children>& children : Childrens)
-	{
+	for (std::unique_ptr<Children>& children : Childrens) {
 		children->SetIsSlow(true);
 		children->DleteChildrenCheck();
 		//削除しない子供ならcontinue
@@ -105,19 +98,15 @@ void Cannon::Update() {
 		int RestraintTh = children->GetRestraintTh();	//連結番号
 		if (alignmentNum < RestraintTh) continue;
 
-		a[RestraintTh -1] = children->GetPos();
+		a[RestraintTh - 1] = children->GetPos();
 		moveChil[RestraintTh - 1] = children->GetRestrainMoveVec();
 	}
 	//削除する子供を削除
-	for (auto itr = Childrens.begin(); itr != Childrens.end();)
-	{
-		if (itr->get()->deleteFlag == true)
-		{
+	for (auto itr = Childrens.begin(); itr != Childrens.end();) {
+		if (itr->get()->deleteFlag == true) {
 			itr = Childrens.erase(itr);
 			Children::trackChildrenNum--;
-		}
-		else
-		{
+		} else {
 			++itr;
 		}
 	}
@@ -128,27 +117,109 @@ void Cannon::Update() {
 		int numA = tracChilNum - (tracChilNum - remainder);
 		int numB = children->GetRestraintTh();
 		if (numB <= numA) continue;
-		
+
 		//カウントが保存個数を超えたらエラー
 		if (count > alignmentNum) { assert(0); }
 
 		//後ろから数えて消した子供の数分置き換える。
-		children->TrackChilOrganize(a[count -1], moveChil[count -1], count -1);
+		children->TrackChilOrganize(a[count - 1], moveChil[count - 1], count - 1);
 		count++;
 	}
 
 	Particle::Ins()->Fireworks(player_->GetPos(),
-							   120u,
-							   128.f,
-							   64ui8,
-							   Particle::ColorRGB{ 0xff,0x22,0x22 },
-							   true, 3ui8);
+		120u,
+		128.f,
+		64ui8,
+		Particle::ColorRGB{ 0xff,0x22,0x22 },
+		true, 3ui8);
 
 	constexpr int scoreUnit = 100;
 	ScoreManager::GetInstance()->AddScore(Children::GetHitNum() * scoreUnit, 1u, player_->GetPos());
 	aditionaltime += 3;
 	delete[] a;
 	Children::TrackChilHitNumReset();
+}
+
+void Cannon::TitleInitialize() {
+	//最初のスポーン数
+	const int firstSpawnNum = 12;
+	std::unique_ptr<Children> child[firstSpawnNum];
+
+	child[0] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(0.f)) * 200.0f, 360 + (cosf((float)DEG_TO_RAD(0.f)) * 200.0f) }, player_,true);
+	child[1] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(30.f)) * 200.0f, 360 + (cosf((float)DEG_TO_RAD(30.f)) * 200.0f) }, player_,true);
+	child[2] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(60.f)) * 200.0f, 360 + (cosf((float)DEG_TO_RAD(60.f)) * 200.0f) }, player_,true);
+	child[3] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(90.f)) * 200.0f, 360 + (cosf((float)DEG_TO_RAD(90.f)) * 200.0f) }, player_,true);
+	child[4] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(120.f)) * 200.0f,360 + (cosf((float)DEG_TO_RAD(120.f)) * 200.0f) }, player_,true);
+	child[5] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(150.f)) * 200.0f,360 + (cosf((float)DEG_TO_RAD(150.f)) * 200.0f) }, player_,true);
+	child[6] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(180.f)) * 200.0f,360 + (cosf((float)DEG_TO_RAD(180.f)) * 200.0f) }, player_,true);
+	child[7] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(210.f)) * 200.0f,360 + (cosf((float)DEG_TO_RAD(210.f)) * 200.0f) }, player_,true);
+	child[8] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(240.f)) * 200.0f,360 + (cosf((float)DEG_TO_RAD(240.f)) * 200.0f) }, player_, true);
+	child[9] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(270.f)) * 200.0f,360 + (cosf((float)DEG_TO_RAD(270.f)) * 200.0f) }, player_, true);
+	child[10] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(300.f)) * 200.0f,360 + (cosf((float)DEG_TO_RAD(300.f)) * 200.0f) }, player_, true);
+	child[11] = std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(330.f)) * 200.0f,360 + (cosf((float)DEG_TO_RAD(330.f)) * 200.0f) }, player_, true);
+
+	for (int i = 0; i < firstSpawnNum; i++) {
+		Childrens.push_back(std::move(child[i]));
+	}
+
+}
+
+void Cannon::TitleUpdate() {
+	//全フレームで削除処理があった場合残った子供の移動処理
+	if (deleteChilFlag == true) {
+		//残った子供が0人の場合はスルー
+		if (Children::GetTracChildrenNum() <= 0) {
+			deleteChilFlag = false;
+		} else {
+			//子供を移動させる。
+			for (std::unique_ptr<Children>& children : Childrens) {
+				if (children->freeFlag == true) continue;
+				children->ChilAlignment(time, alignmentMaxTime);
+			}
+
+			//時間がたったら終わり
+			if (TimeProgress() == true) {
+				deleteChilFlag = false;
+				time = 0.0f;
+			} else {
+				return;
+			}
+		}
+	}
+	TitleSpawn();
+	for (std::unique_ptr<Children>& children : Childrens) {
+		children->Update();
+	}
+
+}
+
+void Cannon::TitleDraw() {
+	for (std::unique_ptr<Children>& children : Childrens) {
+		children->Draw();
+	}
+}
+
+void Cannon::TitleSpawn() {
+	tFrame++;
+	Clamp(tFrame, 0.f, kFrameMax);
+	if (tFrame == kFrameMax) {
+		for (std::unique_ptr<Children>& children : Childrens) {
+			if (!children->freeFlag) {
+				float rad = - (i * 30.f);
+				std::unique_ptr<Children> child;
+				child= std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(rad)) * 200.0f, 360 + (cosf((float)DEG_TO_RAD(rad)) * 200.0f) }, player_, true);
+				Childrens.push_back(std::move(child));
+				i++;
+				break;
+			}
+		}
+		tFrame = 0;
+	}
+
+
+
+
+
 }
 
 void Cannon::Draw() {
@@ -164,13 +235,13 @@ void Cannon::Draw() {
 
 void Cannon::Spawn() {
 	coolTimer_++;
-	Clamp(coolTimer_,0.f, kCoolTimer);
-	if (coolTimer_==kCoolTimer) {
+	Clamp(coolTimer_, 0.f, kCoolTimer);
+	if (coolTimer_ == kCoolTimer) {
 		std::random_device seed_gen;
 		std::default_random_engine engine(seed_gen());
 
 		// -100以上100以下の値を等確率で発生させる
-		std::uniform_int_distribution<> dist(-100,100);
+		std::uniform_int_distribution<> dist(-100, 100);
 		// 一様整数分布で乱数を生成する
 		float positionX = (float)dist(engine);
 		float positionY = (float)dist(engine);
@@ -183,7 +254,7 @@ void Cannon::Spawn() {
 
 void Cannon::SpotSpawn() {
 	int nowscore = ScoreManager::GetInstance()->GetScore();
-	if(nowscore > mScore + 500){
+	if (nowscore > mScore + 500) {
 		mScore = nowscore;
 		isSpawn = true;
 	}
@@ -191,7 +262,7 @@ void Cannon::SpotSpawn() {
 		mGscore = nowscore;
 		isSpawnGear = true;
 	}
-	if (isSpawn|| isSpawnGear) {
+	if (isSpawn || isSpawnGear) {
 		std::random_device seed_gen;
 		std::default_random_engine engine(seed_gen());
 		// -100以上100以下の値を等確率で発生させる
@@ -203,7 +274,7 @@ void Cannon::SpotSpawn() {
 		float positionY = (float)distY(engine);
 
 		if (isSpawn) {
-			if (accels.size()>2) {
+			if (accels.size() > 2) {
 				accels.pop_front();
 			}
 			std::unique_ptr<AccelSpot> accel = std::make_unique<AccelSpot>(DirectX::XMFLOAT2{ positionX,positionY }, player_);
@@ -223,8 +294,7 @@ void Cannon::SpotSpawn() {
 
 }
 
-bool Cannon::TimeProgress()
-{
+bool Cannon::TimeProgress() {
 	if (time >= alignmentMaxTime) return true;
 	float flame = 60.0f;
 	time += 1.0f / flame;

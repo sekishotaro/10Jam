@@ -30,8 +30,8 @@ void FieldScore::Update() {
 void FieldScore::Draw() {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	if (score_ >= 100) {
-		DrawFormatString(610, 100 - (int)up, GetColor(255,255,255), "+3");
+		DrawFormatString(670, 100 - (int)up, GetColor(255,255,255), "+3");
 	}
-	DrawFormatString((int)pos_.x,(int)pos_.y-up,color_,"+%d",score_);
+	DrawFormatString((int)pos_.x,(int)pos_.y-(int)up,color_,"+%d",score_);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 }

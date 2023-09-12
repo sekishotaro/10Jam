@@ -18,6 +18,18 @@ public:
 	/// çXêV
 	/// </summary>
 	void Update();
+	void TitleInitialize();
+
+	/// <summary>
+	/// 
+	/// </summary>
+	void TitleUpdate();
+	/// <summary>
+	/// 
+	/// </summary>
+	void TitleDraw();
+
+	void TitleSpawn();
 	/// <summary>
 	/// ï`âÊ
 	/// </summary>
@@ -25,6 +37,7 @@ public:
 
 	void Spawn();
 	void SpotSpawn();
+
 
 	void SetPlayer(Player* player) {player_ = player;}
 	int GetAditional() { return aditionaltime; }
@@ -39,6 +52,9 @@ private:
 	int mScore = 0;
 	int mGscore = 0;
 
+	int i = 0;
+	float tFrame = 0.f;
+	float kFrameMax = 120.0f;
 	Player* player_ = nullptr;
 	float coolTimer_ = 0.0f;
 	float kCoolTimer = 60.0f;

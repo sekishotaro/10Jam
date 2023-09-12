@@ -13,7 +13,7 @@ private: // エイリアス
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
 
-	Children(XMFLOAT2 pos,Player* player);
+	Children(XMFLOAT2 pos, Player* player, bool isStop = false);
 	~Children();
 
 	/// <summary>
