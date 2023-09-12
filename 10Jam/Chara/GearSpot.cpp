@@ -7,6 +7,7 @@
 GearSpot::GearSpot(XMFLOAT2 pos, Player* player) :
 	pos_(pos),
 	player_(player) {
+	color = GetColor(255, 100, 255);
 }
 
 GearSpot::~GearSpot() {
@@ -17,8 +18,6 @@ void GearSpot::Initialize() {
 
 void GearSpot::Update() {
 	const bool isCollision = Collision();
-	const auto nowColor = isCollision ? Particle::ColorRGB{ 100,100,255 } : Particle::ColorRGB{ 100,255,100 };
-	color = GetColor(nowColor.red, nowColor.green, nowColor.blue);
 
 	if (isCollision && !player_->GetGear()) {
 		player_->SetGear(true);
@@ -32,12 +31,7 @@ void GearSpot::Update() {
 		constexpr float startR = 70.f;
 		constexpr float endR = 85.f;
 		spotRadius = Ease(In, Linear, float(spotframe) / interval_f, startR, endR);
-
-		if (!spotframe) {
-			Particle::Ins()->Ripple(pos_, 30u, endR, 1ui8, nowColor, 16ui8, startR, 8.f);
-		}
 	}
-
 
 	{
 		XMFLOAT2 scroll = ScrollManager::GetInstance()->GetMove();

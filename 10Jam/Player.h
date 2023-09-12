@@ -68,8 +68,8 @@ private:
 	float rotaVal = 3.0f;
 
 	bool isBoost = false;
-	float boostFrame = 0.0f;
-	float kBoostFrameMax = 120.0f;
+	uint8_t boostFrame = 0;
+	uint8_t kBoostFrameMax = 120;
 	float accel = 1.0f;
 
 	bool isGear = false;
