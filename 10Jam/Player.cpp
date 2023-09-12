@@ -96,12 +96,6 @@ void Player::Move() {
 
 	static XMFLOAT2 vec = { 0.0f, 3.0f };
 
-	if (keys[KEY_INPUT_W] == 1) {
-		vec = { 0.0f, 3.0f };
-	} else if (keys[KEY_INPUT_S] == 1) {
-		vec = { 0.0f, 0.0f };
-	}
-
 	float sita = rota * 3.1415f / 108.0f;
 
 	moveVec.x = vec.x * cosf(sita) - vec.y * sinf(sita);

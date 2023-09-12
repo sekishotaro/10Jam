@@ -64,6 +64,8 @@ public:
 	/// <returns></returns>
 	static const int GetTracChildrenNum() { return trackChildrenNum; }
 
+	static void End();
+
 	DirectX::XMFLOAT2 GetPos() { return pos; }
 	std::vector<DirectX::XMFLOAT2> GetRestrainMoveVec() { return restrainMoveVec; }
 	int GetRestraintTh() { return restraintTh; }

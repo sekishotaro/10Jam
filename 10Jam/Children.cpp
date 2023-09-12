@@ -41,15 +41,19 @@ void Children::Draw() {
 	}
 	else if (coolTime < coolTimeMax)
 	{
-		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 246, 0), true);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 241, 24), true);
 	}
-	else if( tailFlag == true)
+	else if (restraintTh <= unColRestrainTh)
 	{
-		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(255, 55, 255), true);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(125, 125, 125), true);
+	}
+	else if( tailFlag == false)
+	{
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(200, 200, 200), true);
 	}
 	else
 	{
-		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(55, 55, 255), true);
+		DrawCircleAA(pos.x, pos.y, radius, 64, GetColor(230, 50, 78), true);
 	}
 }
 
@@ -268,6 +272,11 @@ void Children::UpdateRippleEffect()
 		// 波紋エフェクト開始
 		Particle::Ins()->Ripple(pos, life, endRadius, 1ui8, rippleColor, vertexCount);
 	}
+}
+
+void Children::End()
+{
+	trackChildrenNum = 0;
 }
 
 bool Children::CoolTime()

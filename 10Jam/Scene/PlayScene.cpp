@@ -10,7 +10,7 @@ PlayScene::PlayScene() {
 PlayScene::~PlayScene() {
 	// 描画先を裏画面にする
 	SetDrawScreen(DX_SCREEN_BACK);
-
+	Children::End();
 	Particle::Ins()->Clear();
 }
 
