@@ -22,10 +22,17 @@ public:
 	/// </summary>
 	void initialize();
 
+	void TitleInitialize();
+
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();
+
+	/// <summary>
+	/// タイトル用アップデート
+	/// </summary>
+	void TitleUpdate();
 
 	/// <summary>
 	/// 描画

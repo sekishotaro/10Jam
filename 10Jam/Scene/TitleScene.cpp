@@ -10,6 +10,7 @@ TitleScene::~TitleScene() {
 void TitleScene::Initialize() {
 	cannon = std::make_unique<Cannon>();
 	player = std::make_unique<Player>();
+	player->TitleInitialize();
 	cannon->SetPlayer(player.get());
 	cannon->TitleInitialize();
 	backScreen = std::make_unique<BackScreen>();
@@ -19,8 +20,9 @@ void TitleScene::Initialize() {
 void TitleScene::Update() {
 	// 最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
-	player->Update();
+	player->TitleUpdate();
 	cannon->TitleUpdate();
+	player->playerStop = cannon->deleteChilFlag;
 	if (keys[KEY_INPUT_RETURN] == 1) {
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::PLAY);
 	}
