@@ -35,11 +35,12 @@ void PlayScene::Initialize() {
 void PlayScene::Update() {
 	if(!StartUpdate()){ return; } 
 	if (FinishUpdate()) { return; }
+	ScoreManager::GetInstance()->Update();
 	playcount = (GetNowCount() - count) / 1000;
 	player->playerStop = cannon_->deleteChilFlag;
 	player->Update();
 	cannon_->Update();
-	backScreen->Update(playcount);
+	backScreen->Update(playcount, kPlayCount + cannon_->GetAditional());
 	Particle::Ins()->Update();
 }
 
@@ -69,7 +70,7 @@ void PlayScene::Draw() {
 	if (isStart) {
 		DrawFormatString(600, 360, GetColor(255, 255, 255), "%d", 3 - (GetNowCount() - startCount) / 1000);
 	} else {
-		DrawFormatString(550, 20, GetColor(255, 255, 255), "%d/%d", playcount, kPlayCount);
+		DrawFormatString(550, 20, GetColor(255, 255, 255), "%d/%d", playcount, kPlayCount + cannon_->GetAditional());
 	}
 	ScoreManager::GetInstance()->Draw();
 	if (isFinish) {
@@ -98,8 +99,8 @@ bool PlayScene::StartUpdate() {
 }
 
 bool PlayScene::FinishUpdate() {
-	if (playcount >= 60 &&!isFinish){
-		playcount = 60;
+	if (playcount >= kPlayCount+cannon_->GetAditional() && !isFinish) {
+		playcount = kPlayCount + cannon_->GetAditional();
 		ScoreManager::GetInstance()->ScoreSort();
 		isFinish = true;
 	}

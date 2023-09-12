@@ -13,7 +13,7 @@ BackScreen::~BackScreen() {
 void BackScreen::Initialize() {
 }
 
-void BackScreen::Update(const int playCount) {
+void BackScreen::Update(const int playCount, const int maxCount) {
 	DirectX::XMFLOAT2 scroll = ScrollManager::GetInstance()->GetMove();
 	sub.x += scroll.x;
 	sub.y += scroll.y;
@@ -23,7 +23,7 @@ void BackScreen::Update(const int playCount) {
 		color_ = GetColor(200, 200, 200);
 	}
 	
-	if (playCount < 55) { return; }
+	if (playCount < maxCount-5) { return; }
 	frame += vel;
 	Clamp(frame,0.f, kFrameMax);
 	if (frame==0.f) {
@@ -33,7 +33,7 @@ void BackScreen::Update(const int playCount) {
 		vel = -1.0f;
 	}
 	float fra = frame / kFrameMax;
-	int col = Ease(In,Linear, fra,200,0);
+	int col =(int) Ease(In,Linear, fra,200,0);
 	color_ = GetColor(200, col, col);
 }
 
