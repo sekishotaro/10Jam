@@ -33,7 +33,8 @@ public:
 	void ResetScore() { score = 0; frame = 0.f; }
 
 	static int GetScore() { return score; }
-
+public:
+	bool drawResultFlag = false;
 private:
 	static int score;
 	float frame = 0.0f;

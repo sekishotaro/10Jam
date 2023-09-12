@@ -22,13 +22,18 @@ ScoreManager* ScoreManager::GetInstance() {
 void ScoreManager::Draw() {
 	constexpr size_t bufLen = 32u;
 	char tmp[bufLen]{};
-	sprintf_s(tmp, bufLen, "ÉXÉRÉA: %d", score);
+	sprintf_s(tmp, bufLen, "SCORE: %d", score);
 
 	static unsigned backColor = GetColor(100, 100, 100);
 	static unsigned mainColor = GetColor(255, 255, 255);
 	static unsigned edgeColor = GetColor(0, 0, 0);
 
 	DrawStringF(scorePosLT.x, scorePosLT.y, tmp, mainColor, edgeColor);
+
+	if (drawResultFlag)
+	{
+		ResultDraw();
+	}
 }
 
 void ScoreManager::ResultUpdate() {
@@ -39,15 +44,17 @@ void ScoreManager::ResultUpdate() {
 }
 
 void ScoreManager::ResultDraw() {
+	static const unsigned black = GetColor(0, 0, 0);
+	static const unsigned white = GetColor(255, 255, 255);
+
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-	DrawBox(0,0,1280,720,GetColor(0,0,0),true);
+	DrawBoxAA(0.f, 0.f, 1280.f, 720.f, black, TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
-	DrawFormatString(410, 100+(int)scroll, GetColor(255, 255, 255), "SCORE:%d", score);
-	DrawFormatString(480, 300+(int)scroll, GetColor(255, 255, 255), "1st:%d", result[0]);
-	DrawFormatString(480, 400+(int)scroll, GetColor(255, 255, 255), "2nd:%d", result[1]);
-	DrawFormatString(480, 500+(int)scroll, GetColor(255, 255, 255), "3rd:%d", result[2]);
-
+	DrawFormatStringF(410.f, 100.f + scroll, white, "SCORE: %d", score);
+	DrawFormatStringF(480.f, 300.f + scroll, white, "1st: %d", result[0]);
+	DrawFormatStringF(480.f, 400.f + scroll, white, "2nd: %d", result[1]);
+	DrawFormatStringF(480.f, 500.f + scroll, white, "3rd: %d", result[2]);
 }
 
 void ScoreManager::ScoreSort() {
