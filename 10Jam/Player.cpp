@@ -18,6 +18,14 @@ void Player::initialize() {
 	childrenNum = 0;
 }
 
+void Player::TitleInitialize()
+{
+	pos.x -= 50.0f;
+	pos.y += 150.0f;
+	moveVec = {};
+	childrenNum = 0;
+}
+
 void Player::Update() {
 	if (playerStop == true) return;
 
@@ -56,6 +64,25 @@ void Player::Update() {
 	moveAdd.y += overMove.y;
 
 	ScrollManager::GetInstance()->SetMove(overMove);
+}
+
+void Player::TitleUpdate()
+{
+	if (playerStop == true) return;
+
+	static XMFLOAT2 vec = { 0.0f, 3.0f };
+	static float titeleRota = 145.0f;
+	titeleRota += 0.5f;
+	float sita = titeleRota * 3.1415f / 108.0f;
+	moveVec.x = vec.x * cosf(sita) - vec.y * sinf(sita);
+	moveVec.y = vec.x * sinf(sita) - vec.y * cosf(sita);
+	moveVec.x *= accel;
+	moveVec.y *= accel;
+	moveVec.x *= coinBoost;
+	moveVec.y *= coinBoost;
+
+	pos.x += moveVec.x;
+	pos.y += moveVec.y;
 }
 
 void Player::Draw() {
