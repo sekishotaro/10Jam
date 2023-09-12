@@ -97,7 +97,7 @@ void PlayScene::MainUpdate() {
 	player->playerStop = cannon_->deleteChilFlag;
 	player->Update();
 	cannon_->Update();
-	backScreen->Update(playcount);
+	backScreen->Update(playcount, kPlayCount + cannon_->GetAditional());
 	Particle::Ins()->Update();
 
 	// カウントが終わったら終了

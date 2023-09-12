@@ -38,7 +38,7 @@ public:
 	/// <summary>
 	/// スコアリセット
 	/// </summary>
-	void ResetScore() { score = 0; frame = 0.f; }
+	void ResetScore() { score = 0; frame = 0.f; fields.clear(); }
 
 	static int GetScore() { return score; }
 public:
