@@ -2,10 +2,18 @@
 
 #include <DirectXMath.h>
 
+#include "FieldScore.h"
+#include<memory>
+#include<list>
+
 class ScoreManager {
 public:
 
 	static ScoreManager* GetInstance();
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update();
 
 	/// <summary>
 	/// 描画
@@ -36,6 +44,9 @@ public:
 public:
 	bool drawResultFlag = false;
 private:
+	void AddFields(DirectX::XMFLOAT2 pos, int score, int color);
+	std::list<std::unique_ptr<FieldScore>> fields = {};
+
 	static int score;
 	float frame = 0.0f;
 	float kFrameMax = 90.0f;

@@ -97,6 +97,7 @@ void Cannon::Update() {
 	//íœ‚·‚éq‹Ÿ‚Ì”»•Ê
 	for (std::unique_ptr<Children>& children : Childrens)
 	{
+		children->SetIsSlow(true);
 		children->DleteChildrenCheck();
 		//íœ‚µ‚È‚¢q‹Ÿ‚È‚çcontinue
 		if (children->deleteFlag == false) continue;
@@ -145,6 +146,7 @@ void Cannon::Update() {
 
 	constexpr int scoreUnit = 100;
 	ScoreManager::GetInstance()->AddScore(Children::GetHitNum() * scoreUnit, 1u, player_->GetPos());
+	aditionaltime += 3;
 	delete[] a;
 	Children::TrackChilHitNumReset();
 }

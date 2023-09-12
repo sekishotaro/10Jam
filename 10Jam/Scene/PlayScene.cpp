@@ -28,6 +28,7 @@ void PlayScene::Initialize() {
 
 void PlayScene::Update() {
 	updateProc();
+	ScoreManager::GetInstance()->Update();
 }
 
 void PlayScene::Draw() {
@@ -82,7 +83,7 @@ void PlayScene::StartUpdate() {
 	drawCountProc = [&]
 		{
 			static const unsigned color = GetColor(255, 255, 255);
-			DrawFormatString(550, 20, color, "TIME: %d", kPlayCount - playcount);
+			DrawFormatString(550, 20, color, "TIME: %d", kPlayCount + cannon_->GetAditional() - playcount);
 		};
 
 	// 現在の時間を記録
@@ -98,8 +99,8 @@ void PlayScene::MainUpdate() {
 	Particle::Ins()->Update();
 
 	// カウントが終わったら終了
-	if (playcount >= 60) {
-		playcount = 60;
+	if (playcount >= kPlayCount + cannon_->GetAditional()) {
+		playcount = kPlayCount + cannon_->GetAditional();
 		ScoreManager::GetInstance()->ScoreSort();
 		updateProc = std::bind(&PlayScene::FinishUpdate, this);
 		drawCountProc = [] {};

@@ -166,6 +166,7 @@
     <ClCompile Include="Scene\SceneChanger.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
+    <ClCompile Include="Score\FieldScore.cpp" />
     <ClCompile Include="Score\ScoreManager.cpp" />
     <ClCompile Include="Score\ScrollManager.cpp" />
     <ClCompile Include="Sound.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="Score\BackScreen.h" />
+    <ClInclude Include="Score\FieldScore.h" />
     <ClInclude Include="Score\ScoreManager.h" />
     <ClInclude Include="Score\ScrollManager.h" />
     <ClInclude Include="Sound.h" />
