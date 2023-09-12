@@ -54,7 +54,7 @@ private:
 
 	int i = 0;
 	float tFrame = 0.f;
-	float kFrameMax = 120.0f;
+	float kFrameMax = 60.0f;
 	Player* player_ = nullptr;
 	float coolTimer_ = 0.0f;
 	float kCoolTimer = 60.0f;
