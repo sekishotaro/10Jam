@@ -2,8 +2,10 @@
 #include "SceneManager.h"
 #include "../Particle.h"
 #include "../Bloom.h"
+#include <ScrollManager.h>
 
 TitleScene::TitleScene() {
+	ScrollManager::GetInstance()->Reset();
 }
 
 TitleScene::~TitleScene() {
@@ -28,9 +30,13 @@ void TitleScene::Update() {
 
 	player->playerStop = cannon->deleteChilFlag;
 	if (keys[KEY_INPUT_RETURN] == 1) {
+		// パーティクルを消す
+		Particle::Ins()->Clear();
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::PLAY);
 	}
 }
+
+
 
 void TitleScene::Draw() {
 	// 描画先をmainScreenにする
@@ -44,6 +50,7 @@ void TitleScene::Draw() {
 	Particle::Ins()->Draw();
 
 	DrawFormatString(600, 300, GetColor(255, 255, 255), "タイトルです。エンターでプレイ");
+	//DrawFormatString(600, 300, GetColor(255, 255, 255), "%.0f,%.0f,",player->GetPos().x, player->GetPos().y);
 
 	// 描画先を裏画面にする
 	SetDrawScreen(DX_SCREEN_BACK);

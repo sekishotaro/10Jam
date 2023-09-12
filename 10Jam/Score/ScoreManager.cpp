@@ -67,6 +67,9 @@ void ScoreManager::ResultDraw() {
 	DrawFormatStringF(480.f, 300.f + scroll, white, "1st: %d", result[0]);
 	DrawFormatStringF(480.f, 400.f + scroll, white, "2nd: %d", result[1]);
 	DrawFormatStringF(480.f, 500.f + scroll, white, "3rd: %d", result[2]);
+	if (frame>= kFrameMax) {
+		DrawFormatStringF(430.f, 600.f, white, "PRESS SPACE");
+	}
 }
 
 void ScoreManager::ScoreSort() {

@@ -73,6 +73,7 @@ private:
 	//“ü—Í
 	float rota = 0.0f;
 	float rotaVal = 3.0f;
+	float titeleRota = 145.0f;
 
 	bool isBoost = false;
 	uint8_t boostFrame = 0;

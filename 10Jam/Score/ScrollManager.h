@@ -10,6 +10,9 @@ public:
 	XMFLOAT2 GetMove() { return move; }
 
 	void SetMove(const XMFLOAT2 move) { this->move = move; }
+
+	void Reset() { move = {}; }
+
 private:
 	static XMFLOAT2 move;
 private:

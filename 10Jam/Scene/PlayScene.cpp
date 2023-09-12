@@ -3,6 +3,7 @@
 #include "../Particle.h"
 #include "../Sound.h"
 #include "../Bloom.h"
+#include <ScrollManager.h>
 
 PlayScene::PlayScene() {
 	updateProc = std::bind(&PlayScene::StartUpdate, this);
@@ -64,6 +65,8 @@ void PlayScene::ChangeNextScene(SceneManager::SceneName scene) {
 	Sound::Ins()->Stop(bgmHandle);
 	// パーティクルを消す
 	Particle::Ins()->Clear();
+	//Scrollを消す
+	ScrollManager::GetInstance()->Reset();
 	//子供の変数初期化
 	Children::End();
 	// スコアは非表示に戻す
