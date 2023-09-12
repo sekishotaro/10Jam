@@ -1,5 +1,7 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
+#include "../Particle.h"
+#include "../Bloom.h"
 
 TitleScene::TitleScene() {
 }
@@ -21,16 +23,35 @@ void TitleScene::Update() {
 	GetHitKeyStateAll(keys);
 	player->Update();
 	cannon->TitleUpdate();
+	Particle::Ins()->Update();
+
 	if (keys[KEY_INPUT_RETURN] == 1) {
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::PLAY);
 	}
 }
 
 void TitleScene::Draw() {
+	// 描画先をmainScreenにする
+	SetDrawScreen(Bloom::Ins()->mainScreen);
+	ClearDrawScreen();
 
 	backScreen->Draw();
-	cannon->TitleDraw();
+	cannon->Draw();
 	player->Draw();
 
-	DrawFormatString(600,300,GetColor(255,255,255),"タイトルです。エンターでプレイ");
+	Particle::Ins()->Draw();
+
+	DrawFormatString(600, 300, GetColor(255, 255, 255), "タイトルです。エンターでプレイ");
+
+	// 描画先を裏画面にする
+	SetDrawScreen(DX_SCREEN_BACK);
+
+	// mainScreenの内容を描画する
+	DrawGraphF(0, 0, Bloom::Ins()->mainScreen, FALSE);
+
+	// ぼかしたものを描画する
+	Bloom::Ins()->UpdateBloomScreen();
+	Bloom::Ins()->DrawBloomScreen();
+
+
 }

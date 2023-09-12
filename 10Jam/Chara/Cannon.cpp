@@ -205,7 +205,7 @@ void Cannon::TitleSpawn() {
 	if (tFrame == kFrameMax) {
 		for (std::unique_ptr<Children>& children : Childrens) {
 			if (!children->freeFlag) {
-				float rad = - (i * 30.f);
+				float rad =  (i * 30.f);
 				std::unique_ptr<Children> child;
 				child= std::make_unique<Children>(DirectX::XMFLOAT2{ 640 + sinf((float)DEG_TO_RAD(rad)) * 200.0f, 360 + (cosf((float)DEG_TO_RAD(rad)) * 200.0f) }, player_, true);
 				Childrens.push_back(std::move(child));
