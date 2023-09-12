@@ -72,12 +72,12 @@ void ScoreManager::AddScore(const int add, unsigned particleNum, const DirectX::
 	for (unsigned i = 0; i < particleNum; i++) {
 
 		// スコアのスプライトまで飛ぶパーティクル
-		Particle::Ins()->AddGrain(30u,
+		Particle::Ins()->AddGrain(45u,
 								  XMFLOAT2(particleStartPos.x, particleStartPos.y + float(i) * 10.f),
 								  scorePosLT,
 								  16.f, 16.f,
-								  Particle::ColorRGB{ 255, 128, 128 },
-								  Particle::ColorRGB{ 255, 128, 128 },
+								  Particle::ColorRGB{ 255, 0x22, 0x22 },
+								  Particle::ColorRGB{ 255, 0x22, 0x22 },
 								  true, 3ui8);
 
 	}
