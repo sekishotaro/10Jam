@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
 #include "../Particle.h"
+#include "../Children.h"
 #include "../Bloom.h"
 
 TitleScene::TitleScene() {
@@ -28,6 +29,7 @@ void TitleScene::Update() {
 
 	player->playerStop = cannon->deleteChilFlag;
 	if (keys[KEY_INPUT_RETURN] == 1) {
+		Children::End();
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::PLAY);
 	}
 }
