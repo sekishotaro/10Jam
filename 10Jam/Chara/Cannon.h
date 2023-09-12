@@ -43,7 +43,7 @@ private:
 	float coolTimer_ = 0.0f;
 	float kCoolTimer = 60.0f;
 
-	float alignmentMaxTime = 2.0f;
+	float alignmentMaxTime = 0.5f;
 	float time = 0.0f;
 
 	// 最新のキーボード情報用

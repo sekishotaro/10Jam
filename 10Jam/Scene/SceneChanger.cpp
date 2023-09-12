@@ -6,7 +6,7 @@ namespace
 {
 	inline float StartEase(float t)
 	{
-		return Ease(In, Quad, t, 0.f, 600.0f);
+		return Ease(In, Quad, t, 0.f, 630.0f);
 	}
 
 	inline float EndEase(float t)
