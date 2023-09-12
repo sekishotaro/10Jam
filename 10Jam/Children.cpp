@@ -11,8 +11,10 @@ int Children::trackChilHitNum = 0;
 int Children::trackChildrenNum = 0;
 float Children::coolTime = 0.0f;
 
-Children::Children(XMFLOAT2 pos, Player* player) {
-	MountMove();
+Children::Children(XMFLOAT2 pos, Player* player,bool isStop) {
+	if (!isStop) {
+		MountMove();
+	}
 	this->pos = pos;
 	player_ = player;
 }

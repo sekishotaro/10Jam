@@ -155,14 +155,12 @@ void Player::Dash() {
 void Player::RotaUpdate() {
 
 	if (ScoreManager::GetScore() >= 2000) {
-		rotaVal = 0.5f;
-	} else if (ScoreManager::GetScore() >= 2000) {
-		rotaVal = 1.0f;
-	} else if (ScoreManager::GetScore() >= 1500) {
-		rotaVal = 1.5f;
-	} else if (ScoreManager::GetScore() >= 1000) {
 		rotaVal = 2.0f;
-	} else if (ScoreManager::GetScore() >= 500) {
+	} else if (ScoreManager::GetScore() >= 1500) {
+		rotaVal = 2.25f;
+	} else if (ScoreManager::GetScore() >= 1000) {
 		rotaVal = 2.5f;
+	} else if (ScoreManager::GetScore() >= 500) {
+		rotaVal = 2.75f;
 	}
 }

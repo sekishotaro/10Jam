@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include <memory>
 #include <BackScreen.h>
+#include <Cannon.h>
 
 
 class TitleScene : public BaseScene {
@@ -23,7 +24,8 @@ public:
 private:
 	char keys[256] = { 0 };
 	std::unique_ptr<BackScreen> backScreen = nullptr;
-
+	std::unique_ptr<Cannon> cannon = nullptr;
+	std::unique_ptr<Player> player = nullptr;
 
 };
 

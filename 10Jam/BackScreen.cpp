@@ -23,7 +23,7 @@ void BackScreen::Update(const int playCount, const int maxCount) {
 		color_ = GetColor(200, 200, 200);
 	}
 	
-	if (playCount < maxCount-5) { return; }
+	if (maxCount-playCount > 5) { return; }
 	frame += vel;
 	Clamp(frame,0.f, kFrameMax);
 	if (frame==0.f) {
