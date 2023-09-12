@@ -68,6 +68,8 @@ public:
 	std::vector<DirectX::XMFLOAT2> GetRestrainMoveVec() { return restrainMoveVec; }
 	int GetRestraintTh() { return restraintTh; }
 	bool GetTailFlag() { return tailFlag; }
+	void SetIsSlow(const bool flag) { isSlow = flag; dir *= -1.0f; }
+
 private:
 	/// <summary>
 	/// 自機と当たり判定
@@ -149,6 +151,10 @@ private:
 	//削除後整列があるか確認フラグ
 	bool alignmentFlag = false;
 
+	bool isSlow = false;
+	float slowframe = 0.0f;
+	float kSlowframeMax = 300.f;
+	float speed = 4.5f;
 public:
 	//追跡子供全体数
 	static int trackChildrenNum;

@@ -36,7 +36,7 @@ private:
 
 	int count = 0;
 	int playcount = 0;
-	const int kPlayCount = 60;
+	int kPlayCount = 60;
 	bool isStart = true;
 	int startCount = 0;
 	int bgmHandle=0;

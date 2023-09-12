@@ -14,7 +14,7 @@ public:
 	/// <summary>
 	/// XV
 	/// </summary>
-	void Update(const int playCount=0);
+	void Update(const int playCount=0,const int maxCount=60);
 	/// <summary>
 	/// •`‰æ
 	/// </summary>

@@ -19,6 +19,15 @@ ScoreManager* ScoreManager::GetInstance() {
 	return &instance;
 }
 
+void ScoreManager::Update() {
+	for (std::unique_ptr<FieldScore>& field : fields) {
+		field->Update();
+	}
+	fields.remove_if([](std::unique_ptr<FieldScore>& field) {
+		return field->GetIsFinish();
+		});
+}
+
 void ScoreManager::Draw() {
 	constexpr size_t bufLen = 32u;
 	char tmp[bufLen]{};
@@ -29,6 +38,10 @@ void ScoreManager::Draw() {
 	static unsigned edgeColor = GetColor(0, 0, 0);
 
 	DrawStringF(scorePosLT.x, scorePosLT.y, tmp, mainColor, edgeColor);
+
+	for (std::unique_ptr<FieldScore>& field:fields) {
+		field->Draw();
+	}
 }
 
 void ScoreManager::ResultUpdate() {
@@ -61,7 +74,7 @@ void ScoreManager::ScoreSort() {
 
 void ScoreManager::AddScore(const int add, unsigned particleNum, const DirectX::XMFLOAT2& particleStartPos) {
 	score += add;
-
+	AddFields(particleStartPos, add,GetColor(255,255,100));
 	for (unsigned i = 0; i < particleNum; i++) {
 
 		// スコアのスプライトまで飛ぶパーティクル
@@ -74,4 +87,10 @@ void ScoreManager::AddScore(const int add, unsigned particleNum, const DirectX::
 								  true, 3ui8);
 
 	}
+}
+
+void ScoreManager::AddFields(XMFLOAT2 pos, int score, int color) {
+	std::unique_ptr<FieldScore> scoreF;
+	scoreF = std::make_unique<FieldScore>(pos,score,color);
+	fields.push_back(std::move(scoreF));
 }
