@@ -6,6 +6,7 @@
 #include "Cannon.h"
 #include <BackScreen.h>
 #include "SceneManager.h"
+#include <functional>
 
 class PlayScene : public BaseScene {
 public:
@@ -25,20 +26,23 @@ public:
 	void Draw() override;
 private:
 	void ChangeNextScene(SceneManager::SceneName scene);
-	bool StartUpdate();
-	bool FinishUpdate();
+	void StartUpdate();
+	void MainUpdate();
+	void FinishUpdate();
 private:
 	std::unique_ptr<BackScreen> backScreen = nullptr;
 	std::unique_ptr<Player> player = nullptr;
 	std::unique_ptr<Cannon> cannon_ = nullptr;
 
-	bool isFinish = false;
+	std::function<void()> updateProc = [] {};
+	std::function<void()> drawCountProc = [] {};
 
 	int count = 0;
 	int playcount = 0;
-	int kPlayCount = 60;
-	bool isStart = true;
+	const int kPlayCount = 60;
 	int startCount = 0;
-	int bgmHandle=0;
+	int bgmHandle = 0;
+
+	static constexpr int startUpdateTimeSecMax = 3;
 };
 

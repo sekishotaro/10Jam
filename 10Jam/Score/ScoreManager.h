@@ -6,7 +6,6 @@
 #include<memory>
 #include<list>
 
-
 class ScoreManager {
 public:
 
@@ -42,8 +41,10 @@ public:
 	void ResetScore() { score = 0; frame = 0.f; }
 
 	static int GetScore() { return score; }
-	void AddFields(DirectX::XMFLOAT2 pos, int score, int color);
+public:
+	bool drawResultFlag = false;
 private:
+	void AddFields(DirectX::XMFLOAT2 pos, int score, int color);
 	std::list<std::unique_ptr<FieldScore>> fields = {};
 
 	static int score;

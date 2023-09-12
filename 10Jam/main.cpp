@@ -51,6 +51,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 文字描画にアンチエイリアスと枠線を付ける
 	ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE_4X4);
 
+	// ビネッタ用
+	const int vignette = LoadGraph("Resources/vignette.png");
+
 	constexpr size_t keyCount = 256u;
 	std::array<char, keyCount> keys{};
 	std::array<char, keyCount> oldkeys{};
@@ -77,6 +80,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		sceneManager_->Update();
 		// 描画処理
 		sceneManager_->Draw();
+
+		// ビネッタ描画
+		DrawExtendGraphF(0.f, 0.f, 1280.f, 720.f, vignette, TRUE);
 
 		//---------  ここまでにプログラムを記述  ---------//
 
