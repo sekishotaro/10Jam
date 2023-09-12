@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
 #include "../Particle.h"
+#include "../Children.h"
 #include "../Bloom.h"
 #include <ScrollManager.h>
 
@@ -32,6 +33,7 @@ void TitleScene::Update() {
 	if (keys[KEY_INPUT_RETURN] == 1) {
 		// パーティクルを消す
 		Particle::Ins()->Clear();
+		Children::End();
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::PLAY);
 	}
 }
