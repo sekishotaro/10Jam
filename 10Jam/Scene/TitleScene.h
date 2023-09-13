@@ -28,5 +28,8 @@ private:
 	std::unique_ptr<Player> player = nullptr;
 	int ruby = 0;
 	int ido = 0;
+
+	int startSe = -1;
+
 };
 

@@ -3,10 +3,14 @@
 #include "../Particle.h"
 #include "../Children.h"
 #include "../Bloom.h"
+#include "../Sound.h"
 #include <ScrollManager.h>
 
 TitleScene::TitleScene() {
 	ScrollManager::GetInstance()->Reset();
+
+	startSe = Sound::Ins()->LoadFile("Resources/Sound/Œˆ’è.ogg");
+	assert(startSe != -1);
 }
 
 TitleScene::~TitleScene() {
@@ -36,6 +40,7 @@ void TitleScene::Update() {
 		Particle::Ins()->Clear();
 		Children::End();
 		SceneManager::GetInstance()->ChangeScene(SceneManager::SceneName::PLAY);
+		Sound::Ins()->Play(startSe, true, DX_PLAYTYPE_BACK);
 	}
 }
 

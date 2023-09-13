@@ -42,6 +42,7 @@ private:
 	const int kPlayCount = 60;
 	int startCount = 0;
 	int bgmHandle = 0;
+	int backTitleSe = -1;
 
 	int ui = 0;
 	static constexpr int startUpdateTimeSecMax = 3;

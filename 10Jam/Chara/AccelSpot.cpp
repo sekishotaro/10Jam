@@ -3,11 +3,14 @@
 #include <Easing.h>
 #include <Helper.h>
 #include "../Particle.h"
+#include "../Sound.h"
 
 AccelSpot::AccelSpot(XMFLOAT2 pos, Player* player) :
 	pos_(pos),
 	player_(player) {
 	color = GetColor(100, 100, 255);
+
+	accelSe = Sound::Ins()->LoadFile("Resources/Sound/se_mimimi.ogg");
 }
 
 AccelSpot::~AccelSpot() {
@@ -21,6 +24,7 @@ void AccelSpot::Update() {
 
 	if (isCollision && !player_->GetBoost()) {
 		player_->SetBoost(true);
+		Sound::Ins()->Play(accelSe, false, DX_PLAYTYPE_BACK);
 	}
 
 	{

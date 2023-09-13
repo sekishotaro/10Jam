@@ -5,13 +5,14 @@
 #include <ScoreManager.h>
 #include <vector>
 #include "../Particle.h"
+#include "../Sound.h"
 
 #define DEG_TO_RAD(deg)  ((deg) / 180.0 * 3.14159265358979323846)
 
 using namespace DirectX;
 Cannon::Cannon() {
-
-
+	hitChildSe = Sound::Ins()->LoadFile("Resources/Sound/se_ki-n4.ogg");
+	assert(hitChildSe != -1);
 }
 
 Cannon::~Cannon() {
@@ -126,12 +127,13 @@ void Cannon::Update() {
 		count++;
 	}
 
+	Sound::Ins()->Play(hitChildSe, true, DX_PLAYTYPE_BACK);
 	Particle::Ins()->Fireworks(player_->GetPos(),
-		60u,
-		512.f,
-		64ui8,
-		Particle::ColorRGB{ 0xff,0x22,0x22 },
-		true, 3ui8);
+							   60u,
+							   512.f,
+							   64ui8,
+							   Particle::ColorRGB{ 0xff,0x22,0x22 },
+							   true, 3ui8);
 
 	constexpr int scoreUnit = 100;
 	ScoreManager::GetInstance()->AddScore(Children::GetHitNum() * scoreUnit, 1u, player_->GetPos());

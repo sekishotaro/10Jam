@@ -22,8 +22,11 @@ void PlayScene::Initialize() {
 	cannon_->SetPlayer(player.get());
 	cannon_->Initialize();
 
-	bgmHandle = Sound::Ins()->LoadFile("Resources/Sound/D_rhythmaze_119.ogg");
+	bgmHandle = Sound::Ins()->LoadFile("Resources/Sound/Routine.ogg");
+	backTitleSe = Sound::Ins()->LoadFile("Resources/Sound/戻る.ogg");
+
 	ui = LoadGraph("Resources/AD&SPACE.png");
+
 	startCount = GetNowCount();
 }
 
@@ -73,6 +76,8 @@ void PlayScene::ChangeNextScene(SceneManager::SceneName scene) {
 	ScoreManager::GetInstance()->drawResultFlag = false;
 	// シーンを切り替える
 	SceneManager::GetInstance()->ChangeScene(scene);
+	// SEを鳴らす
+	Sound::Ins()->Play(backTitleSe, true, DX_PLAYTYPE_BACK);
 }
 
 void PlayScene::StartUpdate() {
