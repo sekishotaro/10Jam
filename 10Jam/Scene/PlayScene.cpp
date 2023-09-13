@@ -23,8 +23,9 @@ void PlayScene::Initialize() {
 	cannon_->Initialize();
 
 	bgmHandle = Sound::Ins()->LoadFile("Resources/Sound/Routine.ogg");
-
 	backTitleSe = Sound::Ins()->LoadFile("Resources/Sound/戻る.ogg");
+
+	ui = LoadGraph("Resources/AD&SPACE.png");
 
 	startCount = GetNowCount();
 }
@@ -56,7 +57,7 @@ void PlayScene::Draw() {
 	Bloom::Ins()->DrawBloomScreen();
 
 	drawCountProc();
-
+	DrawRotaGraph(100, 650, 0.7f, 0, ui, true, false);
 	// スコアを描画
 	// スコアにブルームはかけない
 	ScoreManager::GetInstance()->Draw();

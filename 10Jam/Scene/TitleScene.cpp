@@ -23,7 +23,8 @@ void TitleScene::Initialize() {
 	cannon->SetPlayer(player.get());
 	cannon->TitleInitialize();
 	backScreen = std::make_unique<BackScreen>();
-
+	ruby = LoadGraph("Resources/ruby.png");
+	ido = LoadGraph("Resources/【井】.png");
 }
 
 void TitleScene::Update() {
@@ -55,8 +56,7 @@ void TitleScene::Draw() {
 	player->Draw();
 
 	Particle::Ins()->Draw();
-
-	DrawFormatString(600, 300, GetColor(255, 255, 255), "タイトルです。エンターでプレイ");
+	//DrawFormatString(450, 630, GetColor(255, 255, 255), "PRESS ENTER");
 	//DrawFormatString(600, 300, GetColor(255, 255, 255), "%.0f,%.0f,",player->GetPos().x, player->GetPos().y);
 
 	// 描画先を裏画面にする
@@ -69,5 +69,7 @@ void TitleScene::Draw() {
 	Bloom::Ins()->UpdateBloomScreen();
 	Bloom::Ins()->DrawBloomScreen();
 
-
+	DrawRotaGraph(640, 60, 0.5f, 0, ruby, true, false);
+	DrawRotaGraph(640, 360, 1.0f, 0, ido, true, false);
+	DrawFormatString(450, 630, GetColor(255, 255, 255), "PRESS ENTER");
 }
