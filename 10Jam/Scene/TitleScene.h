@@ -27,5 +27,7 @@ private:
 	std::unique_ptr<Cannon> cannon = nullptr;
 	std::unique_ptr<Player> player = nullptr;
 
+	int startSe = -1;
+
 };
 

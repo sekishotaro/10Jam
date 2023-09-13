@@ -6,6 +6,9 @@
 class AccelSpot {
 private:
 	using XMFLOAT2 = DirectX::XMFLOAT2;
+
+	int accelSe = -1;
+
 public:
 	AccelSpot(XMFLOAT2 pos,Player* player);
 	~AccelSpot();

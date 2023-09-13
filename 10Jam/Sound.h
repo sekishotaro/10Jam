@@ -16,7 +16,7 @@ class Sound
 private:
 	Sound(const Sound&) = delete;
 	Sound& operator=(const Sound&) = delete;
-	Sound() = default;
+	Sound();
 
 public:
 	/// @brief シングルトンのインスタンスを取得する
@@ -45,7 +45,7 @@ public:
 	/// @brief 音量を変更
 	/// @param handle 音声データのハンドル
 	/// @param volume 変更後の音量(0 ~ 255)
-	/// @return 
+	/// @return エラーがあればtrue
 	inline bool Volume(int handle, uint8_t volume)
 	{
 		return -1 == DxLib::SetVolumeSoundMem(int(volume), handle);

@@ -3,11 +3,14 @@
 #include <Easing.h>
 #include <Helper.h>
 #include "../Particle.h"
+#include "../Sound.h"
 
 GearSpot::GearSpot(XMFLOAT2 pos, Player* player) :
 	pos_(pos),
 	player_(player) {
 	color = GetColor(255, 100, 255);
+
+	gearSe = Sound::Ins()->LoadFile("Resources/Sound/maou_se_system04.ogg");
 }
 
 GearSpot::~GearSpot() {
@@ -21,6 +24,7 @@ void GearSpot::Update() {
 
 	if (isCollision && !player_->GetGear()) {
 		player_->SetGear(true);
+		Sound::Ins()->Play(gearSe, true, DX_PLAYTYPE_BACK);
 	}
 
 	{

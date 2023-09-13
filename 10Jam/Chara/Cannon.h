@@ -62,6 +62,9 @@ private:
 	float alignmentMaxTime = 0.5f;
 	float time = 0.0f;
 	int aditionaltime = 0;
+
+	int hitChildSe = -1;
+
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
 	// 1ループ(フレーム)前のキーボード情報

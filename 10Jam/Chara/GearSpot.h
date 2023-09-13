@@ -6,6 +6,9 @@
 class GearSpot {
 private:
 	using XMFLOAT2 = DirectX::XMFLOAT2;
+
+	int gearSe = -1;
+
 public:
 	GearSpot(XMFLOAT2 pos, Player* player);
 	~GearSpot();
