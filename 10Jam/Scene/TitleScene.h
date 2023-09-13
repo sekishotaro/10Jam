@@ -26,6 +26,7 @@ private:
 	std::unique_ptr<BackScreen> backScreen = nullptr;
 	std::unique_ptr<Cannon> cannon = nullptr;
 	std::unique_ptr<Player> player = nullptr;
-
+	int ruby = 0;
+	int ido = 0;
 };
 

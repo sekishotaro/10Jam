@@ -43,6 +43,7 @@ private:
 	int startCount = 0;
 	int bgmHandle = 0;
 
+	int ui = 0;
 	static constexpr int startUpdateTimeSecMax = 3;
 };
 
