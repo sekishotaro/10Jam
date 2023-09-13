@@ -24,7 +24,7 @@ void AccelSpot::Update() {
 
 	if (isCollision && !player_->GetBoost()) {
 		player_->SetBoost(true);
-		Sound::Ins()->Play(accelSe, false, DX_PLAYTYPE_BACK);
+		Sound::Ins()->Play(accelSe, true, DX_PLAYTYPE_BACK);
 	}
 
 	{
